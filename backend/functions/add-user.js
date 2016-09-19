@@ -8,14 +8,14 @@ const knex = require('knex')({
 let addUser = (data) => {
     let name = data.input;
     knex.insert({
-        name: name
+        user_name: name
     })
-    .returning('id', 'name')
+    .returning('id', 'user_name')
     .into('users')
-    .then((id, name) => {
+    .then((id, user_name) => {
         return {
-            id: id,
-            name: name
+            userID: id,
+            userName: user_name
         };
     })
     .catch((err) => {
