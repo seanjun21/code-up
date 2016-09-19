@@ -24,5 +24,4 @@ class UserName extends React.Component{
 }
 
 var Container = connect(mapStateToProps)(UserName);
-
 module.exports = Container;
