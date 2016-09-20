@@ -7,18 +7,28 @@ const knex = require('knex')({
 
 let postQuestion = (data) => {
     let question = data.input;
-    let id = data.userID;
+    let userID = data.userID;
+    let timestamp = data.timeStamp;
+
     knex.insert({
         question_text: question,
-        user_id: id
+        user_id: userID,
+        time_stamp: timestamp
     })
-    .returning('id', 'question_text')
+    .returning()
     .into('questions')
-    .then((id, question_text) => {
-        return {
-            questionID: id,
-            questionText: question_text
-        };
+    .then(() => {
+        knex.select()
+        .from('questions')
+        .where({
+            is_answered: false
+        })
+        .orderBy('time_stamp')
+        .then((questions) => {
+            return {
+                questions: questions
+            }
+        })
     })
     .catch((err) => {
         console.error(err);

@@ -7,6 +7,7 @@ const knex = require('knex')({
 
 let addUser = (data) => {
     let name = data.input;
+
     knex.insert({
         user_name: name
     })
