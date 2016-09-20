@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose} from 'redux';
-import reducer from './reducers';
+import reducer from './reducer';
 import createSocketIoMiddleware from 'redux-socket.io';
 import io from 'socket.io-client';
 
