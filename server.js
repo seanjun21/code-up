@@ -8,8 +8,9 @@ const addUser = require('./backend/functions/add-user');
 const postMessage = require('./backend/functions/post-message');
 const postQuestion = require('./backend/functions/post-question');
 const filterQuestions = require('./backend/functions/filter-questions');
-const pg = require('pg');
 
+/* postgres connection */
+const pg = require('pg');
 pg.defaults.ssl = true;
 pg.connect(process.env.DATABASE_URL, function(err, client) {
   if (err) throw err;
@@ -21,6 +22,7 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
       console.log(JSON.stringify(row));
     });
 });
+/*end postgres connection*/
 
 const sockets = [];
 
