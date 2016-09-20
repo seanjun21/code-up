@@ -7,15 +7,15 @@ const knex = require('knex')({
 
 let postMessages = (data) => {
     let message = data.input;
-    let id = data.questionID;
+    //let id = data.questionID;
     let name = data.userName;
-    let timestamp = data.timeStamp;
+    //let timestamp = data.timeStamp;
 
     knex.insert({
         message_text: message,
-        question_id: id,
-        user_name: name,
-        time_stamp: timestamp
+        //question_id: id,
+        username: name,
+        //time_stamp: timestamp
     })
     .returning('question_id')
     .into('messages')
@@ -24,7 +24,7 @@ let postMessages = (data) => {
         .from('messages')
         .where({
             question_id: question_id,
-        }).orderBy('time_stamp')
+        }).orderBy('whensent')
         .then((messages) => {
             return {
                 messages: messages

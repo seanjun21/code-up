@@ -8,12 +8,13 @@ const knex = require('knex')({
 let postQuestion = (data) => {
     let question = data.input;
     let userID = data.userID;
-    let timestamp = data.timeStamp;
+    //let whenasked = data.timeStamp;
 
     knex.insert({
-        question_text: question,
         user_id: userID,
-        time_stamp: timestamp
+        question_text: question,
+        answered: false
+        //whenasked: whenasked
     })
     .returning()
     .into('questions')
@@ -21,9 +22,9 @@ let postQuestion = (data) => {
         knex.select()
         .from('questions')
         .where({
-            is_answered: false
+            answered: false
         })
-        .orderBy('time_stamp')
+        .orderBy('whenasked')
         .then((questions) => {
             return {
                 questions: questions

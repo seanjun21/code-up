@@ -9,14 +9,14 @@ let addUser = (data) => {
     let name = data.input;
 
     knex.insert({
-        user_name: name
+        username: name
     })
     .returning('id', 'user_name')
     .into('users')
-    .then((id, user_name) => {
+    .then((user_id, username) => {
         return {
-            userID: id,
-            userName: user_name
+            userID: user_id,
+            userName: username
         };
     })
     .catch((err) => {

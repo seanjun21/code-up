@@ -10,13 +10,13 @@ let filterQuestions = (data) => {
 
     knex.select()
     .from('questions')
-    .innerJoin('tags', 'questions.id', 'tags.question_id')
+    .innerJoin('tags', 'question.id', 'tags.question_id')
     .where({
         tag_name: tag,
-        is_answered: false
+        answered: false
     })
-    .returning('question_text', 'id', 'time_stamp')
-    .orderBy('time_stamp')
+    .returning('question_text', 'question_id', 'whenasked')
+    .orderBy('whenasked')
     .then((questions) => {
         return {
             questions: questions
