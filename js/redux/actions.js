@@ -1,7 +1,6 @@
 
 // this.props.dispatch({ type: 'server/findGame', data: { input: this.refs.value, state: this.props.state } }); }
 
-
 const ON_LOAD = 'ON_LOAD';
 function onLoad() {
     return {
@@ -15,3 +14,8 @@ function submitName() {
     type: SUBMIT_NAME
   };
 };
+
+exports.ON_LOAD = ON_LOAD;
+exports.onLoad = onLoad;
+exports.SUBMIT_NAME = SUBMIT_NAME;
+exports.submitName = submitName;

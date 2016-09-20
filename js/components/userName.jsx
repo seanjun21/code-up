@@ -1,25 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import actions from '..redux/actions';
+import actions from '../redux/actions';
 
 class UserName extends React.Component{
 
-  nameSubmit: function (event) {
+  nameSubmit (event) {
     event.preventDeafult();
     let userName = this.refs.userName.value;
     this.props.dispatch(actions.submitName(userName));
     console.log(userName, "<---userName")
   }
 
-  render: function() {
-    return {
+  render () {
+    return (
       <div className="user-input">
-        <input className='user-name' type="text" ref="userName" placeholder="User Name" id="userName" required />
-        <button type="button" className="name-submit" id="name=submit" onClick={this.nameSubmit}>submit</button>
+        <input className='user-name' type="text" ref="userName" placeholder={this.props.userName} id="userName" required />
+        <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Let's go</button>
       </div>
 
-    }
+    )
   }
 }
 
