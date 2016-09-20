@@ -1,15 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
-import actions from '../redux/actions';
 
 class UserName extends React.Component{
 
   nameSubmit (event) {
     event.preventDeafult();
     let userName = this.refs.userName.value;
-    this.props.dispatch(actions.submitName(userName));
-    console.log(userName, "<---userName")
+    // this.props.dispatch(actions.submitName(userName));
+    this.props.dispatch({
+      type: 'server/addUser',
+      data: { input: userName }
+    });
+    console.log(userName, "<---userName");
   }
 
   render () {
@@ -23,5 +26,10 @@ class UserName extends React.Component{
   }
 }
 
-var Container = connect(mapStateToProps)(UserName);
-module.exports = Container;
+
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+module.exports = connect(mapStateToProps)(UserName)

@@ -1,12 +1,24 @@
 import React from 'react';
-import {Router, Route, hashHistory} from 'react-router';
+import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import LandingPage from './components/landing-page';
 import ChatroomPage from './components/chatroom-page';
 
+// let App = (props) => {
+//   return (
+//     <div className='app'>
+//       <div>
+//         {props.children}
+//       </div>
+//     </div>
+//   )
+// }
+
 const routes = (
-    <Router history={hashHistory}>
-        <Route path="/" component={LandingPage}/>
-        <Route path="/chatroom" component={ChatroomPage}/>
+  <Router history={hashHistory}>
+    <Route path="/" component={LandingPage} />
+      <Route path="/:questionID">
+        <IndexRoute component={ChatroomPage} />
+      </Route>
     </Router>
 );
 

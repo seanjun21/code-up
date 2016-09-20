@@ -5,6 +5,7 @@ import UserName from './UserName'
 // import actions from '..redux/actions';
 
 class LandingPage extends React.Component{
+  // Write a function to dispatch postQuestion
   render() {
     return (
       <div className="container">
@@ -15,7 +16,21 @@ class LandingPage extends React.Component{
         <div>
           <UserName />
         </div>
+        <div className="question-feed">
+          <ul>
+          </ul>
+        </div>
+        <div className="post-question">
+          <input className="post-question-input"></input>
+        </div>
       </div>
     );
   }
 };
+
+const mapStateToProps = (state) => {
+  return {
+
+  }
+}
+module.exports = connect(mapStateToProps)(LandingPage)
