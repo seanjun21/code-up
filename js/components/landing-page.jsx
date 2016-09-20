@@ -26,10 +26,11 @@ class LandingPage extends React.Component{
             <li>question 5</li>
           </ul>
         </div>
-        {/* <div className="post-question">
-          <p>Submit a question:</p>
+        <div className="post-question">
+          <h1>Submit a question:</h1>
           <input className="post-question-input"></input>
-        </div> */}
+          <button type="button" className="question-button">Submit</button>
+        </div>
       </div>
     );
   }
