@@ -7,7 +7,7 @@ const io = require('socket.io')(server);
 const addUser = require('./backend/functions/add-user');
 const postMessage = require('./backend/functions/post-message');
 const postQuestion = require('./backend/functions/post-question');
-const updateQuestion = require('./backend/functions/update-questions');
+const filterQuestions = require('./backend/functions/filter-questions');
 
 const sockets = [];
 
@@ -35,8 +35,8 @@ io.on('connection', (socket) => {
         if (action.type === 'server/postQuestion') {
             postQuestion(action.data).then(emit);
         }
-        if (action.type === 'server/updateQuestion') {
-            updateQuestion(action.data).then(emit);
+        if (action.type === 'server/filterQuestions') {
+            filterQuestions(action.data).then(emit);
         }
     });
 });
