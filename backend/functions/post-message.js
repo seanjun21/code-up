@@ -17,23 +17,23 @@ let postMessages = (data) => {
         user_name: name,
         time_stamp: timestamp
     })
-        .returning('question_id')
-        .into('messages')
-        .then((question_id) => {
-            knex.select()
-            .from('messages')
-            .where({
-                question_id: question_id,
-            }).orderBy('time_stamp')
-            .then((messages) => {
-                return {
-                    messages: messages
-                }
-            })
+    .returning('question_id')
+    .into('messages')
+    .then((question_id) => {
+        knex.select()
+        .from('messages')
+        .where({
+            question_id: question_id,
+        }).orderBy('time_stamp')
+        .then((messages) => {
+            return {
+                messages: messages
+            }
         })
-        .catch((err) => {
-            console.error(err);
-        })
+    })
+    .catch((err) => {
+        console.error(err);
+    })
 };
 
 module.exports = postMessages;
