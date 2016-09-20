@@ -7,7 +7,6 @@ class UserName extends React.Component{
   nameSubmit (event) {
     event.preventDeafult();
     let userName = this.refs.userName.value;
-    // this.props.dispatch(actions.submitName(userName));
     this.props.dispatch({
       type: 'server/addUser',
       data: { input: userName }

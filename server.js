@@ -28,10 +28,46 @@ const sockets = [];
 
 app.use(express.static('./build'));
 
-let emit = (data) => {
+let emitGetQuestions = (data) => {
+  sockets.forEach((socket) => {
+    socket.emit('action', {
+      type: 'getQuestionsSuccess',
+      data: data
+    });
+  });
+};
+
+let emitNewUser = (data) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
-           type: 'update',
+           type: 'addUserSuccess',
+           data: data
+       });
+    });
+};
+
+let emitNewQuestion = (data) => {
+    sockets.forEach((socket) => {
+       socket.emit('action', {
+           type: 'postQuestionSuccess',
+           data: data
+       });
+    });
+};
+
+let emitNewMessage = (data) => {
+    sockets.forEach((socket) => {
+       socket.emit('action', {
+           type: 'postMessageSuccess',
+           data: data
+       });
+    });
+};
+
+let emitFilterQuestions = (data) => {
+    sockets.forEach((socket) => {
+       socket.emit('action', {
+           type: 'questionFilterSuccess',
            data: data
        });
     });
@@ -41,17 +77,20 @@ io.on('connection', (socket) => {
     console.log(`Socket connected: ${socket.id}`);
     sockets.push(socket);
     socket.on('action', (action) => {
+        if (action.type === 'server/getQuestions') {
+            getQuestions(action.data).then(emitGetQuestions);
+        }
         if (action.type === 'server/addUser') {
-            addUser(action.data).then(emit);
+            addUser(action.data).then(emitNewUser);
         }
         if (action.type === 'server/postMessage') {
-            postMessage(action.data).then(emit);
+            postMessage(action.data).then(emitNewQuestion);
         }
         if (action.type === 'server/postQuestion') {
-            postQuestion(action.data).then(emit);
+            postQuestion(action.data).then(emitNewMessage);
         }
         if (action.type === 'server/filterQuestions') {
-            filterQuestions(action.data).then(emit);
+            filterQuestions(action.data).then(emitFilterQuestions);
         }
     });
 });
