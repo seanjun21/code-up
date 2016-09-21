@@ -67,6 +67,10 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener('DOMContentLoaded', function () {
+	  _store2.default.dispatch({
+	    type: 'server/getQuestions',
+	    data: {}
+	  });
 	  _reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: _store2.default },
@@ -23193,17 +23197,63 @@
 /* 200 */
 /***/ function(module, exports) {
 
-	"use strict";
+	'use strict';
 	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
 	
-	
-	// Initial state for userName when the page loads
 	function reducer() {
 	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
 	  var action = arguments[1];
+	
+	  switch (action.type) {
+	    case 'getQuestionsSuccess':
+	      {
+	        return Object.assign({}, state, {
+	          questionFeed: action.data.questions
+	        });
+	      }
+	    case 'addUserSuccess':
+	      {
+	        return Object.assign({}, state, {
+	          userID: action.data.userID,
+	          userName: action.data.userName
+	        });
+	      }
+	    case 'userEnterLobby':
+	      {
+	        return Object.assign({}, state, {
+	          lobby: action.data.lobby
+	        });
+	      }
+	    case 'postQuestionSuccess':
+	      {
+	        return Object.assign({}, state, {
+	          questionFeed: action.data.questions,
+	          myQuestion: {
+	            questionText: action.data.questionText,
+	            questionID: action.data.questionID
+	          }
+	        });
+	      }
+	    case 'postMessageSuccess':
+	      {
+	        return Object.assign({}, state, {
+	          chatMessages: action.data.messages
+	        });
+	      }
+	    case 'questionFilterSuccess':
+	      {
+	        return Object.assign({}, state, {
+	          questionFeed: action.data.questions
+	        });
+	      }
+	    default:
+	      {
+	        return state;
+	      }
+	  }
 	}
 	
 	exports.default = reducer;
@@ -30927,7 +30977,7 @@
 	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _landingPage2.default }),
 	  _react2.default.createElement(
 	    _reactRouter.Route,
-	    { path: '/:questionID' },
+	    { path: '/room/:questionID' },
 	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _chatroomPage2.default })
 	  )
 	);
@@ -36616,8 +36666,6 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	// import actions from '..redux/actions';
-	
 	var LandingPage = function (_React$Component) {
 	  _inherits(LandingPage, _React$Component);
 	
@@ -36628,16 +36676,93 @@
 	  }
 	
 	  _createClass(LandingPage, [{
-	    key: 'render',
+	    key: 'postQuestion',
+	    value: function postQuestion(event) {
+	      var _this2 = this;
 	
-	    // Write a function to dispatch postQuestion
+	      event.();
+	      if (!this.props.userID) {
+	        console.log("Please log in to post questions");
+	      } else {
+	        var promise = new Promise(function (response) {
+	          response(_this2.props.dispatch({
+	            type: "server/postQuestion",
+	            data: {
+	              userID: _this2.props.userID,
+	              input: _this2.refs.questionText.value
+	            }
+	          }));
+	        });
+	        promise.then(function (data) {
+	          window.location.href = '/#/room/' + data.questionID;
+	        });
+	      }
+	    }
+	  }, {
+	    key: 'filterQuestions',
+	    value: function filterQuestions(event) {
+	      event.();
+	      this.props.dispatch({
+	        type: "server/filterQuestions",
+	        data: this.refs.filterText.value
+	      });
+	    }
+	  }, {
+	    key: 'joinRoom',
+	    value: function joinRoom(id, callback) {
+	      return function callback() {
+	        window.location.href = '/#/room/' + id;
+	      };
+	    }
+	  }, {
+	    key: 'render',
 	    value: function render() {
+	      var _this3 = this;
+	
+	      if (!this.props.questionFeed) {
+	        return null;
+	      }
+	      var feed = this.props.questionFeed.map(function (question, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            question.question_text
+	          ),
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Room #: ',
+	            question.id
+	          ),
+	          _react2.default.createElement(
+	            'h3',
+	            null,
+	            'Date: ',
+	            question.whenasked
+	          ),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'join-room', onClick: _this3.joinRoom(question.id) },
+	            'Join room'
+	          )
+	        );
+	      });
+	
+	      var userName = "Please log in or register";
+	
+	      if (this.props.userName) {
+	        userName = this.props.userName;
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'app-name' },
+	          { className: 'appName' },
 	          _react2.default.createElement(
 	            'h1',
 	            null,
@@ -36652,11 +36777,11 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_UserName2.default, null)
+	          _react2.default.createElement(_UserName2.default, { userName: userName })
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'question-feed' },
+	          { className: 'questionFeed' },
 	          _react2.default.createElement(
 	            'p',
 	            null,
@@ -36665,45 +36790,27 @@
 	          _react2.default.createElement(
 	            'ul',
 	            null,
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'question 1'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'question 2'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'question 3'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'question 4'
-	            ),
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              'question 5'
-	            )
+	            feed
+	          ),
+	          _react2.default.createElement('input', { className: 'filter', ref: 'filterText', type: 'text', placeholder: 'filter questions by topic (React, JavaScript, CSS, etc.)' }),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'filter-button' },
+	            'submit filter'
 	          )
 	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'post-question' },
 	          _react2.default.createElement(
-	            'p',
+	            'h1',
 	            null,
 	            'Submit a question:'
 	          ),
-	          _react2.default.createElement('input', { className: 'post-question-input' }),
+	          _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', required: true }),
 	          _react2.default.createElement(
 	            'button',
-	            { type: 'button', className: 'question-button' },
+	            { type: 'button', className: 'question-button', onClick: this.postQuestion },
 	            'Submit'
 	          )
 	        )
@@ -36717,7 +36824,11 @@
 	;
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	  return {
+	    questionFeed: state.questionFeed,
+	    userID: state.userID,
+	    userName: state.userName
+	  };
 	};
 	module.exports = (0, _reactRedux.connect)(mapStateToProps)(LandingPage);
 
@@ -36759,9 +36870,8 @@
 	  _createClass(UserName, [{
 	    key: 'nameSubmit',
 	    value: function nameSubmit(event) {
-	      event.preventDeafult();
+	      event.();
 	      var userName = this.refs.userName.value;
-	      // this.props.dispatch(actions.submitName(userName));
 	      this.props.dispatch({
 	        type: 'server/addUser',
 	        data: { input: userName }
@@ -36771,9 +36881,15 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'user-input' },
+	        _react2.default.createElement(
+	          'h3',
+	          null,
+	          this.props.userName
+	        ),
 	        _react2.default.createElement('input', { className: 'user-name', type: 'text', ref: 'userName', placeholder: this.props.userName, id: 'userName', required: true }),
 	        _react2.default.createElement(
 	          'button',
@@ -36787,10 +36903,7 @@
 	  return UserName;
 	}(_react2.default.Component);
 	
-	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
-	};
-	module.exports = (0, _reactRedux.connect)(mapStateToProps)(UserName);
+	module.exports = (0, _reactRedux.connect)()(UserName);
 
 /***/ },
 /* 318 */
@@ -36828,12 +36941,40 @@
 	  }
 	
 	  _createClass(ChatRoom, [{
+	    key: 'sendMessage',
+	    value: function sendMessage(event) {
+	      event.();
+	      this.props.dispatch({
+	        type: "server/postMessage",
+	        data: {
+	          input: this.refs.messageText.value,
+	          questionID: this.props.questionID,
+	          userName: this.props.userName
+	        }
+	      });
+	    }
+	  }, {
 	    key: 'render',
 	    value: function render() {
+	      if (!this.props.questionText) {
+	        return null;
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        null,
-	        _react2.default.createElement('ul', null)
+	        _react2.default.createElement(
+	          'h1',
+	          { className: 'questionText' },
+	          this.props.questionText
+	        ),
+	        _react2.default.createElement('ul', null),
+	        _react2.default.createElement('input', { type: 'text', className: 'newMessage', ref: 'messageText', placeholder: 'submit message' }),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button', className: 'newMessageButton', onClick: this.sendMessage },
+	          'send message'
+	        )
 	      );
 	    }
 	  }]);
@@ -36844,8 +36985,14 @@
 	;
 	
 	var mapStateToProps = function mapStateToProps(state) {
-	  return {};
+	  return {
+	    questionID: state.myQuestion.questionID,
+	    questionText: state.myQuestion.questionText,
+	    userName: state.userName
+	
+	  };
 	};
+	
 	module.exports = (0, _reactRedux.connect)(mapStateToProps)(ChatRoom);
 
 /***/ }

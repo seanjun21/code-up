@@ -5,7 +5,7 @@ import UserName from './UserName'
 
 class LandingPage extends React.Component{
   postQuestion(event) {
-    event.preventDeafult()
+    event.()
     if (!this.props.userID){
       console.log("Please log in to post questions")
     }
@@ -26,7 +26,7 @@ class LandingPage extends React.Component{
   }
 
   filterQuestions(event) {
-    event.preventDeafult()
+    event.()
     this.props.dispatch({
       type: "server/filterQuestions",
       data: this.refs.filterText.value
