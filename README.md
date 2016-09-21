@@ -17,5 +17,5 @@
 15. Implement some kind of credits system for posting/answering questions. Adjust how many credits an answer is worth based on how long its gone unanswered. Maybe start users off with 5 credits for their first 5 questions.
 16. Make rules and guidlines section about how to use site and behaviorial policy.
 17. Make some kind of dropdown or input for adding tags when you post a new question and write function for this.
-18. Figure out way to manage sockets arrays/room arrays when people enter/leave room/lobby. (maybe another schma for rooms - everytime a new question is posted, a new room is also added to the db - and a many-to-many relationship for rooms_users? )
+18. Figure out way to manage sockets arrays/room arrays when people enter/leave room/lobby. (maybe another schema for rooms - everytime a new question is posted, a new room is also added to the db - and a many-to-many relationship for rooms_users? )
 19. Check inner join query in filter-questions function for accuracy now that we have questions_tags table.
