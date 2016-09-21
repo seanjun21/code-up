@@ -9,52 +9,15 @@ const addUser = require('./backend/functions/add-user');
 const postQuestion = require('./backend/functions/post-question');
 const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
+const joinRoom = require('./backend/functions/join-room');
 
 const sockets = [];
 const lobby = [];
 
 app.use(express.static('./build'));
 
-let emitNewUser = (socket, data) => {
-    lobby.push(data.userName)
-    socket.emit('action', {
-        type: 'addUserSuccess',
-        data: data
-    });
-    sockets.forEach((socket) => {
-        socket.emit('action', {
-            type: 'userEnterLobby',
-            data: {lobby: lobby}
-        });
-    });
-};
-
-let emitNewQuestion = (data) => {
-    sockets.forEach((socket) => {
-       socket.emit('action', {
-           type: 'postQuestionSuccess',
-           data: data
-       });
-    });
-};
-
-let emitNewMessage = (data) => {
-    sockets.forEach((socket) => {
-       socket.emit('action', {
-           type: 'postMessageSuccess',
-           data: data
-       });
-    });
-};
-// returns to specific unique socket - apply to other emit functions
-let emitFilterQuestions = (socket, data) => {
-    socket.emit('action', {
-        type: 'questionFilterSuccess',
-        data: data
-    });
-};
-
 io.on('connection', (socket) => {
+    // TODO: need to account for io.on disconnect
     console.log(`Socket connected: ${socket.id}`);
     sockets.push(socket);
     socket.on('action', (action) => {
@@ -68,31 +31,57 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/addUser') {
             lobby.push(data.userName)
-            socket.emit('action', {
-                type: 'addUserSuccess',
-                data: data
-            });
-            sockets.forEach((socket) => {
+            addUser(action.data).then((data) => {
                 socket.emit('action', {
-                    type: 'userEnterLobby',
-                    data: {lobby: lobby}
+                    type: 'addUserSuccess',
+                    data: data
+                });
+                sockets.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'userEnterLobby',
+                        data: {lobby: lobby}
+                    });
                 });
             });
-            addUser(action.data).then(emitNewUser).bind(null, socket);
         }
-        // if statement for joinRoom (room for question that's not your own)
-            // make change to sockets, remove from lobby array and add to array for specific room #
         if (action.type === 'server/postMessage') {
-            postMessage(action.data).then(emitNewQuestion);
+            postMessage(action.data).then((data) => {
+                sockets.forEach((socket) => {
+                   socket.emit('action', {
+                       type: 'postQuestionSuccess',
+                       data: data
+                   });
+                });
+            });
         }
         if (action.type === 'server/postQuestion') {
-            postQuestion(action.data).then(emitNewMessage);
-            // change data structure adding new key/value pair 'room#(key): [socket]'
+            postQuestion(action.data).then((data) => {
+                sockets.forEach((socket) => {
+                   socket.emit('action', {
+                       type: 'postMessageSuccess',
+                       data: data
+                   });
+                });
+            // TODO: Add code here to change data structure adding new key/value pair 'room#': [socket]'
+            });
         }
         if (action.type === 'server/filterQuestions') {
-            filterQuestions(action.data).then(emitFilterQuestions.bind(null, socket));
+            filterQuestions(action.data).then((data) => {
+                socket.emit('action', {
+                    type: 'questionFilterSuccess',
+                    data: data
+                });
+            });
         }
-        // need to account for io.on disconnect
+        if (action.type === 'server/joinRoom') {
+            joinRoom(action.data).then((data) => {
+                socket.emit('action', {
+                    type: 'joinRoomSuccess',
+                    data: data
+                });
+            // TODO: Add code here to make change to sockets, removing socket from lobby array and add to array for specific room #
+            });
+        }
     });
 });
 
