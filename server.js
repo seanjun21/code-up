@@ -68,16 +68,20 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/addUser') {
             addUser(action.data).then(emitNewUser).bind(null, socket);
-}
+        }
+        // if statement for joinRoom (room for question that's not your own)
+            // make change to sockets, remove from lobby array and add to array for specific room #
         if (action.type === 'server/postMessage') {
             postMessage(action.data).then(emitNewQuestion);
         }
         if (action.type === 'server/postQuestion') {
             postQuestion(action.data).then(emitNewMessage);
+            // change data structure adding new key/value pair 'room#(key): [socket]'
         }
         if (action.type === 'server/filterQuestions') {
             filterQuestions(action.data).then(emitFilterQuestions.bind(null, socket));
         }
+        // need to account for io.on disconnect
     });
 });
 
