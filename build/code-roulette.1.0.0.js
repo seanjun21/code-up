@@ -67,10 +67,6 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	document.addEventListener('DOMContentLoaded', function () {
-	  // store.dispatch({
-	  //   type: 'server/getQuestions',
-	  //   data: {}
-	  // });
 	  _reactDom2.default.render(_react2.default.createElement(
 	    _reactRedux.Provider,
 	    { store: _store2.default },
@@ -36246,6 +36242,13 @@
 	  }
 	
 	  _createClass(LandingPage, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	      this.props.dispatch({
+	        type: 'server/getQuestions'
+	      });
+	    }
+	  }, {
 	    key: 'postQuestion',
 	    value: function postQuestion(event) {
 	      var _this2 = this;

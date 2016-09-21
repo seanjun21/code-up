@@ -15,13 +15,6 @@ const lobby = [];
 
 app.use(express.static('./build'));
 
-let emitGetQuestions = (socket, data) => {
-    socket.emit('action', {
-        type: 'getQuestionsSuccess',
-        data: data
-    });
-};
-
 let emitNewUser = (socket, data) => {
     lobby.push(data.userName)
     socket.emit('action', {
@@ -66,7 +59,12 @@ io.on('connection', (socket) => {
     sockets.push(socket);
     socket.on('action', (action) => {
         if (action.type === 'server/getQuestions') {
-            getQuestions(action.data).then(emitGetQuestions).bind(null, socket);
+            getQuestions().then((data) => {
+                socket.emit('action', {
+                    type: 'getQuestionsSuccess',
+                    data: data
+                });
+            });
         }
         if (action.type === 'server/addUser') {
             addUser(action.data).then(emitNewUser).bind(null, socket);

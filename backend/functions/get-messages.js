@@ -1,6 +1,13 @@
 // For when you join a room for someone else's question
-const pg = require('../database/connect.js');
-const knex = require('knex')(pg);
+// const pg = require('../database/connect.js');
+// const knex = require('knex')(pg);
+
+const knex = require('knex')({
+    client: 'pg',
+    connection: {
+        database: 'chat'
+    },
+});
 
 let getMessages = (data) => {
     let questionID = data.questionID;

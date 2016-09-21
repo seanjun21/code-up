@@ -8,6 +8,7 @@ create table if not exists questions (
     user_id integer not null references users,
     question_text text not null,
     when_asked timestamp not null,
+    -- '1999-01-08 04:05:06'
     is_answered boolean
 );
 

@@ -3,6 +3,13 @@ import {connect} from 'react-redux';
 import UserName from './UserName'
 
 class LandingPage extends React.Component{
+
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'server/getQuestions'
+    });
+  }
+
   postQuestion(event) {
     event.preventDefault()
     if (!this.props.userID){
