@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import UserName from './UserName'
 
 class LandingPage extends React.Component{
   postQuestion(event) {
-    event.preventDeafult()
+    event.preventDefault()
     if (!this.props.userID){
       console.log("Please log in to post questions")
     }
@@ -26,7 +25,7 @@ class LandingPage extends React.Component{
   }
 
   filterQuestions(event) {
-    event.preventDeafult()
+    event.preventDefault()
     this.props.dispatch({
       type: "server/filterQuestions",
       data: this.refs.filterText.value

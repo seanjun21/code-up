@@ -1,11 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
 class UserName extends React.Component{
 
   nameSubmit (event) {
-    event.preventDeafult();
+    event.preventDefault();
     let userName = this.refs.userName.value;
     this.props.dispatch({
       type: 'server/addUser',
