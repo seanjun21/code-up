@@ -10,70 +10,70 @@ const postQuestion = require('./backend/functions/post-question');
 const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
 
-// /* postgres connection */
-// const pg = require('pg');
-// pg.defaults.ssl = true;
-// pg.connect(process.env.DATABASE_URL, function(err, client) {
-//   if (err) throw err;
-//   console.log('Connected to postgres! Getting schemas...');
-//
-//   client
-//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
-//     .on('row', function(row) {
-//       console.log(JSON.stringify(row));
-//     });
-// });
-// /*end postgres connection*/
-
 const sockets = [];
 const lobby = [];
 
 app.use(express.static('./build'));
 
-let emitGetQuestions = (data) => {
-  socket.emit('action', {
-    type: 'getQuestionsSuccess',
-    data: data
-  });
+// let emitGetQuestions = (socket, data, err) => {
+//     socket.emit('action', {
+//         type: 'getQuestionsSuccess',
+//         data: data
+//     });
+//     if (err) {
+//         console.error(err);
+//     }
+// };
+
+let emitNewUser = (socket, data, err) => {
+    lobby.push(data.userName)
+    socket.emit('action', {
+        type: 'addUserSuccess',
+        data: data
+    });
+    sockets.forEach((socket) => {
+        socket.emit('action', {
+            type: 'userEnterLobby',
+            data: {lobby: lobby}
+        });
+    });
+    if (err) {
+        console.error(err);
+    }
 };
 
-let emitNewUser = (data) => {
-  lobby.push(data.userName)
-  socket.emit('action', {
-    type: 'addUserSuccess',
-    data: data
-  });
-  sockets.forEach((socket) => {
-     socket.emit('action', {
-       type: 'userEnterLobby',
-       data: {lobby: lobby}
-     });
-  });
-};
-
-let emitNewQuestion = (data) => {
+let emitNewQuestion = (data, err) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
            type: 'postQuestionSuccess',
            data: data
        });
     });
+    if (err) {
+      console.error(err);
+    }
 };
 
-let emitNewMessage = (data) => {
+let emitNewMessage = (data, err) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
            type: 'postMessageSuccess',
            data: data
        });
     });
+    if (err) {
+      console.error(err);
+    }
 };
 // returns to specific unique socket - apply to other emit functions
-let emitFilterQuestions = (socket, data) => {
-   socket.emit('action', {
-     type: 'questionFilterSuccess',
-     data: data
-   });
+let emitFilterQuestions = (socket, data, err) => {
+    socket.emit('action', {
+        type: 'questionFilterSuccess',
+        data: data
+    });
+    if (err) {
+      console.error(err);
+    }
 };
 
 io.on('connection', (socket) => {
@@ -81,10 +81,27 @@ io.on('connection', (socket) => {
     sockets.push(socket);
     socket.on('action', (action) => {
         if (action.type === 'server/getQuestions') {
-            getQuestions(action.data).then(emitGetQuestions);
+            getQuestions(action.data).then(() =>
+                socket.emit('action', { 
+                    type: 'getQuestionsSuccess', 
+                    data: data 
+                })
+            );
         }
         if (action.type === 'server/addUser') {
-            addUser(action.data).then(emitNewUser);
+            addUser(action.data).then(() => {
+                lobby.push(data.userName)
+                socket.emit('action', {
+                    type: 'addUserSuccess',
+                    data: data
+                });
+                sockets.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'userEnterLobby',
+                        data: {lobby: lobby}
+                    });
+                });
+            });
         }
         if (action.type === 'server/postMessage') {
             postMessage(action.data).then(emitNewQuestion);
@@ -115,5 +132,3 @@ if (require.main === module) {
         }
     });
 }
-//
-// module.exports = pg;
