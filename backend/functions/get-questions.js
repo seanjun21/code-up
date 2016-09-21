@@ -10,14 +10,13 @@ const knex = require('knex')({
 
 let getQuestions = () => {
     return new Promise((resolve, reject) => {
-        console.log('in getQuestions')
         knex.select()
         .from('questions')
         .where({ is_answered: false })
         .returning('id', 'question_text', 'when_asked')
         .orderBy('when_asked')
         .then((questions) => {
-            resolve({questions: questions})
+            resolve({ questions: questions });
         }).catch((err) => {
             reject(err);
         });

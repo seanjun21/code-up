@@ -11,26 +11,17 @@ const knex = require('knex')({
 
 let getMessages = (data) => {
     let questionID = data.questionID;
-    
-    knex.select(
-    ).from(
-        'messages'
-    ).where({ 
-        question_id: questionID }
-    ).returning(
-        'message_text', 
-        'user_name', 
-        'when_sent'
-    ).orderBy(
-        'when_sent'
-    ).then(
-        (messages) => {
-            return { 
-                messages: messages 
-            };
-        }
-    ).catch((err) => {
-        console.error(err);
+    return new Promise((resolve, reject) => {
+        knex.select()
+        .from('messages')
+        .where({ question_id: questionID })
+        .returning('message_text', 'user_name', 'when_sent')
+        .orderBy('when_sent')
+        .then((messages) => {
+            resolve({ messages: messages });
+        }).catch((err) => {
+            reject(err);
+        });
     });
 };
 

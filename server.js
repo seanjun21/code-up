@@ -67,6 +67,17 @@ io.on('connection', (socket) => {
             });
         }
         if (action.type === 'server/addUser') {
+            lobby.push(data.userName)
+            socket.emit('action', {
+                type: 'addUserSuccess',
+                data: data
+            });
+            sockets.forEach((socket) => {
+                socket.emit('action', {
+                    type: 'userEnterLobby',
+                    data: {lobby: lobby}
+                });
+            });
             addUser(action.data).then(emitNewUser).bind(null, socket);
         }
         // if statement for joinRoom (room for question that's not your own)
