@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
-// write postMessage dispatch
 class ChatRoom extends React.Component{
 
   sendMessage(event) {
@@ -33,7 +32,6 @@ class ChatRoom extends React.Component{
   }
 };
 
-
 const mapStateToProps = (state) => {
   return {
     questionID: state.myQuestion.questionID,
@@ -42,4 +40,5 @@ const mapStateToProps = (state) => {
 
   }
 }
+
 module.exports = connect(mapStateToProps)(ChatRoom)

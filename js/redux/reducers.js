@@ -20,14 +20,12 @@ function reducer(state={}, action) {
     case 'postQuestionSuccess': {
       return Object.assign({}, state, {
         questionFeed: action.data.questions,
-        // check that this is only emitted to your own reducer
         myQuestion: {
           questionText: action.data.questionText,
           questionID: action.data.questionID
         }
       })
     }
-    // add a join room function also to store the room's question details as state
     case 'postMessageSuccess': {
       return Object.assign({}, state, {
         chatMessages: action.data.messages

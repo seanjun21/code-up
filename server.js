@@ -4,11 +4,11 @@ const app = express();
 const server = require('http').Server('app');
 const io = require('socket.io')(server);
 
-const addUser = require('./backend/functions/add-user');
-const postMessage = require('./backend/functions/post-message');
-const postQuestion = require('./backend/functions/post-question');
-const filterQuestions = require('./backend/functions/filter-questions');
 const getQuestions = require('./backend/functions/get-questions');
+const addUser = require('./backend/functions/add-user');
+const postQuestion = require('./backend/functions/post-question');
+const postMessage = require('./backend/functions/post-message');
+const filterQuestions = require('./backend/functions/filter-questions');
 
 /* postgres connection */
 const pg = require('pg');
@@ -43,7 +43,6 @@ let emitNewUser = (data) => {
     type: 'addUserSuccess',
     data: data
   });
-
   sockets.forEach((socket) => {
      socket.emit('action', {
        type: 'userEnterLobby',
@@ -51,7 +50,7 @@ let emitNewUser = (data) => {
      });
   });
 };
-// change this to only emit the newly added question and not refresh the entire questions array.
+
 let emitNewQuestion = (data) => {
     sockets.forEach((socket) => {
        socket.emit('action', {

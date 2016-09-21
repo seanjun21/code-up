@@ -2,11 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import UserName from './UserName'
-// import actions from '..redux/actions';
 
 class LandingPage extends React.Component{
-  // Write a function to dispatch postQuestion, filterQuestions
-  //
   postQuestion(event) {
     event.preventDeafult()
     if (!this.props.userID){
@@ -36,8 +33,6 @@ class LandingPage extends React.Component{
     })
   }
 
-
-
   joinRoom(id, callback) {
     return function callback() {
        window.location.href = '/#/room/' + id
@@ -45,7 +40,6 @@ class LandingPage extends React.Component{
   }
 
   render() {
-
     if (!this.props.questionFeed) {
       return null
     }

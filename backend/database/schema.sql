@@ -1,25 +1,32 @@
 create table if not exists users (
-    user_id serial primary key,
-    username text not null,
+    id serial primary key,
+    user_name text not null unique
 );
 
 create table if not exists questions (
-    question_id serial primary key,
+    id serial primary key,
+    user_id integer not null references users,
     question_text text not null,
-    whenasked timestamp not null,
-    anwered boolean not null
-    /* FOREIGN KEY ref users_id */
+    when_asked timestamp not null,
+    is_answered boolean
 );
 
 create table if not exists messages (
-    message_id serial primary key,
-    message_text text not null
-    whensent timestamp not null
-    /* FOREIGN KEY ref questions_id */
+    id serial primary key,
+    question_id integer not null references questions,
+    message_text text not null,
+    user_name text not null,
+    when_sent timestamp not null
 );
 
 create table if not exists tags (
-    tag_id serial primary key,
+    id serial primary key,
     tag text not null
-    /* FOREIGN KEY ref questions_id */
 );
+
+create table if not exists questions_tags (
+    question_id integer references questions,
+    tag_id integer references tags,
+    primary key (question_id, tag_id)
+);
+

@@ -1,41 +1,43 @@
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-        database: 'code-roulette'
-    }
-});
+const pg = require('../../server.js');
+const knex = require('knex')(pg);
 
 let postQuestion = (data) => {
-    let question = data.input;
+    let questionText = data.input;
     let userID = data.userID;
-    //let whenasked = data.timeStamp;
 
     knex.insert({
+        question_text: questionText,
         user_id: userID,
-        question_text: question,
-        answered: false
-        //whenasked: whenasked
-    })
-    .returning('id', 'question_text')
-    .into('questions')
-    .then((id) => {
-        knex.select()
-        .from('questions')
-        .where({
-            answered: false
-        })
-        .orderBy('whenasked')
-        .then((questions) => {
-            return {
-                questions: questions,
-                questionID: id,
-                questionText: question_text
-            }
-        })
-    })
-    .catch((err) => {
+        is_answered: false }
+    ).returning(
+        'id', 
+        'question_text'
+    ).into(
+        'questions'
+    ).then(
+        (id, question_text) => {
+            knex.select(
+            ).from(
+                'questions'
+            ).where({
+                is_answered: false }
+            ).orderBy(
+                'when_asked'
+            ).then(
+                (questions) => {
+                    return {
+                        questions: questions,
+                        questionID: id,
+                        questionText: question_text
+                    };
+                }
+            ).catch((err) => {
+            console.error(err);
+            });
+        }
+    ).catch((err) => {
         console.error(err);
-    })
+    });
 };
 
 module.exports = postQuestion;
