@@ -8,6 +8,7 @@ const addUser = require('./backend/functions/add-user');
 const postMessage = require('./backend/functions/post-message');
 const postQuestion = require('./backend/functions/post-question');
 const filterQuestions = require('./backend/functions/filter-questions');
+const getQuestions = require('./backend/functions/get-questions');
 
 /* postgres connection */
 const pg = require('pg');
@@ -25,27 +26,32 @@ pg.connect(process.env.DATABASE_URL, function(err, client) {
 /*end postgres connection*/
 
 const sockets = [];
+const lobby = [];
 
 app.use(express.static('./build'));
 
 let emitGetQuestions = (data) => {
-  sockets.forEach((socket) => {
-    socket.emit('action', {
-      type: 'getQuestionsSuccess',
-      data: data
-    });
+  socket.emit('action', {
+    type: 'getQuestionsSuccess',
+    data: data
   });
 };
 
 let emitNewUser = (data) => {
-    sockets.forEach((socket) => {
-       socket.emit('action', {
-           type: 'addUserSuccess',
-           data: data
-       });
-    });
-};
+  lobby.push(data.userName)
+  socket.emit('action', {
+    type: 'addUserSuccess',
+    data: data
+  });
 
+  sockets.forEach((socket) => {
+     socket.emit('action', {
+       type: 'userEnterLobby',
+       data: {lobby: lobby}
+     });
+  });
+};
+// change this to only emit the newly added question and not refresh the entire questions array.
 let emitNewQuestion = (data) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
@@ -65,12 +71,10 @@ let emitNewMessage = (data) => {
 };
 
 let emitFilterQuestions = (data) => {
-    sockets.forEach((socket) => {
-       socket.emit('action', {
-           type: 'questionFilterSuccess',
-           data: data
-       });
-    });
+   socket.emit('action', {
+     type: 'questionFilterSuccess',
+     data: data
+   });
 };
 
 io.on('connection', (socket) => {
@@ -112,3 +116,5 @@ if (require.main === module) {
         }
     });
 }
+
+module.exports = pg;

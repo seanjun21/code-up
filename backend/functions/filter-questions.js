@@ -1,9 +1,5 @@
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-        database: 'code-roulette'
-    }
-});
+const pg = require('../../server.js');
+const knex = require('knex')(pg);
 
 let filterQuestions = (data) => {
     let tag = data.tag;

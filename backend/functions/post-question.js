@@ -16,9 +16,9 @@ let postQuestion = (data) => {
         answered: false
         //whenasked: whenasked
     })
-    .returning()
+    .returning('id', 'question_text')
     .into('questions')
-    .then(() => {
+    .then((id) => {
         knex.select()
         .from('questions')
         .where({
@@ -27,7 +27,9 @@ let postQuestion = (data) => {
         .orderBy('whenasked')
         .then((questions) => {
             return {
-                questions: questions
+                questions: questions,
+                questionID: id,
+                questionText: question_text
             }
         })
     })

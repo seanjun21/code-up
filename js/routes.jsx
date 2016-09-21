@@ -16,7 +16,7 @@ let App = (props) => {
 const routes = (
   <Router history={hashHistory}>
     <Route path="/" component={LandingPage} />
-      <Route path="/:questionID">
+      <Route path="/room/:questionID">
         <IndexRoute component={ChatroomPage} />
       </Route>
     </Router>

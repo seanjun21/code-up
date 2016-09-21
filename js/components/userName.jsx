@@ -15,8 +15,10 @@ class UserName extends React.Component{
   }
 
   render () {
+
     return (
       <div className="user-input">
+      <h3>{this.props.userName}</h3>
         <input className='user-name' type="text" ref="userName" placeholder={this.props.userName} id="userName" required />
         <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Let's go</button>
       </div>
@@ -25,10 +27,4 @@ class UserName extends React.Component{
   }
 }
 
-
-const mapStateToProps = (state) => {
-  return {
-
-  }
-}
-module.exports = connect(mapStateToProps)(UserName)
+module.exports = connect()(UserName)

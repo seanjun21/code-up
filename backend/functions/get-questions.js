@@ -1,20 +1,12 @@
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-        database: 'code-roulette'
-    }
-});
+const pg = require('../../server.js');
+const knex = require('knex')(pg);
 
-let filterQuestions = (data) => {
+let getQuestions = (data) => {
     let tag = data.tag;
 
     knex.select()
     .from('questions')
-    .innerJoin('tags', 'question.id', 'tags.question_id')
-    .where({
-        tag_name: tag,
-        answered: false
-    })
+    .where({answered: false})
     .returning('question_text', 'question_id', 'whenasked')
     .orderBy('whenasked')
     .then((questions) => {
@@ -27,4 +19,4 @@ let filterQuestions = (data) => {
     })
 };
 
-module.exports = filterQuestions;
+module.exports = getQuestions;

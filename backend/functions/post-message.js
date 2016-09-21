@@ -1,21 +1,18 @@
-const knex = require('knex')({
-    client: 'pg',
-    connection: {
-        database: 'code-roulette'
-    }
-});
+const pg = require('../../server.js');
+const knex = require('knex')(pg);
 
 let postMessages = (data) => {
     let message = data.input;
     //let id = data.questionID;
     let name = data.userName;
     //let timestamp = data.timeStamp;
+    let question_id = data.questionID;
 
     knex.insert({
         message_text: message,
-        //question_id: id,
         username: name,
         //time_stamp: timestamp
+        question_id: question_id
     })
     .returning('question_id')
     .into('messages')
