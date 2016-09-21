@@ -1,4 +1,4 @@
-const pg = require('../../server.js');
+const pg = require('../../database/connect.js');
 const knex = require('knex')(pg);
 
 let getQuestions = (data) => {
