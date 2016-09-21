@@ -36648,10 +36648,6 @@
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _reactDom = __webpack_require__(34);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
-	
 	var _reactRedux = __webpack_require__(172);
 	
 	var _UserName = __webpack_require__(317);
@@ -36843,10 +36839,6 @@
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
-	
-	var _reactDom = __webpack_require__(34);
-	
-	var _reactDom2 = _interopRequireDefault(_reactDom);
 	
 	var _reactRedux = __webpack_require__(172);
 	
