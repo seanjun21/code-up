@@ -1,7 +1,8 @@
 const pg = require('pg');
+const knex = require('knex')(pg);
 pg.defaults.ssl = true;
 pg.connect(process.env.DATABASE_URL?ssl=true, function(err, client, done) {
-  client.query('SELECT * FROM users', function(err, result) {
+  knex.query('SELECT * FROM users', function(err, result) {
     done();
     if(err) return console.error(err);
     console.log(result.rows);
