@@ -36680,7 +36680,7 @@
 	    value: function postQuestion(event) {
 	      var _this2 = this;
 	
-	      event.();
+	      event.preventDefault();
 	      if (!this.props.userID) {
 	        console.log("Please log in to post questions");
 	      } else {
@@ -36701,7 +36701,7 @@
 	  }, {
 	    key: 'filterQuestions',
 	    value: function filterQuestions(event) {
-	      event.();
+	      event.preventDefault();
 	      this.props.dispatch({
 	        type: "server/filterQuestions",
 	        data: this.refs.filterText.value
@@ -36870,7 +36870,7 @@
 	  _createClass(UserName, [{
 	    key: 'nameSubmit',
 	    value: function nameSubmit(event) {
-	      event.();
+	      event.preventDefault();
 	      var userName = this.refs.userName.value;
 	      this.props.dispatch({
 	        type: 'server/addUser',
@@ -36943,7 +36943,7 @@
 	  _createClass(ChatRoom, [{
 	    key: 'sendMessage',
 	    value: function sendMessage(event) {
-	      event.();
+	      event.preventDefault();
 	      this.props.dispatch({
 	        type: "server/postMessage",
 	        data: {

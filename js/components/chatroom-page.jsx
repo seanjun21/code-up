@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class ChatRoom extends React.Component{
 
   sendMessage(event) {
-    event.()
+    event.preventDefault()
     this.props.dispatch({
       type: "server/postMessage",
       data: {
