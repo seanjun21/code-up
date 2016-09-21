@@ -43,6 +43,12 @@ BACKEND:
 	6. Access database:
 			$ psql -d *INSERT_DB_NAME*
 
+	* `createdb chat`
+	* `psql -d chat < backend/database/schema.sql`
+	* `psql -d chat`
+	* `insert into users (user_name) values ('Alex');`
+	* `insert into questions (user_id, question_text, when_asked, is_answered) values (1, 'this is the questions text', '1999-01-08 04:05:06', false);`
+
 
 ## Queries for accessing the SQL database directly.
 
