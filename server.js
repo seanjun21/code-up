@@ -10,20 +10,20 @@ const postQuestion = require('./backend/functions/post-question');
 const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
 
-/* postgres connection */
-const pg = require('pg');
-pg.defaults.ssl = true;
-pg.connect(process.env.DATABASE_URL, function(err, client) {
-  if (err) throw err;
-  console.log('Connected to postgres! Getting schemas...');
-
-  client
-    .query('SELECT table_schema,table_name FROM information_schema.tables;')
-    .on('row', function(row) {
-      console.log(JSON.stringify(row));
-    });
-});
-/*end postgres connection*/
+// /* postgres connection */
+// const pg = require('pg');
+// pg.defaults.ssl = true;
+// pg.connect(process.env.DATABASE_URL, function(err, client) {
+//   if (err) throw err;
+//   console.log('Connected to postgres! Getting schemas...');
+//
+//   client
+//     .query('SELECT table_schema,table_name FROM information_schema.tables;')
+//     .on('row', function(row) {
+//       console.log(JSON.stringify(row));
+//     });
+// });
+// /*end postgres connection*/
 
 const sockets = [];
 const lobby = [];
@@ -68,8 +68,8 @@ let emitNewMessage = (data) => {
        });
     });
 };
-
-let emitFilterQuestions = (data) => {
+// returns to specific unique socket - apply to other emit functions
+let emitFilterQuestions = (socket, data) => {
    socket.emit('action', {
      type: 'questionFilterSuccess',
      data: data
@@ -93,7 +93,7 @@ io.on('connection', (socket) => {
             postQuestion(action.data).then(emitNewMessage);
         }
         if (action.type === 'server/filterQuestions') {
-            filterQuestions(action.data).then(emitFilterQuestions);
+            filterQuestions(action.data).then(emitFilterQuestions.bind(null, socket));
         }
     });
 });
