@@ -15,17 +15,14 @@ const lobby = [];
 
 app.use(express.static('./build'));
 
-// let emitGetQuestions = (socket, data, err) => {
-//     socket.emit('action', {
-//         type: 'getQuestionsSuccess',
-//         data: data
-//     });
-//     if (err) {
-//         console.error(err);
-//     }
-// };
+let emitGetQuestions = (socket, data) => {
+    socket.emit('action', {
+        type: 'getQuestionsSuccess',
+        data: data
+    });
+};
 
-let emitNewUser = (socket, data, err) => {
+let emitNewUser = (socket, data) => {
     lobby.push(data.userName)
     socket.emit('action', {
         type: 'addUserSuccess',
@@ -37,43 +34,31 @@ let emitNewUser = (socket, data, err) => {
             data: {lobby: lobby}
         });
     });
-    if (err) {
-        console.error(err);
-    }
 };
 
-let emitNewQuestion = (data, err) => {
+let emitNewQuestion = (data) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
            type: 'postQuestionSuccess',
            data: data
        });
     });
-    if (err) {
-      console.error(err);
-    }
 };
 
-let emitNewMessage = (data, err) => {
+let emitNewMessage = (data) => {
     sockets.forEach((socket) => {
        socket.emit('action', {
            type: 'postMessageSuccess',
            data: data
        });
     });
-    if (err) {
-      console.error(err);
-    }
 };
 // returns to specific unique socket - apply to other emit functions
-let emitFilterQuestions = (socket, data, err) => {
+let emitFilterQuestions = (socket, data) => {
     socket.emit('action', {
         type: 'questionFilterSuccess',
         data: data
     });
-    if (err) {
-      console.error(err);
-    }
 };
 
 io.on('connection', (socket) => {
@@ -81,28 +66,11 @@ io.on('connection', (socket) => {
     sockets.push(socket);
     socket.on('action', (action) => {
         if (action.type === 'server/getQuestions') {
-            getQuestions(action.data).then(() =>
-                socket.emit('action', { 
-                    type: 'getQuestionsSuccess', 
-                    data: data 
-                })
-            );
+            getQuestions(action.data).then(emitGetQuestions).bind(null, socket);
         }
         if (action.type === 'server/addUser') {
-            addUser(action.data).then(() => {
-                lobby.push(data.userName)
-                socket.emit('action', {
-                    type: 'addUserSuccess',
-                    data: data
-                });
-                sockets.forEach((socket) => {
-                    socket.emit('action', {
-                        type: 'userEnterLobby',
-                        data: {lobby: lobby}
-                    });
-                });
-            });
-        }
+            addUser(action.data).then(emitNewUser).bind(null, socket);
+}
         if (action.type === 'server/postMessage') {
             postMessage(action.data).then(emitNewQuestion);
         }
