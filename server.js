@@ -9,18 +9,21 @@ const addUser = require('./backend/functions/add-user');
 const postQuestion = require('./backend/functions/post-question');
 const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
-const joinRoom = require('./backend/functions/join-room');
+// const joinRoom = require('./backend/functions/join-room');
 
-const sockets = [];
-const lobby = [];
+const sockets = {lobby:[]};
 
 app.use(express.static('./build'));
 
 io.on('connection', (socket) => {
     // TODO: need to account for io.on disconnect
+    //  start with lobby, if not there loop through rooms (1-xx)
+    //  loop through array in each room and for each socket stored in there, check if socket.id = the socket.id stored in array
+
     console.log(`Socket connected: ${socket.id}`);
-    sockets.push(socket);
+    sockets.lobby.push(socket);
     socket.on('action', (action) => {
+
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
                 socket.emit('action', {
@@ -30,39 +33,38 @@ io.on('connection', (socket) => {
             });
         }
         if (action.type === 'server/addUser') {
-            lobby.push(data.userName)
+            // TODO: send back username to be stored in state in 'lobby' array. emit to everyone for update
             addUser(action.data).then((data) => {
-                socket.emit('action', {
-                    type: 'addUserSuccess',
-                    data: data
-                });
-                sockets.forEach((socket) => {
+                sockets.lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'userEnterLobby',
-                        data: {lobby: lobby}
+                        data: data
                     });
                 });
             });
         }
         if (action.type === 'server/postMessage') {
+            let questionID = action.data.questionID
             postMessage(action.data).then((data) => {
-                sockets.forEach((socket) => {
+                sockets[questionID].forEach((socket) => {
                    socket.emit('action', {
-                       type: 'postQuestionSuccess',
+                       type: 'postMessageSuccess',
                        data: data
                    });
                 });
             });
         }
         if (action.type === 'server/postQuestion') {
+            let questionID = action.data.questionID
+            sockets[questionID] = [socket]
+            // TODO: remove socket from lobby
             postQuestion(action.data).then((data) => {
-                sockets.forEach((socket) => {
+                sockets.lobby.forEach((socket) => {
                    socket.emit('action', {
-                       type: 'postMessageSuccess',
+                       type: 'postQuestionSuccess',
                        data: data
                    });
                 });
-            // TODO: Add code here to change data structure adding new key/value pair 'room#': [socket]'
             });
         }
         if (action.type === 'server/filterQuestions') {
@@ -73,13 +75,18 @@ io.on('connection', (socket) => {
                 });
             });
         }
+        // TODO: pass back the username for that room and store room's occupants (add section that shows room's occuments in chatroom component and make sure we send back the user that joined the room to be stored as state also.)
         if (action.type === 'server/joinRoom') {
+            let questionID = action.data.questionID
+            sockets[questionID]push(socket)
+            // TODO: remove socket from lobby
             joinRoom(action.data).then((data) => {
-                socket.emit('action', {
-                    type: 'joinRoomSuccess',
-                    data: data
+                socket[questionID].forEach((socket) => {
+                    socket.emit('action', {
+                      type: 'joinRoomSuccess',
+                      data: data
+                    });
                 });
-            // TODO: Add code here to make change to sockets, removing socket from lobby array and add to array for specific room #
             });
         }
     });
