@@ -58,6 +58,11 @@ io.on('connection', (socket) => {
             let questionID = action.data.questionID
             sockets[questionID] = [socket]
             // TODO: remove socket from lobby
+            //
+            socketIndex = sockets.indexOf(socket)
+            sockets.splice(socketIndex, 1)
+            //
+            //
             postQuestion(action.data).then((data) => {
                 sockets.lobby.forEach((socket) => {
                    socket.emit('action', {
@@ -77,17 +82,22 @@ io.on('connection', (socket) => {
         }
         // TODO: pass back the username for that room and store room's occupants (add section that shows room's occuments in chatroom component and make sure we send back the user that joined the room to be stored as state also.)
         if (action.type === 'server/joinRoom') {
-            let questionID = action.data.questionID
-            sockets[questionID]push(socket)
-            // TODO: remove socket from lobby
-            joinRoom(action.data).then((data) => {
-                socket[questionID].forEach((socket) => {
-                    socket.emit('action', {
-                      type: 'joinRoomSuccess',
-                      data: data
-                    });
-                });
-            });
+          let questionID = action.data.questionID
+          sockets[questionID].push(socket)
+          // TODO: remove socket from lobby
+          //
+          socketIndex = sockets.indexOf(socket)
+          sockets.splice(socketIndex, 1)
+          //
+          //
+          joinRoom(action.data).then((data) => {
+              socket[questionID].forEach((socket) => {
+                  socket.emit('action', {
+                    type: 'joinRoomSuccess',
+                    data: data
+                  });
+              });
+          });
         }
     });
 });
