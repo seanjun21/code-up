@@ -1,12 +1,15 @@
+"Your programming questions answered in real-time with chat and collaborative code editor"
+
 ## TO-DO
-*Getting remote db up/integrate Travis CI (Joe)
-*Update server.js & functions (Ben)
-*1. Add hash map to socket storage for separating sockets by different rooms.
-	exp: ['lobby': [], 'room(questionID)': [] ]; (Alex)
+* Getting remote db up/integrate Travis CI (**Joe**)
+* Update server.js & functions (**Ben**)
+
+1. Add hash map to socket storage for separating sockets by different rooms.
+	exp: ['lobby': [], 'room(questionID)': [] ]; (**Alex**)
 2. Authentication endpoint for post messages/post questions
 3. Separate options on question feed for viewing a question and answering a question
 4. Have feed refresh to show all questions from filtered questions when remove filter
-*5. Need separate function for joining a room to store the room's question details as state; need to add dispatches for get-messages.js and add to reducer/server.js (Sean)
+5. Need separate function for joining a room to store the room's question details as state; need to add dispatches for get-messages.js and add to reducer/server.js (**Sean**)
 6. Make sure questionText and questionID is only emitted to your own reducer on postQuestionSuccess.
 7. On post question success emit only the newly posted question to be appended onto others' questionFeed rather than emitting the entire questionFeed (and interfering with people using filters, etc.)
 8. Add 'users online' section to landing-page and add 'users in room' section to a question room.

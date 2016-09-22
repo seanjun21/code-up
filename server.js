@@ -58,6 +58,11 @@ io.on('connection', (socket) => {
             let questionID = action.data.questionID
             sockets[questionID] = [socket]
             // TODO: remove socket from lobby
+            //
+            socketIndex = sockets.indexOf(socket)
+            sockets.splice(socketIndex, 1)
+            //
+            //
             postQuestion(action.data).then((data) => {
                 sockets.lobby.forEach((socket) => {
                    socket.emit('action', {
