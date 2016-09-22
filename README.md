@@ -1,3 +1,5 @@
+"Your programming questions answered in real-time with chat and collaborative code editor"
+
 ## TO-DO
 * Getting remote db up/integrate Travis CI (Joe)
 * Update server.js & functions (Ben)
