@@ -1,6 +1,6 @@
 ## TO-DO
-*Getting remote db up/integrate Travis CI (Joe)
-*Update server.js & functions (Ben)
+* Getting remote db up/integrate Travis CI (Joe)
+* Update server.js & functions (Ben)
 
 1. Add hash map to socket storage for separating sockets by different rooms.
 	exp: ['lobby': [], 'room(questionID)': [] ]; (Alex)
