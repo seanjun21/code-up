@@ -5,7 +5,7 @@
 * Update server.js & functions (**Ben**)
 
 1. Add hash map to socket storage for separating sockets by different rooms.
-	exp: ['lobby': [], 'room(questionID)': [] ]; (   **Alex**)
+	exp: ['lobby': [], 'room(questionID)': [] ]; (**Alex**)
 2. Authentication endpoint for post messages/post questions
 3. Separate options on question feed for viewing a question and answering a question
 4. Have feed refresh to show all questions from filtered questions when remove filter
