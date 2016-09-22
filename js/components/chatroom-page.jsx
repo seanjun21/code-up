@@ -5,7 +5,7 @@ import {connect} from 'react-redux';
 class ChatRoom extends React.Component{
 
   sendMessage(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.props.dispatch({
       type: "server/postMessage",
       data: {
@@ -30,15 +30,15 @@ class ChatRoom extends React.Component{
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
-    questionID: state.myQuestion.questionID,
-    questionText: state.myQuestion.questionText,
+    questionID: state.currentQuestion.questionID,
+    questionText: state.currentQuestion.questionText,
     userName: state.userName
 
   }
-}
+};
 
-module.exports = connect(mapStateToProps)(ChatRoom)
+module.exports = connect(mapStateToProps)(ChatRoom);
