@@ -20,7 +20,7 @@ function reducer(state={}, action) {
     case 'postQuestionSuccess': {
       return Object.assign({}, state, {
         questionFeed: action.data.questions,
-        myQuestion: {
+        currentQuestion: {
           questionText: action.data.questionText,
           questionID: action.data.questionID
         }
@@ -34,6 +34,15 @@ function reducer(state={}, action) {
     case 'questionFilterSuccess': {
       return Object.assign({}, state, {
         questionFeed: action.data.questions
+      })
+    }
+    case 'joinRoomSuccess': {
+      return Object.assign({}, state, {
+        currentQuestion: {
+          questionText: action.data.questionText,
+          questionID: action.data.questionID,
+          chatMessages: action.data.messages
+        }
       })
     }
     default: {
