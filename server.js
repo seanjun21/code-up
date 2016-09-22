@@ -85,11 +85,16 @@ io.on('connection', (socket) => {
             let questionID = action.data.questionID
             sockets[questionID].push(socket)
             // TODO: remove socket from lobby
+            //
+            socketIndex = sockets.indexOf(socket)
+            sockets.splice(socketIndex, 1)
+            //
+            //
             joinRoom(action.data).then((data) => {
                 socket[questionID].forEach((socket) => {
                     socket.emit('action', {
-                      type: 'joinRoomSuccess',
-                      data: data
+                        type: 'joinRoomSuccess',
+                        data: data
                     });
                 });
             });
