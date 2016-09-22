@@ -78,7 +78,7 @@ io.on('connection', (socket) => {
         // TODO: pass back the username for that room and store room's occupants (add section that shows room's occuments in chatroom component and make sure we send back the user that joined the room to be stored as state also.)
         if (action.type === 'server/joinRoom') {
             let questionID = action.data.questionID
-            sockets[questionID]push(socket)
+            sockets[questionID].push(socket)
             // TODO: remove socket from lobby
             joinRoom(action.data).then((data) => {
                 socket[questionID].forEach((socket) => {

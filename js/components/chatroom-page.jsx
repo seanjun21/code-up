@@ -4,6 +4,11 @@ import {connect} from 'react-redux';
 
 class ChatRoom extends React.Component{
 
+  constructor() {
+    super();
+    this.sendMessage = this.sendMessage.bind(this);
+  }
+
   sendMessage(event) {
     event.preventDefault();
     this.props.dispatch({

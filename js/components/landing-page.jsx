@@ -4,6 +4,13 @@ import UserName from './UserName'
 
 class LandingPage extends React.Component{
 
+  constructor() {
+    super();
+    this.postQuestion = this.postQuestion.bind(this);
+    this.filterQuestions = this.filterQuestions.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
+  }
+
   componentDidMount() {
     this.props.dispatch({
       type: 'server/getQuestions'
@@ -39,18 +46,22 @@ class LandingPage extends React.Component{
     })
   }
 
-  joinRoom(id, callback) {
-    const promise = new Promise((response) => {
-      response(this.props.dispatch({
-        type: "server/joinRoom",
-        data: {
-          questionID: id
-        }
-      }))
-    });
-    promise.then(() => {
-      window.location.href = '/#/room/' + id
-    })
+  joinRoom(id, event, callback) {
+    event.preventDefault();
+    let props = this.props
+    return function callback() {
+      const promise = new Promise((response) => {
+        response(this.props.dispatch({
+          type: "server/joinRoom",
+          data: {
+            questionID: id
+          }
+        }))
+      });
+      promise.then(() => {
+        window.location.href = '/#/room/' + id
+      })
+    }
   }
 
   render() {
@@ -89,7 +100,7 @@ class LandingPage extends React.Component{
           {feed}
           </ul>
           <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
-          <button type="button" className="filter-button">submit filter</button>
+          <button type="button" className="filter-button" onClick={this.filterQuestions}>submit filter</button>
         </div>
         <div className="post-question">
           <h1>Submit a question:</h1>
