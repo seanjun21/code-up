@@ -11,7 +11,7 @@ class LandingPage extends React.Component{
   }
 
   postQuestion(event) {
-    event.preventDefault()
+    event.preventDefault();
     if (!this.props.userID){
       console.log("Please log in to post questions")
     }
@@ -24,7 +24,7 @@ class LandingPage extends React.Component{
             input: this.refs.questionText.value
           }
         }))
-      })
+      });
       promise.then((data) => {
         window.location.href = '/#/room/' + data.questionID
       })
@@ -32,7 +32,7 @@ class LandingPage extends React.Component{
   }
 
   filterQuestions(event) {
-    event.preventDefault()
+    event.preventDefault();
     this.props.dispatch({
       type: "server/filterQuestions",
       data: this.refs.filterText.value
@@ -40,9 +40,17 @@ class LandingPage extends React.Component{
   }
 
   joinRoom(id, callback) {
-    return function callback() {
-       window.location.href = '/#/room/' + id
-    }
+    const promise = new Promise((response) => {
+      response(this.props.dispatch({
+        type: "server/joinRoom",
+        data: {
+          questionID: id
+        }
+      }))
+    });
+    promise.then(() => {
+      window.location.href = '/#/room/' + id
+    })
   }
 
   render() {
@@ -58,9 +66,9 @@ class LandingPage extends React.Component{
           <button type="button" className="join-room" onClick={this.joinRoom(question.id)}>Join room</button>
         </li>
       )
-    })
+    });
 
-    let userName = "Please log in or register"
+    let userName = "Please log in or register";
 
     if (this.props.userName) {
       userName = this.props.userName
@@ -80,18 +88,18 @@ class LandingPage extends React.Component{
           <ul>
           {feed}
           </ul>
-          <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)"></input>
+          <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
           <button type="button" className="filter-button">submit filter</button>
         </div>
         <div className="post-question">
           <h1>Submit a question:</h1>
-          <input className="post-question-input" ref="questionText" required></input>
+          <input className="post-question-input" ref="questionText" required />
           <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
         </div>
       </div>
     );
   }
-};
+}
 
 const mapStateToProps = (state) => {
   return {
@@ -99,5 +107,6 @@ const mapStateToProps = (state) => {
     userID: state.userID,
     userName: state.userName
   }
-}
-module.exports = connect(mapStateToProps)(LandingPage)
+};
+
+module.exports = connect(mapStateToProps)(LandingPage);
