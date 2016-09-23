@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
             // TODO: remove socket from lobby
 
             socketIndex = sockets["lobby"].indexOf(socket)
-            sockets["lobby"]splice(socketIndex, 1)
+            sockets["lobby"].splice(socketIndex, 1)
 
             postQuestion(action.data).then((data) => {
                 sockets.lobby.forEach((socket) => {
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
           // TODO: remove socket from lobby
 
           socketIndex = sockets["lobby"].indexOf(socket)
-          sockets["lobby"]splice(socketIndex, 1)
+          sockets["lobby"].splice(socketIndex, 1)
 
           joinRoom(action.data).then((data) => {
               socket[questionID].forEach((socket) => {
