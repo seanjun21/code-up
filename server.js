@@ -60,11 +60,10 @@ io.on('connection', (socket) => {
             let questionID = action.data.questionID
             sockets[questionID] = [socket]
             // TODO: remove socket from lobby
-            //
+
             socketIndex = sockets["lobby"].indexOf(socket)
             sockets.["lobby"].splice(socketIndex, 1)
-            //
-            //
+
             postQuestion(action.data).then((data) => {
                 sockets.lobby.forEach((socket) => {
                    socket.emit('action', {
@@ -87,11 +86,10 @@ io.on('connection', (socket) => {
           let questionID = action.data.questionID
           sockets[questionID].push(socket)
           // TODO: remove socket from lobby
-          //
+
           socketIndex = sockets["lobby"].indexOf(socket)
           sockets.["lobby"].splice(socketIndex, 1)
-          //
-          //
+
           joinRoom(action.data).then((data) => {
               socket[questionID].forEach((socket) => {
                   socket.emit('action', {
@@ -103,7 +101,6 @@ io.on('connection', (socket) => {
         }
     });
 
-// sockets = {lobby:[], questionID: []};
 // when a user leaves or closes browser
   socket.on('disconnect', function(socket){
 
@@ -113,17 +110,17 @@ io.on('connection', (socket) => {
     console.log(keys, "<--keys");
     var socketToRemove = socket;
 
-    var continueLoop = true;
+    var doLoop = true;
     var counter = 0;
-    while(continueLoop){
+    while(doLoop){
       var indexOfItem = sockets[keys[counter]].indexOf(socketToRemove);
       if(indexOfItem >= 0){
       console.log(counter, "counter");
       console.log(indexOfItem, "indexOfItem")
       sockets[keys[counter]].splice(indexOfItem, 1);
-      continueLoop = false;
+      doLoop = false;
   }
-  if(counter > keys.length) continueLoop = false;
+  if(counter > keys.length) doLoop = false;
   counter++;
 }
 console.log(sockets, "<--new sockets");
