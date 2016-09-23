@@ -1,5 +1,7 @@
+
 const express = require('express');
 const app = express();
+
 
 const server = require('http').Server(app);
 const io = require('socket.io')(server);
@@ -11,7 +13,9 @@ const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
 // const joinRoom = require('./backend/functions/join-room');
 
-const sockets = {lobby:[]};
+let spaces = {
+                lobby: []
+              };
 
 app.use(express.static('./build'));
 
@@ -19,9 +23,13 @@ io.on('connection', (socket) => {
     // TODO: need to account for io.on disconnect
     //  start with lobby, if not there loop through rooms (1-xx)
     //  loop through array in each room and for each socket stored in there, check if socket.id = the socket.id stored in array
-
+    console.log("socket------->")
+    console.log(socket)
     console.log(`Socket connected: ${socket.id}`);
-    sockets.lobby.push(socket);
+
+
+
+    spaces.lobby.push(socket);
     socket.on('action', (action) => {
 
         if (action.type === 'server/getQuestions') {
@@ -35,7 +43,7 @@ io.on('connection', (socket) => {
         if (action.type === 'server/addUser') {
             // TODO: send back username to be stored in state in 'lobby' array. emit to everyone for update
             addUser(action.data).then((data) => {
-                sockets.lobby.forEach((socket) => {
+                spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'userEnterLobby',
                         data: data
@@ -46,7 +54,7 @@ io.on('connection', (socket) => {
         if (action.type === 'server/postMessage') {
             let questionID = action.data.questionID
             postMessage(action.data).then((data) => {
-                sockets[questionID].forEach((socket) => {
+                spaces[questionID].forEach((socket) => {
                    socket.emit('action', {
                        type: 'postMessageSuccess',
                        data: data
@@ -56,15 +64,20 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/postQuestion') {
             let questionID = action.data.questionID
-            sockets[questionID] = [socket]
-            // TODO: remove socket from lobby
-            //
-            socketIndex = sockets.indexOf(socket)
-            sockets.splice(socketIndex, 1)
-            //
-            //
+            spaces[questionID] = [socket]
+
+            lobby = spaces[lobby]
+            for (let j = 0; j < lobby.length; j += 1) {
+              let roomSock = lobby[j];
+              console.log('Room Socket ----> ', roomSock.id);
+              console.log('Socket to delete ----> ', socket.id);
+              if (lobbySock.id === socket.id) {
+                lobby.splice(j, 1);
+              }
+            }
+
             postQuestion(action.data).then((data) => {
-                sockets.lobby.forEach((socket) => {
+                spaces.lobby.forEach((socket) => {
                    socket.emit('action', {
                        type: 'postQuestionSuccess',
                        data: data
@@ -82,25 +95,53 @@ io.on('connection', (socket) => {
         }
         // TODO: pass back the username for that room and store room's occupants (add section that shows room's occuments in chatroom component and make sure we send back the user that joined the room to be stored as state also.)
         if (action.type === 'server/joinRoom') {
-            let questionID = action.data.questionID
-            sockets[questionID].push(socket)
-            // TODO: remove socket from lobby
-            //
-            socketIndex = sockets.indexOf(socket)
-            sockets.splice(socketIndex, 1)
-            //
-            //
-            joinRoom(action.data).then((data) => {
-                socket[questionID].forEach((socket) => {
-                    socket.emit('action', {
-                        type: 'joinRoomSuccess',
-                        data: data
-                    });
-                });
-            });
+          let questionID = action.data.questionID
+          spaces[questionID].push(socket)
+
+          lobby = spaces[lobby]
+          for (let j = 0; j < lobby.length; j += 1) {
+            let roomSock = lobby[j];
+            console.log('Room Socket ----> ', roomSock.id);
+            console.log('Socket to delete ----> ', socket.id);
+            if (lobbySock.id === socket.id) {
+              lobby.splice(j, 1);
+            }
+          }
+
+          joinRoom(action.data).then((data) => {
+              socket[questionID].forEach((socket) => {
+                  socket.emit('action', {
+                    type: 'joinRoomSuccess',
+                    data: data
+                  });
+              });
+          });
         }
     });
-});
+//when a user leaves or closes browser
+socket.on('disconnect', () => {
+  var rooms = Object.keys(spaces);
+  var socketToRemove = socket.id;
+
+  for (let i = 0; i < rooms.length; i += 1) {
+    let room = spaces[rooms[i]];
+    console.log(`room ${rooms[i]} ----> `, room )
+    for (let j = 0; j < room.length; j += 1) {
+      let roomSock = room[j];
+      console.log('Room Socket ----> ', roomSock.id);
+      console.log('Socket to delete ----> ', socket.id);
+      if (roomSock.id === socket.id) {
+        room.splice(j, 1);
+      }
+    }
+    console.log(`${rooms[i]} ----> `, room )
+  }
+
+  // console.log(spaces, "<--new spaces");
+  // console.log('user disconnected');
+  //
+  });
+})
 
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
@@ -118,4 +159,4 @@ if (require.main === module) {
             throw new Error(err);
         }
     });
-}
+};
