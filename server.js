@@ -62,7 +62,7 @@ io.on('connection', (socket) => {
             // TODO: remove socket from lobby
 
             socketIndex = sockets["lobby"].indexOf(socket)
-            sockets.["lobby"].splice(socketIndex, 1)
+            sockets["lobby"].splice(socketIndex, 1)
 
             postQuestion(action.data).then((data) => {
                 sockets.lobby.forEach((socket) => {
@@ -88,7 +88,7 @@ io.on('connection', (socket) => {
           // TODO: remove socket from lobby
 
           socketIndex = sockets["lobby"].indexOf(socket)
-          sockets.["lobby"].splice(socketIndex, 1)
+          sockets["lobby"].splice(socketIndex, 1)
 
           joinRoom(action.data).then((data) => {
               socket[questionID].forEach((socket) => {
@@ -127,6 +127,7 @@ console.log(sockets, "<--new sockets");
     console.log('user disconnected');
 
 });
+})
 
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
@@ -144,4 +145,4 @@ if (require.main === module) {
             throw new Error(err);
         }
     });
-}
+};
