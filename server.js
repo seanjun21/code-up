@@ -21,6 +21,8 @@ io.on('connection', (socket) => {
     //  loop through array in each room and for each socket stored in there, check if socket.id = the socket.id stored in array
 
     console.log(`Socket connected: ${socket.id}`);
+
+
     sockets.lobby.push(socket);
     socket.on('action', (action) => {
 
@@ -59,8 +61,8 @@ io.on('connection', (socket) => {
             sockets[questionID] = [socket]
             // TODO: remove socket from lobby
             //
-            socketIndex = sockets.indexOf(socket)
-            sockets.splice(socketIndex, 1)
+            socketIndex = sockets["lobby"].indexOf(socket)
+            sockets.["lobby"].splice(socketIndex, 1)
             //
             //
             postQuestion(action.data).then((data) => {
@@ -86,8 +88,8 @@ io.on('connection', (socket) => {
           sockets[questionID].push(socket)
           // TODO: remove socket from lobby
           //
-          socketIndex = sockets.indexOf(socket)
-          sockets.splice(socketIndex, 1)
+          socketIndex = sockets["lobby"].indexOf(socket)
+          sockets.["lobby"].splice(socketIndex, 1)
           //
           //
           joinRoom(action.data).then((data) => {
@@ -100,6 +102,33 @@ io.on('connection', (socket) => {
           });
         }
     });
+
+// sockets = {lobby:[], questionID: []};
+// when a user leaves or closes browser
+  socket.on('disconnect', function(socket){
+
+    console.log(sockets, "<--sockets");
+
+    var keys = Object.keys(sockets);
+    console.log(keys, "<--keys");
+    var socketToRemove = socket;
+
+    var continueLoop = true;
+    var counter = 0;
+    while(continueLoop){
+      var indexOfItem = sockets[keys[counter]].indexOf(socketToRemove);
+      if(indexOfItem >= 0){
+      console.log(counter, "counter");
+      console.log(indexOfItem, "indexOfItem")
+      sockets[keys[counter]].splice(indexOfItem, 1);
+      continueLoop = false;
+  }
+  if(counter > keys.length) continueLoop = false;
+  counter++;
+}
+console.log(sockets, "<--new sockets");
+    console.log('user disconnected');
+
 });
 
 function runServer(callback) {
