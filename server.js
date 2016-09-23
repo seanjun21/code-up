@@ -127,6 +127,7 @@ console.log(sockets, "<--new sockets");
     console.log('user disconnected');
 
 });
+})
 
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
@@ -144,4 +145,4 @@ if (require.main === module) {
             throw new Error(err);
         }
     });
-}
+};
