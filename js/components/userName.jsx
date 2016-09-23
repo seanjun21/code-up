@@ -3,9 +3,14 @@ import {connect} from 'react-redux';
 
 class UserName extends React.Component{
 
+  constructor() {
+    super();
+    this.nameSubmit = this.nameSubmit.bind(this);
+  }
+
   nameSubmit (event) {
     event.preventDefault();
-    let userName = this.refs.userName.value;
+    let userName = this.name.value;
     this.props.dispatch({
       type: 'server/addUser',
       data: { input: userName }
@@ -18,7 +23,7 @@ class UserName extends React.Component{
     return (
       <div className="user-input">
       <h3>{this.props.userName}</h3>
-        <input className='user-name' type="text" ref="userName" placeholder={this.props.userName} id="userName" required />
+        <input className='user-name' type="text" ref={(name) => { this.name = name; }} placeholder={this.props.userName} id="userName" required />
         <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Let's go</button>
       </div>
 

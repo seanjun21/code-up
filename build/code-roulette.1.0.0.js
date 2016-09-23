@@ -36460,14 +36460,17 @@
 	  function UserName() {
 	    _classCallCheck(this, UserName);
 	
-	    return _possibleConstructorReturn(this, (UserName.__proto__ || Object.getPrototypeOf(UserName)).apply(this, arguments));
+	    var _this = _possibleConstructorReturn(this, (UserName.__proto__ || Object.getPrototypeOf(UserName)).call(this));
+	
+	    _this.nameSubmit = _this.nameSubmit.bind(_this);
+	    return _this;
 	  }
 	
 	  _createClass(UserName, [{
 	    key: 'nameSubmit',
 	    value: function nameSubmit(event) {
 	      event.preventDefault();
-	      var userName = this.refs.userName.value;
+	      var userName = this.name.value;
 	      this.props.dispatch({
 	        type: 'server/addUser',
 	        data: { input: userName }
@@ -36477,6 +36480,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
+	      var _this2 = this;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -36486,7 +36490,9 @@
 	          null,
 	          this.props.userName
 	        ),
-	        _react2.default.createElement('input', { className: 'user-name', type: 'text', ref: 'userName', placeholder: this.props.userName, id: 'userName', required: true }),
+	        _react2.default.createElement('input', { className: 'user-name', type: 'text', ref: function ref(name) {
+	            _this2.name = name;
+	          }, placeholder: this.props.userName, id: 'userName', required: true }),
 	        _react2.default.createElement(
 	          'button',
 	          { type: 'button', className: 'name-submit', id: 'name-submit', onClick: this.nameSubmit },
