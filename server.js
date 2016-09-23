@@ -20,14 +20,10 @@ let spaces = {
 app.use(express.static('./build'));
 
 io.on('connection', (socket) => {
-    // TODO: need to account for io.on disconnect
-    //  start with lobby, if not there loop through rooms (1-xx)
-    //  loop through array in each room and for each socket stored in there, check if socket.id = the socket.id stored in array
+
     console.log("socket------->")
     console.log(socket)
     console.log(`Socket connected: ${socket.id}`);
-
-
 
     spaces.lobby.push(socket);
     socket.on('action', (action) => {
@@ -137,9 +133,6 @@ socket.on('disconnect', () => {
     console.log(`${rooms[i]} ----> `, room )
   }
 
-  // console.log(spaces, "<--new spaces");
-  // console.log('user disconnected');
-  //
   });
 })
 
