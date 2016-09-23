@@ -46,8 +46,7 @@ class LandingPage extends React.Component{
     })
   }
 
-  joinRoom(id, event, callback) {
-    event.preventDefault();
+  joinRoom(id, callback) {
     let props = this.props
     return function callback() {
       const promise = new Promise((response) => {
