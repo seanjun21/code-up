@@ -1,12 +1,4 @@
-const pg = require('../database/connect.js');
-const knex = require('knex')(pg);
-
-// const knex = require('knex')({
-//     client: 'pg',
-//     connection: {
-//         database: 'chat'
-//     },
-// });
+const knex = require('../database/connect.js');
 
 let postQuestion = (data) => {
     let questionText = data.input;
