@@ -22,7 +22,7 @@ create table if not exists messages (
 
 create table if not exists tags (
     id serial primary key,
-    tag text not null
+    tag text not null unique
 );
 
 create table if not exists questions_tags (

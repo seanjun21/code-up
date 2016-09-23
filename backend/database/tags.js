@@ -1,0 +1,3 @@
+let tagsArr = ['PHP', 'JavaScript', 'Python', 'Node.js', 'Swift', 'HTML', 'CSS', 'jQuery' 'Bootstrap', 'Foundation', 'Skeleton', 'Symfony', 'Zend', 'Laravel', 'Slim', 'Codeigniter', 'CakePHP', 'Express', 'Hapi', 'Sails.js', 'Total.js', 'Angular.js', 'Vue.js', 'Polymer', 'React.js', 'Ember.js', 'Dojo', 'Ruby', 'Rails', 'Sinatra', 'Java', 'Play', 'Spring', 'Spark', 'Django', 'Flask', 'SQL', 'noSQL', 'RESTful APIs', 'Git', 'Github', 'Mocha', 'Chai',]
+
+module.exports = tagsArr
