@@ -1,12 +1,4 @@
-const pg = require('../database/connect.js');
-const knex = require('knex')(pg);
-
-// const knex = require('knex')({
-//     client: 'pg',
-//     connection: {
-//         database: 'chat'
-//     },
-// });
+const knex = require('../database/connect.js');
 
 let getMessages = (data) => {
     let questionID = data.questionID;
