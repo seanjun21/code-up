@@ -62,13 +62,13 @@ Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 ## Authors
 
-* **Ben Young** - *Project Manager* - [GitHub Profile](https://github.com/URL)
+* [Ben Young](https://github.com/URL) - *Project Manager*
 
-* **Alex Bang** - *Front-End Designer* - [GitHub Profile](https://github.com/URL)
+* [Alex Bang](https://github.com/URL) - *Front-End Designer* 
 
-* **Sean Jun** - *Co-Product Manager + CI/Testing* - [GitHub Profile](https://github.com/URL)
+* [Sean Jun](https://github.com/URL) - *Co-Product Manager + CI/Testing*
 
-* **Joe Seago** - *Co-Product Manager + DevOps* - [GitHub Profile](https://github.com/URL)
+* [Joe Seago](https://github.com/URL) - *Co-Product Manager + DevOps*
 
 Also see the list of [contributors](https://github.com/seanjun21/code-roulette/contributors) for their specific commits to this project.
 
