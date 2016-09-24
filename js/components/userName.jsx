@@ -23,7 +23,7 @@ class UserName extends React.Component{
     return (
       <div className="user-input">
       <h3>{this.props.userName}</h3>
-        <input className='user-name' type="text" ref={(name) => { this.name = name; }} placeholder={this.props.userName} id="userName" required />
+        <input className='user-name' type="text" ref={(name) => { this.name = name; }} placeholder="Log in or register" id="userName" required />
         <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Let's go</button>
       </div>
 

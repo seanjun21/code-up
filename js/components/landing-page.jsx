@@ -78,7 +78,7 @@ class LandingPage extends React.Component{
       )
     });
 
-    let userName = "Please log in or register";
+    let userName = "Visitor";
 
     if (this.props.userName) {
       userName = this.props.userName
@@ -86,25 +86,28 @@ class LandingPage extends React.Component{
 
     return (
       <div className="container">
-        <div className="appName">
-          <h1>Code Roulette</h1>
-          <h2>Log in</h2>
+        <div className="navigation">
+          <h1 id="app-name">Code Roulette</h1>
+          <h4 id="beta">beta</h4>
+          <div className="userName">
+            <UserName userName={userName} />
+          </div>
         </div>
-        <div>
-          <UserName userName={userName}/>
-        </div>
-        <div className="questionFeed">
-          <p>Log in to submit or answer questions</p>
-          <ul>
-          {feed}
-          </ul>
-          <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
-          <button type="button" className="filter-button" onClick={this.filterQuestions}>submit filter</button>
-        </div>
-        <div className="post-question">
-          <h1>Submit a question:</h1>
-          <input className="post-question-input" ref="questionText" required />
-          <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
+
+        <div className="body-container">
+          <div className="question-feed">
+            <p>Log in to submit or answer questions</p>
+            <ul>
+            {feed}
+            </ul>
+            <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
+            <button type="button" className="filter-button" onClick={this.filterQuestions}>submit filter</button>
+          </div>
+          <div className="post-question">
+            <h1>Submit a question:</h1>
+            <input className="post-question-input" ref="questionText" required />
+            <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
+          </div>
         </div>
       </div>
     );
