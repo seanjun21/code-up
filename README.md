@@ -66,9 +66,9 @@ Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 * **Alex Bang** - *Front-End Designer* - [GitHub Profile](https://github.com/URL)
 
-* **Sean Jun** - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
+* **Sean Jun** - *Co-Product Manager + CI/Testing* - [GitHub Profile](https://github.com/URL)
 
-* **Joe Seago** - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
+* **Joe Seago** - *Co-Product Manager + DevOps* - [GitHub Profile](https://github.com/URL)
 
 See also the list of [contributors](https://github.com/seanjun21/code-roulette/contributors) for their specific commits in this project.
 
