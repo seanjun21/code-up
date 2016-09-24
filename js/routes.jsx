@@ -6,6 +6,7 @@ import ChatroomPage from './components/chatroom-page';
 let App = (props) => {
   return (
     <div className='app'>
+      <h1>NavBar here</h1>
       <div>
         {props.children}
       </div>

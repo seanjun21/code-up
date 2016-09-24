@@ -1,0 +1,38 @@
+.navigation {
+  margin: 1em -3em;
+  background-color: #008ae6
+;
+  color: #fff;
+  padding: 2em;
+  display: inline-block;
+  width: 100%;
+}
+.navigation h1 {
+  display: inline-block;
+  letter-spacing: 0.2em;
+}
+.navigation h4 {
+  display: inline-block;
+  margin-left: 0.4em;
+  color: #ff8000;
+  letter-spacing: 0.2em;
+}
+#app-name {
+  color: #002e4d;
+  font-size: 3em;
+  margin-left: 1em;
+}
+.userName {
+  margin: 2em;
+  color: #fff;
+  float: right;
+  margin-top: 1.9em;
+}
+.user-input h3 {
+  display: inline-block;
+  margin-right: 1em;
+}
+.user-input input {
+  display: inline-block;
+}
+/*# sourceMappingURL=code-roulette.1.0.0.css.map */
