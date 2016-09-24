@@ -94,18 +94,20 @@ class LandingPage extends React.Component{
           </div>
         </div>
 
-        <div className="questionFeed">
-          <p>Log in to submit or answer questions</p>
-          <ul>
-          {feed}
-          </ul>
-          <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
-          <button type="button" className="filter-button" onClick={this.filterQuestions}>submit filter</button>
-        </div>
-        <div className="post-question">
-          <h1>Submit a question:</h1>
-          <input className="post-question-input" ref="questionText" required />
-          <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
+        <div className="body-container">
+          <div className="question-feed">
+            <p>Log in to submit or answer questions</p>
+            <ul>
+            {feed}
+            </ul>
+            <input className="filter" ref="filterText" type="text" placeholder="filter questions by topic (React, JavaScript, CSS, etc.)" />
+            <button type="button" className="filter-button" onClick={this.filterQuestions}>submit filter</button>
+          </div>
+          <div className="post-question">
+            <h1>Submit a question:</h1>
+            <input className="post-question-input" ref="questionText" required />
+            <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
+          </div>
         </div>
       </div>
     );

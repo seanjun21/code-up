@@ -36813,37 +36813,41 @@
 	        ),
 	        _react2.default.createElement(
 	          'div',
-	          { className: 'questionFeed' },
+	          { className: 'body-container' },
 	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Log in to submit or answer questions'
+	            'div',
+	            { className: 'question-feed' },
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Log in to submit or answer questions'
+	            ),
+	            _react2.default.createElement(
+	              'ul',
+	              null,
+	              feed
+	            ),
+	            _react2.default.createElement('input', { className: 'filter', ref: 'filterText', type: 'text', placeholder: 'filter questions by topic (React, JavaScript, CSS, etc.)' }),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'filter-button', onClick: this.filterQuestions },
+	              'submit filter'
+	            )
 	          ),
 	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            feed
-	          ),
-	          _react2.default.createElement('input', { className: 'filter', ref: 'filterText', type: 'text', placeholder: 'filter questions by topic (React, JavaScript, CSS, etc.)' }),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'filter-button', onClick: this.filterQuestions },
-	            'submit filter'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'post-question' },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Submit a question:'
-	          ),
-	          _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', required: true }),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'question-button', onClick: this.postQuestion },
-	            'Submit'
+	            'div',
+	            { className: 'post-question' },
+	            _react2.default.createElement(
+	              'h1',
+	              null,
+	              'Submit a question:'
+	            ),
+	            _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', required: true }),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', className: 'question-button', onClick: this.postQuestion },
+	              'Submit'
+	            )
 	          )
 	        )
 	      );
