@@ -64,7 +64,7 @@ Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 * **Ben Young** - *Project Manager* - [GitHub Profile](https://github.com/URL)
 
-* **Alex Bang** - *Designer* - [GitHub Profile](https://github.com/URL)
+* **Alex Bang** - *Front-End Designer* - [GitHub Profile](https://github.com/URL)
 
 * **Sean Jun** - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
 
