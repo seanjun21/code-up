@@ -66,7 +66,7 @@ Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 * **Alex Bang** - *Designer* - [GitHub Profile](https://github.com/URL)
 
-* **Sean Jun* - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
+* **Sean Jun** - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
 
 * **Joe Seago** - *Co-Product Manager* - [GitHub Profile](https://github.com/URL)
 
