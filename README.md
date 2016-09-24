@@ -1,5 +1,5 @@
 ## Code Roulette
-Your programming questions answered in real-time by self-identified language or framework experts with 1-on-1 chat rooms that are seamlessly integrated with a reactive collaborative code editor.
+Your programming questions answered in real-time by self-identified language or framework experts in 1-on-1 chat rooms that are seamlessly integrated with a reactive collaborative code editor.
 
 To initilize the app, create a user account and log in/authenticate with your Google credentials. Ask your question which is tagged by topic then see your question appear in a real-time lobby queue. An expert in your tagged topic then picks up your question and invites you into a 1-on-1 chat room to discuss and pair program solutions to your programming dilemma. 
 
