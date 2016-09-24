@@ -9,6 +9,10 @@ Backend built with Node and Socket.io and frontend built with React and Redux an
 
 Coming Soon
 
+## Live Deployment
+
+Live demo can be seen at: https://codehelpchat.herokuapp.com
+
 ## Local Setup
 
 Steps below for setting up Code Roulette locally.
@@ -55,10 +59,6 @@ Steps below for setting up Code Roulette locally.
 			$ update *INSERT_TABLE* set *INSERT_COLUMN_1*='*INSERT_VALUE_1*' where *INSERT_VALUE_2*='*INSERT_COLUMN_2*';
 		-DELETE:
 			$ delete from *INSERT_TABLE* where *INSERT_COLUMN_1*='*INSERT_VALUE_1*';
-
-## Live Deployment
-
-Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 ## Authors
 
