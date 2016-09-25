@@ -48,4 +48,41 @@
   border-radius: 6px;
   padding: 0.3em 1em;
 }
+.questionFeed {
+  display: inline-block;
+  margin: 3em;
+  padding: 2em;
+  border-style: solid;
+  border-color: black;
+}
+.container .post-question {
+  display: inline-block;
+  margin-top: 5em;
+  margin-right: 5em;
+  padding: 2em;
+  float: right;
+  border-style: solid;
+  border-color: black;
+}
+.join-room {
+  margin: auto;
+  color: #fff;
+  background-color: #ff8000;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+}
+.filter-button {
+  margin: auto;
+  color: #fff;
+  background-color: #ff8000;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+}
+.question-button {
+  margin: 0em 12em 0em 0.5em;
+  color: #fff;
+  background-color: #ff8000;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+}
 /*# sourceMappingURL=code-roulette.1.0.0.css.map */

@@ -30973,10 +30973,10 @@
 	  return _react2.default.createElement(
 	    'div',
 	    { className: 'app' },
+	    _react2.default.createElement(_navBar2.default, null),
 	    _react2.default.createElement(
 	      'div',
 	      null,
-	      _react2.default.createElement(_navBar2.default, null),
 	      props.children
 	    )
 	  );
