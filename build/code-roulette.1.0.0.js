@@ -30975,26 +30975,8 @@
 	    { className: 'app' },
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'container' },
-	      _react2.default.createElement(
-	        'div',
-	        { className: 'navigation' },
-	        _react2.default.createElement(
-	          'h1',
-	          { id: 'app-name' },
-	          'Code Roulette'
-	        ),
-	        _react2.default.createElement(
-	          'h4',
-	          { id: 'beta' },
-	          'beta'
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'userName' },
-	          _react2.default.createElement(UserName, { userName: userName })
-	        )
-	      ),
+	      null,
+	      _react2.default.createElement(_navBar2.default, null),
 	      props.children
 	    )
 	  );
@@ -37070,9 +37052,11 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function NavBar() {
+	  var _this = this;
+	
 	  return _react2.default.createElement(
 	    'div',
-	    { 'class': 'navigation' },
+	    { className: 'navigation' },
 	    _react2.default.createElement(
 	      'h1',
 	      { id: 'app-name' },
@@ -37085,21 +37069,19 @@
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      null,
+	      { className: 'user-input' },
 	      _react2.default.createElement(
-	        'div',
-	        { 'class': 'user-input' },
-	        _react2.default.createElement(
-	          'h3',
-	          { 'class': 'userName' },
-	          'Visitor'
-	        ),
-	        _react2.default.createElement('input', { 'class': 'user-name', type: 'text', id: 'userName', required: true }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', 'class': 'name-submit-bttn', id: 'name-submit' },
-	          'Let\'s go'
-	        )
+	        'h3',
+	        { className: 'userName' },
+	        this.props.userName
+	      ),
+	      _react2.default.createElement('input', { className: 'nameInput', type: 'text', ref: function ref(name) {
+	          _this.name = name;
+	        }, placeholder: this.props.userName, id: 'userName', required: true }),
+	      _react2.default.createElement(
+	        'button',
+	        { type: 'button', className: 'name-submit-bttn', id: 'name-submit-bttn', onClick: this.nameSubmit },
+	        'Let\'s go'
 	      )
 	    )
 	  );

@@ -7,15 +7,8 @@ import NavBar from './components/navBar';
 let App = (props) => {
   return (
     <div className='app'>
-      {/* <div> */}
-        <div className="container">
-          <div className="navigation">
-            <h1 id="app-name">Code Roulette</h1>
-            <h4 id="beta">beta</h4>
-              <div className="userName">
-              <UserName userName={userName} />
-              </div>
-          </div>
+      <NavBar />
+      <div>
         {props.children}
       </div>
     </div>
