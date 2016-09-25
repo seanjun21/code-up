@@ -1,5 +1,5 @@
 ## Code Roulette
-Your programming questions answered in real-time by self-identified language or framework experts with 1-on-1 chat rooms that are seamlessly integrated with a reactive collaborative code editor.
+Your programming questions answered in real-time by self-identified language or framework experts in 1-on-1 chat rooms that are seamlessly integrated with a reactive collaborative code editor.
 
 To initilize the app, create a user account and log in/authenticate with your Google credentials. Ask your question which is tagged by topic then see your question appear in a real-time lobby queue. An expert in your tagged topic then picks up your question and invites you into a 1-on-1 chat room to discuss and pair program solutions to your programming dilemma. 
 
@@ -8,6 +8,10 @@ Backend built with Node and Socket.io and frontend built with React and Redux an
 ## Screenshots
 
 Coming Soon
+
+## Live Deployment
+
+Live demo can be seen at: https://codehelpchat.herokuapp.com
 
 ## Local Setup
 
@@ -56,19 +60,15 @@ Steps below for setting up Code Roulette locally.
 		-DELETE:
 			$ delete from *INSERT_TABLE* where *INSERT_COLUMN_1*='*INSERT_VALUE_1*';
 
-## Live Deployment
-
-Live demo can be seen at: https://codehelpchat.herokuapp.com
-
 ## Authors
 
-* **Ben Young** - *Project Manager* - [GitHub Profile](https://github.com/URL)
+* [Ben Young](https://github.com/URL) - *Project Manager*
 
-* **Alex Bang** - *Front-End Designer* - [GitHub Profile](https://github.com/URL)
+* [Alex Bang](https://github.com/URL) - *Front-End Designer* 
 
-* **Sean Jun** - *Co-Product Manager + CI/Testing* - [GitHub Profile](https://github.com/URL)
+* [Sean Jun](https://github.com/URL) - *Co-Product Manager + CI/Testing*
 
-* **Joe Seago** - *Co-Product Manager + DevOps* - [GitHub Profile](https://github.com/URL)
+* [Joe Seago](https://github.com/URL) - *Co-Product Manager + DevOps*
 
 Also see the list of [contributors](https://github.com/seanjun21/code-roulette/contributors) for their specific commits to this project.
 
