@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import UserName from './UserName'
+import UserName from './user-name'
 
 class LandingPage extends React.Component{
 
