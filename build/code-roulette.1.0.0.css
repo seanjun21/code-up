@@ -9,29 +9,20 @@
 .navigation h1 {
   display: inline-block;
   letter-spacing: 0.2em;
-}
-.navigation h4 {
-  display: inline-block;
-  margin-left: 0.4em;
-  color: #ff8000;
-  letter-spacing: 0.2em;
-}
-#app-name {
   color: #002e4d;
   font-size: 3em;
   margin-left: 1em;
 }
-#logout-bttn {
-  float: right;
-  margin: -6em 2em 2em 2em;
-  color: #fff;
-  background-color: #ff8000;
-  border-radius: 8px;
-  padding: 0.5em 1em;
+.navigation h4 {
+  display: inline-block;
+  margin-left: 0.4em;
+  color: #002e4d;
+  letter-spacing: 0.2em;
 }
 .user-input {
   float: right;
-  margin: -5.5em;
+  margin-top: -5.5em;
+  margin-right: 2em;
   color: #002e4d;
   display: inline-block;
 }
@@ -41,8 +32,8 @@
 .userName {
   margin-right: 1em;
 }
-.name-submit-bttn {
-  margin: 0em 12em 0em 0.5em;
+.name-submit {
+  margin: 0em 2em 0em 0.5em;
   color: #fff;
   background-color: #ff8000;
   border-radius: 6px;
@@ -51,18 +42,23 @@
 .questionFeed {
   display: inline-block;
   margin: 3em;
-  padding: 2em;
+  padding: 5em;
   border-style: solid;
   border-color: black;
 }
 .container .post-question {
   display: inline-block;
-  margin-top: 5em;
+  margin-top: 2.9em;
   margin-right: 5em;
-  padding: 2em;
+  margin-bottom: 10em;
+  padding: 2em 5em 10em 2em;
   float: right;
   border-style: solid;
   border-color: black;
+}
+.post-question-input {
+  width: 400px;
+  height: 100px;
 }
 .join-room {
   margin: auto;

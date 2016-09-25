@@ -30985,11 +30985,15 @@
 	var routes = _react2.default.createElement(
 	  _reactRouter.Router,
 	  { history: _reactRouter.hashHistory },
-	  _react2.default.createElement(_reactRouter.Route, { path: '/', component: _landingPage2.default }),
 	  _react2.default.createElement(
 	    _reactRouter.Route,
-	    { path: '/room/:questionID' },
-	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _chatroomPage2.default })
+	    { path: '/', component: App },
+	    _react2.default.createElement(_reactRouter.IndexRoute, { component: _landingPage2.default }),
+	    _react2.default.createElement(
+	      _reactRouter.Route,
+	      { path: '/room/:questionID' },
+	      _react2.default.createElement(_reactRouter.IndexRoute, { component: _chatroomPage2.default })
+	    )
 	  )
 	);
 	
@@ -36661,9 +36665,9 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
-	var _UserName = __webpack_require__(317);
+	var _userName = __webpack_require__(317);
 	
-	var _UserName2 = _interopRequireDefault(_UserName);
+	var _userName2 = _interopRequireDefault(_userName);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -36809,7 +36813,7 @@
 	        _react2.default.createElement(
 	          'div',
 	          null,
-	          _react2.default.createElement(_UserName2.default, { userName: userName })
+	          _react2.default.createElement(_userName2.default, { userName: userName })
 	        ),
 	        _react2.default.createElement(
 	          'div',
@@ -36913,6 +36917,12 @@
 	    value: function render() {
 	      var _this2 = this;
 	
+	      var userName = "Please log in or register";
+	
+	      if (this.props.userName) {
+	        userName = this.props.userName;
+	      }
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'user-input' },
@@ -36927,7 +36937,7 @@
 	        _react2.default.createElement(
 	          'button',
 	          { type: 'button', className: 'name-submit', id: 'name-submit', onClick: this.nameSubmit },
-	          'Let\'s go'
+	          'Register'
 	        )
 	      );
 	    }
@@ -36936,7 +36946,13 @@
 	  return UserName;
 	}(_react2.default.Component);
 	
-	module.exports = (0, _reactRedux.connect)()(UserName);
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    userName: state.userName
+	  };
+	};
+	
+	module.exports = (0, _reactRedux.connect)(mapStateToProps)(UserName);
 
 /***/ },
 /* 318 */
@@ -37045,14 +37061,13 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
-	var _UserName = __webpack_require__(317);
+	var _userName = __webpack_require__(317);
 	
-	var _UserName2 = _interopRequireDefault(_UserName);
+	var _userName2 = _interopRequireDefault(_userName);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function NavBar() {
-	  var _this = this;
 	
 	  return _react2.default.createElement(
 	    'div',
@@ -37069,20 +37084,8 @@
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'user-input' },
-	      _react2.default.createElement(
-	        'h3',
-	        { className: 'userName' },
-	        this.props.userName
-	      ),
-	      _react2.default.createElement('input', { className: 'nameInput', type: 'text', ref: function ref(name) {
-	          _this.name = name;
-	        }, placeholder: this.props.userName, id: 'userName', required: true }),
-	      _react2.default.createElement(
-	        'button',
-	        { type: 'button', className: 'name-submit-bttn', id: 'name-submit-bttn', onClick: this.nameSubmit },
-	        'Let\'s go'
-	      )
+	      { className: 'userName' },
+	      _react2.default.createElement(_userName2.default, null)
 	    )
 	  );
 	}

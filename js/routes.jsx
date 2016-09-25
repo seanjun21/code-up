@@ -17,11 +17,14 @@ let App = (props) => {
 
 const routes = (
   <Router history={hashHistory}>
-    <Route path="/" component={LandingPage} />
+    <Route path="/" component={App}>
+      <IndexRoute component={LandingPage} />
       <Route path="/room/:questionID">
         <IndexRoute component={ChatroomPage} />
       </Route>
-    </Router>
+    </Route>
+  </Router>
+
 );
 
 export default routes;
