@@ -7,7 +7,8 @@ function reducer(state={}, action) {
         tagsOutput: [],
         filtersOutput: [],
         appliedTags: [],
-        appliedFilters: []
+        appliedFilters: [],
+        lobby: action.data.lobby
       })
     }
     case 'addUserSuccess': {
@@ -18,7 +19,7 @@ function reducer(state={}, action) {
     }
     case 'userEnterLobby': {
       return Object.assign({}, state, {
-        lobby: action.data.lobby
+        lobby: action.data
       })
     }
     case 'postQuestionSuccess': {

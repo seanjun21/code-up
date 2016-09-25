@@ -30,9 +30,29 @@ io.on('connection', (socket) => {
 
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
+                let userNameArr = [];
+                spaces.lobby.forEach((person, index) => {
+                    if (person.userName) {
+                        let personObj = {
+                            userName: person.userName,
+                            userID: person.userID
+                        };
+                        userNameArr.push(personObj);
+                    } else {
+                        let personObj = {
+                            userName: `Guest User No. ${index + 1}`,
+                            // Is it a security issue to have a socket.id being sent to front end?
+                            userID: person.id
+                        };
+                        userNameArr.push(personObj);
+                    }
+                });
                 socket.emit('action', {
                     type: 'getQuestionsSuccess',
-                    data: data
+                    data: {
+                        questions: data.questions,
+                        lobby: userNameArr
+                    }
                 });
             });
         }
@@ -40,7 +60,7 @@ io.on('connection', (socket) => {
             // TODO: send back username to be stored in state in 'lobby' array. emit to everyone for update
             addUser(action.data).then((data) => {
                 let userNameArr = [];
-                spaces.lobby.forEach((person) => {
+                spaces.lobby.forEach((person, index) => {
                     if (socket.id === person.id) {
                         person.userName = data.userName;
                         person.userID = data.userID;
@@ -49,6 +69,13 @@ io.on('connection', (socket) => {
                         let personObj = {
                             userName: person.userName,
                             userID: person.userID
+                        };
+                        userNameArr.push(personObj);
+                    } else {
+                        let personObj = {
+                            userName: `Guest User No. ${index + 1}`,
+                            // Is it a security issue to have a socket.id being sent to front end?
+                            userID: person.id
                         };
                         userNameArr.push(personObj);
                     }

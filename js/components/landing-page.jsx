@@ -9,12 +9,12 @@ import tagsArr from '../tags-arr'
 class LandingPage extends React.Component {
 
   constructor() {
-    super()
-    this.postQuestion = this.postQuestion.bind(this)
-    this.filterQuestions = this.filterQuestions.bind(this)
-    this.joinRoom = this.joinRoom.bind(this)
-    this.tagsSearch = this.tagsSearch.bind(this)
-    this.filtersSearch = this.filtersSearch.bind(this)
+    super();
+    this.postQuestion = this.postQuestion.bind(this);
+    this.filterQuestions = this.filterQuestions.bind(this);
+    this.joinRoom = this.joinRoom.bind(this);
+    this.tagsSearch = this.tagsSearch.bind(this);
+    this.filtersSearch = this.filtersSearch.bind(this);
     // this.removeTag = this.removeTag.bind(this)
     // this.removeFilter = this.removeFilter.bind(this)
   }
@@ -26,7 +26,7 @@ class LandingPage extends React.Component {
   }
 
   postQuestion(event) {
-    event.preventDefault()
+    event.preventDefault();
     if (!this.props.userID) {
       console.log("Please log in to post questions")
     }
@@ -48,7 +48,7 @@ class LandingPage extends React.Component {
 
   filterQuestions(event) {
     event.preventDefault();
-    let filters = this.props.appliedFilters
+    let filters = this.props.appliedFilters;
     if (filters.length < 1) {
       this.props.dispatch({
       type: "server/getQuestions",
@@ -82,13 +82,13 @@ class LandingPage extends React.Component {
   }
 
   filtersSearch(event) {
-    event.preventDefault()
-    let tempArr = []
-    let value = event.target.value.toLowerCase()
+    event.preventDefault();
+    let tempArr = [];
+    let value = event.target.value.toLowerCase();
     if (value.length > 0) {
       tempArr = tagsArr.filter((item) => {
-        item = item.toLowerCase()
-        let tagsMatch = new RegExp(value)
+        item = item.toLowerCase();
+        let tagsMatch = new RegExp(value);
         if (item.match(tagsMatch)) {
           return true
         } else {
@@ -107,13 +107,13 @@ class LandingPage extends React.Component {
   }
 
   tagsSearch(event) {
-    event.preventDefault()
-    let tempArr = []
-    let value = event.target.value.toLowerCase()
+    event.preventDefault();
+    let tempArr = [];
+    let value = event.target.value.toLowerCase();
     if (value.length > 0) {
       tempArr = tagsArr.filter((item) => {
-        item = item.toLowerCase()
-        let tagsMatch = new RegExp(value)
+        item = item.toLowerCase();
+        let tagsMatch = new RegExp(value);
         if (item.match(tagsMatch)) {
           return true
         } else {
@@ -159,7 +159,7 @@ class LandingPage extends React.Component {
     if (!this.props.questionFeed) {
       return null
     }
-    console.log(this.props.state)
+    console.log(this.props.state);
     let feed = this.props.questionFeed.map((question, index) => {
       return (
         <li key={index}>
@@ -171,14 +171,19 @@ class LandingPage extends React.Component {
       )
     });
 
-    let appliedFilters = this.props.appliedFilters
+    let appliedFilters = this.props.appliedFilters;
       appliedFilters = appliedFilters.map((filter, index) => {
         return <li key={index}><p>{filter}</p></li>;
     });
 
-    let appliedTags = this.props.appliedTags
+    let appliedTags = this.props.appliedTags;
       appliedTags = appliedTags.map((tag, index) => {
         return <li key={index}><p>{tag}</p></li>;
+    });
+
+    let usersOnline = this.props.lobby;
+      usersOnline = usersOnline.map((user) => {
+        return <li key={user.userID}><p>{user.userName}</p></li>;
     });
 
     return (
@@ -201,6 +206,10 @@ class LandingPage extends React.Component {
           <TagsSearchBar text="Add tags to your questions" onInput={this.tagsSearch} output={this.props.tagsOutput} what='Tag' />
           <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
         </div>
+        <div className="users-online">
+          <span>Users Online</span>
+          <ul>{usersOnline}</ul>
+        </div>
       </div>
     );
   }
@@ -215,7 +224,8 @@ const mapStateToProps = (state) => {
     tagsOutput: state.tagsOutput,
     appliedTags: state.appliedTags,
     appliedFilters: state.appliedFilters,
-    state: state
+    state: state,
+    lobby: state.lobby
   }
 };
 
