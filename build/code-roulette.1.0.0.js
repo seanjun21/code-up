@@ -23065,7 +23065,11 @@
 	    case 'getQuestionsSuccess':
 	      {
 	        return Object.assign({}, state, {
-	          questionFeed: action.data.questions
+	          questionFeed: action.data.questions,
+	          tagsOutput: [],
+	          filtersOutput: [],
+	          appliedTags: [],
+	          appliedFilters: []
 	        });
 	      }
 	    case 'addUserSuccess':
@@ -23087,7 +23091,9 @@
 	          questionFeed: action.data.questions,
 	          currentQuestion: {
 	            questionText: action.data.questionText,
-	            questionID: action.data.questionID
+	            questionID: action.data.questionID,
+	            appliedTags: [],
+	            tagsOutput: []
 	          }
 	        });
 	      }
@@ -23111,6 +23117,60 @@
 	            questionID: action.data.questionID,
 	            chatMessages: action.data.messages
 	          }
+	        });
+	      }
+	    case 'addFilterResults':
+	      {
+	        return Object.assign({}, state, {
+	          filtersOutput: action.data.results
+	        });
+	      }
+	    case 'addTagResults':
+	      {
+	        return Object.assign({}, state, {
+	          tagsOutput: action.data.results
+	        });
+	      }
+	    case 'applyFilter':
+	      {
+	        var appliedFilters = state.appliedFilters;
+	        appliedFilters.push(action.data.item);
+	        return Object.assign({}, state, {
+	          appliedFilters: appliedFilters,
+	          filtersOutput: []
+	        });
+	      }
+	    case 'applyTag':
+	      {
+	        var _appliedTags = state.appliedTags;
+	        _appliedTags.push(action.data.item);
+	        return Object.assign({}, state, {
+	          appliedTags: _appliedTags,
+	          tagsOutput: []
+	        });
+	      }
+	    case 'removeFilter':
+	      {
+	        var _appliedFilters = state.appliedFilters;
+	        for (var i = 0; i < _appliedFilters.length; i++) {
+	          if (action.data.index === i) {
+	            _appliedFilters.splice(i, 1);
+	          }
+	        }
+	        return Object.assign({}, state, {
+	          appliedTags: appliedTags
+	        });
+	      }
+	    case 'removeTag':
+	      {
+	        var _appliedTags2 = state.appliedTags;
+	        for (var _i = 0; _i < _appliedTags2.length; _i++) {
+	          if (action.data.index === _i) {
+	            _appliedTags2.splice(_i, 1);
+	          }
+	        }
+	        return Object.assign({}, state, {
+	          appliedTags: _appliedTags2
 	        });
 	      }
 	    default:
@@ -30647,7 +30707,7 @@
 	
 	var _landingPage2 = _interopRequireDefault(_landingPage);
 	
-	var _chatroomPage = __webpack_require__(311);
+	var _chatroomPage = __webpack_require__(313);
 	
 	var _chatroomPage2 = _interopRequireDefault(_chatroomPage);
 	
@@ -36230,9 +36290,13 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
-	var _UserName = __webpack_require__(310);
+	var _tagsSearchBar = __webpack_require__(310);
 	
-	var _UserName2 = _interopRequireDefault(_UserName);
+	var _tagsSearchBar2 = _interopRequireDefault(_tagsSearchBar);
+	
+	var _tagsArr = __webpack_require__(312);
+	
+	var _tagsArr2 = _interopRequireDefault(_tagsArr);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
@@ -36240,7 +36304,9 @@
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /*onClick={this.removeTag(index)}>*/
+	/*onClick={this.removeFilter(index)}>*/
+	
 	
 	var LandingPage = function (_React$Component) {
 	  _inherits(LandingPage, _React$Component);
@@ -36253,6 +36319,10 @@
 	    _this.postQuestion = _this.postQuestion.bind(_this);
 	    _this.filterQuestions = _this.filterQuestions.bind(_this);
 	    _this.joinRoom = _this.joinRoom.bind(_this);
+	    _this.tagsSearch = _this.tagsSearch.bind(_this);
+	    _this.filtersSearch = _this.filtersSearch.bind(_this);
+	    // this.removeTag = this.removeTag.bind(this)
+	    // this.removeFilter = this.removeFilter.bind(this)
 	    return _this;
 	  }
 	
@@ -36290,10 +36360,20 @@
 	    key: 'filterQuestions',
 	    value: function filterQuestions(event) {
 	      event.preventDefault();
-	      this.props.dispatch({
-	        type: "server/filterQuestions",
-	        data: this.refs.filterText.value
-	      });
+	      var filters = this.props.appliedFilters;
+	      if (filters.length < 1) {
+	        this.props.dispatch({
+	          type: "server/getQuestions",
+	          data: {}
+	        });
+	      } else {
+	        this.props.dispatch({
+	          type: "server/filterQuestions",
+	          data: {
+	            filters: filters
+	          }
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'joinRoom',
@@ -36316,6 +36396,83 @@
 	      };
 	    }
 	  }, {
+	    key: 'filtersSearch',
+	    value: function filtersSearch(event) {
+	      event.preventDefault();
+	      var tempArr = [];
+	      var value = event.target.value.toLowerCase();
+	      if (value.length > 0) {
+	        tempArr = _tagsArr2.default.filter(function (item) {
+	          item = item.toLowerCase();
+	          var tagsMatch = new RegExp(value);
+	          if (item.match(tagsMatch)) {
+	            return true;
+	          } else {
+	            return false;
+	          }
+	        });
+	      } else {
+	        tempArr = [];
+	      }
+	      this.props.dispatch({
+	        type: "addFilterResults",
+	        data: {
+	          results: tempArr
+	        }
+	      });
+	    }
+	  }, {
+	    key: 'tagsSearch',
+	    value: function tagsSearch(event) {
+	      event.preventDefault();
+	      var tempArr = [];
+	      var value = event.target.value.toLowerCase();
+	      if (value.length > 0) {
+	        tempArr = _tagsArr2.default.filter(function (item) {
+	          item = item.toLowerCase();
+	          var tagsMatch = new RegExp(value);
+	          if (item.match(tagsMatch)) {
+	            return true;
+	          } else {
+	            return false;
+	          }
+	        });
+	      } else {
+	        tempArr = [];
+	      }
+	      this.props.dispatch({
+	        type: "addTagResults",
+	        data: {
+	          results: tempArr
+	        }
+	      });
+	    }
+	
+	    // removeFilter(idx, callback) {
+	    //   let props = this.props
+	    //   return function callback() {
+	    //     this.props.dispatch({
+	    //       type: removeFilter,
+	    //       data: {
+	    //         index: idx
+	    //       }
+	    //     })
+	    //   }
+	    // }
+	
+	    // removeTag(idx, callback) {
+	    //   let props = this.props
+	    //   return function callback() {
+	    //     this.props.dispatch({
+	    //       type: removeTag,
+	    //       data: {
+	    //         index: idx
+	    //       }
+	    //     })
+	    //   }
+	    // }
+	
+	  }, {
 	    key: 'render',
 	    value: function render() {
 	      var _this4 = this;
@@ -36323,6 +36480,7 @@
 	      if (!this.props.questionFeed) {
 	        return null;
 	      }
+	      console.log(this.props.state);
 	      var feed = this.props.questionFeed.map(function (question, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -36352,34 +36510,35 @@
 	        );
 	      });
 	
-	      var userName = "Please log in or register";
+	      var appliedFilters = this.props.appliedFilters;
+	      appliedFilters = appliedFilters.map(function (filter, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            filter
+	          )
+	        );
+	      });
 	
-	      if (this.props.userName) {
-	        userName = this.props.userName;
-	      }
+	      var appliedTags = this.props.appliedTags;
+	      appliedTags = appliedTags.map(function (tag, index) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: index },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            tag
+	          )
+	        );
+	      });
 	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'container' },
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'appName' },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Code Roulette'
-	          ),
-	          _react2.default.createElement(
-	            'h2',
-	            null,
-	            'Log in'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          null,
-	          _react2.default.createElement(_UserName2.default, { userName: userName })
-	        ),
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'questionFeed' },
@@ -36393,11 +36552,21 @@
 	            null,
 	            feed
 	          ),
-	          _react2.default.createElement('input', { className: 'filter', ref: 'filterText', type: 'text', placeholder: 'filter questions by topic (React, JavaScript, CSS, etc.)' }),
+	          _react2.default.createElement(_tagsSearchBar2.default, { text: 'Filter questions by tags', onInput: this.filtersSearch, output: this.props.filtersOutput, what: 'Filter' }),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Current Tags:'
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            appliedFilters
+	          ),
 	          _react2.default.createElement(
 	            'button',
 	            { type: 'button', className: 'filter-button', onClick: this.filterQuestions },
-	            'submit filter'
+	            'Apply Filter(s)'
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -36408,7 +36577,18 @@
 	            null,
 	            'Submit a question:'
 	          ),
-	          _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', required: true }),
+	          _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', placeholder: 'Enter question text', required: true }),
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Current Tags:'
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            appliedTags
+	          ),
+	          _react2.default.createElement(_tagsSearchBar2.default, { text: 'Add tags to your questions', onInput: this.tagsSearch, output: this.props.tagsOutput, what: 'Tag' }),
 	          _react2.default.createElement(
 	            'button',
 	            { type: 'button', className: 'question-button', onClick: this.postQuestion },
@@ -36426,7 +36606,12 @@
 	  return {
 	    questionFeed: state.questionFeed,
 	    userID: state.userID,
-	    userName: state.userName
+	    userName: state.userName,
+	    filtersOutput: state.filtersOutput,
+	    tagsOutput: state.tagsOutput,
+	    appliedTags: state.appliedTags,
+	    appliedFilters: state.appliedFilters,
+	    state: state
 	  };
 	};
 	
@@ -36434,6 +36619,66 @@
 
 /***/ },
 /* 310 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _tag = __webpack_require__(311);
+	
+	var _tag2 = _interopRequireDefault(_tag);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var TagsSearchBar = function (_React$Component) {
+		_inherits(TagsSearchBar, _React$Component);
+	
+		function TagsSearchBar() {
+			_classCallCheck(this, TagsSearchBar);
+	
+			return _possibleConstructorReturn(this, (TagsSearchBar.__proto__ || Object.getPrototypeOf(TagsSearchBar)).apply(this, arguments));
+		}
+	
+		_createClass(TagsSearchBar, [{
+			key: 'render',
+			value: function render() {
+				var _this2 = this;
+	
+				var tags = this.props.output;
+				tags = tags.map(function (tag, index) {
+					return _react2.default.createElement(_tag2.default, { name: tag, what: _this2.props.what, number: index + 1 });
+				});
+				return _react2.default.createElement(
+					'div',
+					null,
+					_react2.default.createElement('input', { type: 'text', placeholder: this.props.text, onChange: this.props.onInput }),
+					_react2.default.createElement(
+						'ul',
+						null,
+						tags
+					)
+				);
+			}
+		}]);
+	
+		return TagsSearchBar;
+	}(_react2.default.Component);
+	
+	module.exports = TagsSearchBar;
+
+/***/ },
+/* 311 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -36454,61 +36699,59 @@
 	
 	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 	
-	var UserName = function (_React$Component) {
-	  _inherits(UserName, _React$Component);
+	var Tag = function (_React$Component) {
+		_inherits(Tag, _React$Component);
 	
-	  function UserName() {
-	    _classCallCheck(this, UserName);
+		function Tag() {
+			_classCallCheck(this, Tag);
 	
-	    var _this = _possibleConstructorReturn(this, (UserName.__proto__ || Object.getPrototypeOf(UserName)).call(this));
+			var _this = _possibleConstructorReturn(this, (Tag.__proto__ || Object.getPrototypeOf(Tag)).call(this));
 	
-	    _this.nameSubmit = _this.nameSubmit.bind(_this);
-	    return _this;
-	  }
+			_this.addItem = _this.addItem.bind(_this);
+			return _this;
+		}
 	
-	  _createClass(UserName, [{
-	    key: 'nameSubmit',
-	    value: function nameSubmit(event) {
-	      event.preventDefault();
-	      var userName = this.name.value;
-	      this.props.dispatch({
-	        type: 'server/addUser',
-	        data: { input: userName }
-	      });
-	      console.log(userName, "<---userName");
-	    }
-	  }, {
-	    key: 'render',
-	    value: function render() {
-	      var _this2 = this;
+		_createClass(Tag, [{
+			key: 'addItem',
+			value: function addItem(event) {
+				event.preventDefault();
+				var type = 'apply' + this.props.what;
+				var tag = this.props.name;
+				this.props.dispatch({
+					type: type,
+					data: {
+						item: tag
+					}
+				});
+			}
+		}, {
+			key: 'render',
+			value: function render() {
+				return _react2.default.createElement(
+					'li',
+					{ className: 'output-item', key: this.props.number, onClick: this.addItem },
+					this.props.name
+				);
+			}
+		}]);
 	
-	      return _react2.default.createElement(
-	        'div',
-	        { className: 'user-input' },
-	        _react2.default.createElement(
-	          'h3',
-	          null,
-	          this.props.userName
-	        ),
-	        _react2.default.createElement('input', { className: 'user-name', type: 'text', ref: function ref(name) {
-	            _this2.name = name;
-	          }, placeholder: this.props.userName, id: 'userName', required: true }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', className: 'name-submit', id: 'name-submit', onClick: this.nameSubmit },
-	          'Let\'s go'
-	        )
-	      );
-	    }
-	  }]);
-	
-	  return UserName;
+		return Tag;
 	}(_react2.default.Component);
 	
-	module.exports = (0, _reactRedux.connect)()(UserName);
+	module.exports = (0, _reactRedux.connect)()(Tag);
 
 /***/ },
-/* 311 */
+/* 312 */
+/***/ function(module, exports) {
+
+	"use strict";
+	
+	var tagsArr = ["php", "javascript", "python", "node.js", "swift", "html", "css", "jquery", "bootstrap", "foundation", "skeleton", "symfony", "zend", "laravel", "slim", "codeigniter", "cakephp", "express.js", "hapi", "sails.js", "total.js", "angularjs", "knockoutjs", "vue.js", "polymer", "react", "ember.js", "dojo", "ruby", "rails", "sinatra", "java", "play", "spring", "spark", "django", "flask", "sql", "nosql", "restful", "ajax", "mongodb", "mongoose", "postgresql", "knex.js", "npm", "less", "webpack", "git", "github", "mocha", "chai", "mysql"];
+	
+	module.exports = tagsArr;
+
+/***/ },
+/* 313 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
