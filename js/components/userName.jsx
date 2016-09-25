@@ -20,15 +20,27 @@ class UserName extends React.Component{
 
   render () {
 
+    let userName = "Please log in or register";
+
+    if (this.props.userName) {
+      userName = this.props.userName
+    }
+
     return (
-      <div className="user-input">
-      <h3>{this.props.userName}</h3>
-        <input className='user-name' type="text" ref={(name) => { this.name = name; }} placeholder={this.props.userName} id="userName" required />
-        <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Let's go</button>
-      </div>
+        <div className="user-input">
+          <h3>{this.props.userName}</h3>
+          <input className='user-name' type="text" ref={(name) => { this.name = name; }} placeholder={this.props.userName} id="userName" required />
+          <button type="button" className="name-submit" id="name-submit" onClick={this.nameSubmit}>Register</button>
+        </div>
 
     )
   }
 }
 
-module.exports = connect()(UserName)
+const mapStateToProps = (state) => {
+  return {
+    userName: state.userName
+  }
+};
+
+module.exports = connect(mapStateToProps)(UserName)
