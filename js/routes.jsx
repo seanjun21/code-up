@@ -2,7 +2,7 @@ import React from 'react';
 import {Router, Route, IndexRoute, hashHistory} from 'react-router';
 import LandingPage from './components/landing-page';
 import ChatroomPage from './components/chatroom-page';
-import NavBar from './components/navBar';
+import NavBar from './components/nav-bar';
 
 let App = (props) => {
   return (

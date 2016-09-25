@@ -1,6 +1,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
-import UserName from './userName';
+import UserName from './user-name';
 
 function NavBar () {
 
