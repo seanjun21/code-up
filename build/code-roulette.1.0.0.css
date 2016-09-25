@@ -29,35 +29,46 @@
   border-radius: 8px;
   padding: 0.5em 1em;
 }
-/*
+.user-input {
+  float: right;
+  margin: -5.5em;
+  color: #002e4d;
+  display: inline-block;
+}
+.user-input h3 {
+  display: inline-block;
+}
+.userName {
+  margin-right: 1em;
+}
+.name-submit-bttn {
+  margin: 0em 12em 0em 0.5em;
+  color: #fff;
+  background-color: #ff8000;
+  border-radius: 6px;
+  padding: 0.3em 1em;
+}
 .userName {
   margin: 2em;
   color: #fff;
   float: right;
   margin-top: 1.9em;
 }
-
 .user-input h3 {
   display: inline-block;
   margin-right: 1em;
 }
-
 .user-input input {
   display: inline-block;
 }
-
 .question-feed {
   display: inline-block;
   margin: 1em;
   border: 1px;
-
 }
-
 .post-question {
   display: inline-block;
   margin-top: 1em;
   border: 1px;
-
 }
- */
 /*# sourceMappingURL=code-roulette.1.0.0.css.map */

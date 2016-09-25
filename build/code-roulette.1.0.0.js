@@ -37072,7 +37072,7 @@
 	function NavBar() {
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'navigation' },
+	    { 'class': 'navigation' },
 	    _react2.default.createElement(
 	      'h1',
 	      { id: 'app-name' },
@@ -37085,16 +37085,21 @@
 	    ),
 	    _react2.default.createElement(
 	      'div',
-	      { className: 'userName' },
-	      _react2.default.createElement(_UserName2.default, { userName: userName })
-	    ),
-	    _react2.default.createElement(
-	      'div',
 	      null,
 	      _react2.default.createElement(
-	        'button',
-	        { type: 'button', id: 'logout-bttn' },
-	        'let\'s go'
+	        'div',
+	        { 'class': 'user-input' },
+	        _react2.default.createElement(
+	          'h3',
+	          { 'class': 'userName' },
+	          'Visitor'
+	        ),
+	        _react2.default.createElement('input', { 'class': 'user-name', type: 'text', id: 'userName', required: true }),
+	        _react2.default.createElement(
+	          'button',
+	          { type: 'button', 'class': 'name-submit-bttn', id: 'name-submit' },
+	          'Let\'s go'
+	        )
 	      )
 	    )
 	  );
