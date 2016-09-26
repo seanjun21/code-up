@@ -11,10 +11,11 @@ const addUser = require('./backend/functions/add-user');
 const postQuestion = require('./backend/functions/post-question');
 const postMessage = require('./backend/functions/post-message');
 const filterQuestions = require('./backend/functions/filter-questions');
-// const joinRoom = require('./backend/functions/join-room');
+const joinRoom = require('./backend/functions/join-room');
 
 let spaces = {
-    lobby: []
+    lobby: [],
+    1: []
 };
 
 app.use(express.static('./build'));
@@ -80,7 +81,7 @@ io.on('connection', (socket) => {
                         userNameArr.push(personObj);
                     }
                 });
-                console.log(userNameArr, '<<<<<<<userNameArr');
+                //console.log(userNameArr, '<<<<<<<userNameArr');
 
                 spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
@@ -144,18 +145,19 @@ io.on('connection', (socket) => {
             let questionID = action.data.questionID;
             spaces[questionID].push(socket);
 
-            let lobby = spaces[lobby];
-            for (let j = 0; j < lobby.length; j += 1) {
-                let roomSock = lobby[j];
+            let lobby = spaces.lobby;
+            for (let i = 0; i < lobby.length; i += 1) {
+                let item = lobby[i];
                 // console.log('Room Socket ----> ', roomSock.id);
                 // console.log('Socket to delete ----> ', socket.id);
-                if (lobbySock.id === socket.id) {
-                    lobby.splice(j, 1);
+                if (item.id === socket.id) {
+                    lobby.splice(i, 1);
                 }
             }
 
             joinRoom(action.data).then((data) => {
-                socket[questionID].forEach((socket) => {
+                console.log(data);
+                spaces[questionID].forEach((socket) => {
                     socket.emit('action', {
                         type: 'joinRoomSuccess',
                         data: data

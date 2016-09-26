@@ -23070,7 +23070,12 @@
 	          filtersOutput: [],
 	          appliedTags: [],
 	          appliedFilters: [],
-	          lobby: action.data.lobby
+	          lobby: action.data.lobby,
+	          currentQuestion: {
+	            questionID: '',
+	            questionText: '',
+	            messages: []
+	          }
 	        });
 	      }
 	    case 'addUserSuccess':
@@ -23112,11 +23117,12 @@
 	      }
 	    case 'joinRoomSuccess':
 	      {
+	        console.log(action.data);
 	        return Object.assign({}, state, {
 	          currentQuestion: {
 	            questionText: action.data.questionText,
 	            questionID: action.data.questionID,
-	            chatMessages: action.data.messages
+	            messages: action.data.messages
 	          }
 	        });
 	      }
@@ -36390,10 +36396,8 @@
 	    value: function joinRoom(id, callback) {
 	      var props = this.props;
 	      return function callback() {
-	        var _this3 = this;
-	
 	        var promise = new Promise(function (response) {
-	          response(_this3.props.dispatch({
+	          response(props.dispatch({
 	            type: "server/joinRoom",
 	            data: {
 	              questionID: id
@@ -36485,7 +36489,7 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this4 = this;
+	      var _this3 = this;
 	
 	      if (!this.props.questionFeed) {
 	        return null;
@@ -36517,7 +36521,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'button', onClick: _this4.joinRoom(question.id) },
+	              { type: 'button', onClick: _this3.joinRoom(question.id) },
 	              'Join room'
 	            )
 	          )
@@ -36922,10 +36926,36 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      if (!this.props.questionText) {
+	      if (!this.props.questionID) {
 	        return null;
 	      }
 	
+	      var messages = null;
+	      if (this.props.messages) {
+	        messages = this.props.messages.map(function (message, index) {
+	          return _react2.default.createElement(
+	            'li',
+	            { key: index, id: message.question_id },
+	            _react2.default.createElement(
+	              'h3',
+	              null,
+	              message.message_text
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'user: ',
+	              message.user_name
+	            ),
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'time: ',
+	              message.when_sent
+	            )
+	          );
+	        });
+	      }
 	      return _react2.default.createElement(
 	        'div',
 	        null,
@@ -36934,7 +36964,11 @@
 	          { className: 'questionText' },
 	          this.props.questionText
 	        ),
-	        _react2.default.createElement('ul', null),
+	        _react2.default.createElement(
+	          'ul',
+	          null,
+	          messages
+	        ),
 	        _react2.default.createElement('input', { type: 'text', className: 'newMessage', ref: 'messageText', placeholder: 'submit message' }),
 	        _react2.default.createElement(
 	          'button',
@@ -36952,8 +36986,7 @@
 	  return {
 	    questionID: state.currentQuestion.questionID,
 	    questionText: state.currentQuestion.questionText,
-	    userName: state.userName
-	
+	    messages: state.currentQuestion.messages
 	  };
 	};
 	
