@@ -15,7 +15,7 @@ const joinRoom = require('./backend/functions/join-room');
 
 let spaces = {
     lobby: [],
-    1: []
+    2: []
 };
 
 app.use(express.static('./build'));
