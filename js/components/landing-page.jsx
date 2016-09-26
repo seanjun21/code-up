@@ -68,7 +68,7 @@ class LandingPage extends React.Component {
     let props = this.props
     return function callback() {
       const promise = new Promise((response) => {
-        response(this.props.dispatch({
+        response(props.dispatch({
           type: "server/joinRoom",
           data: {
             questionID: id

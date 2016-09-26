@@ -22,14 +22,26 @@ class ChatRoom extends React.Component{
   }
 
   render() {
-    if (!this.props.questionText) {
+    if (!this.props.questionID) {
       return null
     }
 
+    let messages = null
+    if (this.props.messages) {
+      messages = this.props.messages.map((message, index) => {
+      return (
+          <li key={index} id={message.question_id}>
+            <h3>{message.message_text}</h3>
+            <p>user: {message.user_name}</p>
+            <p>time: {message.when_sent}</p>
+          </li>
+        )
+      })
+    }
     return (
       <div>
         <h1 className="questionText">{this.props.questionText}</h1>
-        <ul></ul>
+        <ul>{messages}</ul>
         <input type="text" className="newMessage" ref="messageText" placeholder="submit message" />
         <button type="button" className="newMessageButton" onClick={this.sendMessage}>send message</button>
       </div>
@@ -41,8 +53,7 @@ const mapStateToProps = (state) => {
   return {
     questionID: state.currentQuestion.questionID,
     questionText: state.currentQuestion.questionText,
-    userName: state.userName
-
+    messages: state.currentQuestion.messages
   }
 };
 

@@ -8,7 +8,12 @@ function reducer(state={}, action) {
         filtersOutput: [],
         appliedTags: [],
         appliedFilters: [],
-        lobby: action.data.lobby
+        lobby: action.data.lobby,
+        currentQuestion: {
+          questionID: '',
+          questionText: '',
+          messages: []
+        }
       })
     }
     case 'addUserSuccess': {
@@ -44,11 +49,12 @@ function reducer(state={}, action) {
       })
     }
     case 'joinRoomSuccess': {
+    console.log(action.data);
       return Object.assign({}, state, {
         currentQuestion: {
           questionText: action.data.questionText,
           questionID: action.data.questionID,
-          chatMessages: action.data.messages
+          messages: action.data.messages
         }
       })
     }
