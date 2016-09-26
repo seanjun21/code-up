@@ -163,10 +163,9 @@ class LandingPage extends React.Component {
     let feed = this.props.questionFeed.map((question, index) => {
       return (
         <li key={index}>
-          <h3>{question.question_text}</h3>
-          <h3>Room #: {question.id}</h3>
-          <h3>Date: {question.whenasked}</h3>
-          <button type="button" className="join-room" onClick={this.joinRoom(question.id)}>Join room</button>
+          <p>{question.question_text}</p>
+          <p>Date: {question.whenasked}</p>
+          <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom(question.id)}>Join room</button></div>
         </li>
       )
     });
@@ -187,29 +186,65 @@ class LandingPage extends React.Component {
     });
 
     return (
-      <div className="container">
-        <div className="questionFeed">
-          <p>Log in to submit or answer questions</p>
-          <ul>
-          {feed}
-          </ul>
-          <TagsSearchBar text="Filter questions by tags" onInput={this.filtersSearch} output={this.props.filtersOutput} what='Filter' />
-          <p>Current Tags:</p>
-          <ul>{appliedFilters}</ul>
-          <button type="button" className="filter-button" onClick={this.filterQuestions}>Apply Filter(s)</button>
-        </div>
-        <div className="post-question">
-          <h1>Submit a question:</h1>
-          <input className="post-question-input" ref="questionText" placeholder='Enter question text' required />
-          <p>Current Tags:</p>
-          <ul>{appliedTags}</ul>
-          <TagsSearchBar text="Add tags to your questions" onInput={this.tagsSearch} output={this.props.tagsOutput} what='Tag' />
-          <button type="button" className="question-button" onClick={this.postQuestion}>Submit</button>
-        </div>
-        <div className="users-online">
-          <span>Users Online</span>
-          <ul>{usersOnline}</ul>
-        </div>
+      <div className="landing-page">
+        <center className="wrapper">
+          <table className="outer" width="100%">
+            <tr>
+              <td className="content">
+                <div className="land-column">
+                  <table className="inner" width="100%">
+                    <tr>
+                      <td className="inner-col">
+                        <div className="post-question">
+                          <h1>SUBMIT A QUESTION:</h1>
+                          <div>
+                            <textarea className="post-question-input" name="Text1" cols="36" rows="5" ref="questionText" placeholder="Enter question text" required />
+                            <h3>Applied Tags:</h3>
+                            <ul>{appliedTags}</ul>
+                            <button type="button" onClick={this.postQuestion}>Submit Question</button>
+                            <TagsSearchBar text="Add tags to your question" onInput={this.tagsSearch} output={this.props.tagsOutput} what="Tag" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div className="land-column">
+                  <table className="inner" width="100%">
+                    <tr>
+                      <td className="inner-col">
+                        <div className="question-feed">
+                          <h1>ANSWER A QUESTION:</h1>
+                          <div>
+                            <ul>{feed}</ul>
+                          </div>
+                          <div className="filters">
+                            <h3>Applied Filters:</h3>
+                            <ul>{appliedFilters}</ul>
+                            <button type="button" onClick={this.filterQuestions}>Filter Questions</button>
+                            <TagsSearchBar text="Filter questions by tags" onInput={this.filtersSearch} output={this.props.filtersOutput} what="Filter" />
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+                <div className="land-column">
+                  <table className="inner">
+                    <tr>
+                      <td className="inner-col users-online">
+                        <div className="users-online">
+                          <h1>USERS ONLINE:</h1>
+                          <ul>{usersOnline}</ul>
+                        </div>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </center>
       </div>
     );
   }

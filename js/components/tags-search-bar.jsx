@@ -8,7 +8,7 @@ class TagsSearchBar extends React.Component {
 			return <Tag name={tag} what={this.props.what} number={index + 1} />;
 	   	});
 	    return (
-			<div>
+			<div className="search-bar">
 				<input type="text" placeholder={this.props.text} onChange={this.props.onInput} />
 				<ul>{tags}</ul>
 			</div>

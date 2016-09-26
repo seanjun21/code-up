@@ -36496,26 +36496,30 @@
 	          'li',
 	          { key: index },
 	          _react2.default.createElement(
-	            'h3',
+	            'p',
 	            null,
 	            question.question_text
 	          ),
 	          _react2.default.createElement(
-	            'h3',
-	            null,
-	            'Room #: ',
-	            question.id
-	          ),
-	          _react2.default.createElement(
-	            'h3',
+	            'p',
 	            null,
 	            'Date: ',
 	            question.whenasked
 	          ),
 	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'join-room', onClick: _this4.joinRoom(question.id) },
-	            'Join room'
+	            'div',
+	            { className: 'room' },
+	            _react2.default.createElement(
+	              'p',
+	              null,
+	              'Room #: ',
+	              question.id
+	            ),
+	            _react2.default.createElement(
+	              'button',
+	              { type: 'button', onClick: _this4.joinRoom(question.id) },
+	              'Join room'
+	            )
 	          )
 	        );
 	      });
@@ -36561,75 +36565,151 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'container' },
+	        { className: 'landing-page' },
 	        _react2.default.createElement(
-	          'div',
-	          { className: 'questionFeed' },
+	          'center',
+	          { className: 'wrapper' },
 	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Log in to submit or answer questions'
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            feed
-	          ),
-	          _react2.default.createElement(_tagsSearchBar2.default, { text: 'Filter questions by tags', onInput: this.filtersSearch, output: this.props.filtersOutput, what: 'Filter' }),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Current Tags:'
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            appliedFilters
-	          ),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'filter-button', onClick: this.filterQuestions },
-	            'Apply Filter(s)'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'post-question' },
-	          _react2.default.createElement(
-	            'h1',
-	            null,
-	            'Submit a question:'
-	          ),
-	          _react2.default.createElement('input', { className: 'post-question-input', ref: 'questionText', placeholder: 'Enter question text', required: true }),
-	          _react2.default.createElement(
-	            'p',
-	            null,
-	            'Current Tags:'
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            appliedTags
-	          ),
-	          _react2.default.createElement(_tagsSearchBar2.default, { text: 'Add tags to your questions', onInput: this.tagsSearch, output: this.props.tagsOutput, what: 'Tag' }),
-	          _react2.default.createElement(
-	            'button',
-	            { type: 'button', className: 'question-button', onClick: this.postQuestion },
-	            'Submit'
-	          )
-	        ),
-	        _react2.default.createElement(
-	          'div',
-	          { className: 'users-online' },
-	          _react2.default.createElement(
-	            'span',
-	            null,
-	            'Users Online'
-	          ),
-	          _react2.default.createElement(
-	            'ul',
-	            null,
-	            usersOnline
+	            'table',
+	            { className: 'outer', width: '100%' },
+	            _react2.default.createElement(
+	              'tr',
+	              null,
+	              _react2.default.createElement(
+	                'td',
+	                { className: 'content' },
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'land-column' },
+	                  _react2.default.createElement(
+	                    'table',
+	                    { className: 'inner', width: '100%' },
+	                    _react2.default.createElement(
+	                      'tr',
+	                      null,
+	                      _react2.default.createElement(
+	                        'td',
+	                        { className: 'inner-col' },
+	                        _react2.default.createElement(
+	                          'div',
+	                          { className: 'post-question' },
+	                          _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'SUBMIT A QUESTION:'
+	                          ),
+	                          _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement('textarea', { className: 'post-question-input', name: 'Text1', cols: '36', rows: '5', ref: 'questionText', placeholder: 'Enter question text', required: true }),
+	                            _react2.default.createElement(
+	                              'h3',
+	                              null,
+	                              'Applied Tags:'
+	                            ),
+	                            _react2.default.createElement(
+	                              'ul',
+	                              null,
+	                              appliedTags
+	                            ),
+	                            _react2.default.createElement(
+	                              'button',
+	                              { type: 'button', onClick: this.postQuestion },
+	                              'Submit Question'
+	                            ),
+	                            _react2.default.createElement(_tagsSearchBar2.default, { text: 'Add tags to your question', onInput: this.tagsSearch, output: this.props.tagsOutput, what: 'Tag' })
+	                          )
+	                        )
+	                      )
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'land-column' },
+	                  _react2.default.createElement(
+	                    'table',
+	                    { className: 'inner', width: '100%' },
+	                    _react2.default.createElement(
+	                      'tr',
+	                      null,
+	                      _react2.default.createElement(
+	                        'td',
+	                        { className: 'inner-col' },
+	                        _react2.default.createElement(
+	                          'div',
+	                          { className: 'question-feed' },
+	                          _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'ANSWER A QUESTION:'
+	                          ),
+	                          _react2.default.createElement(
+	                            'div',
+	                            null,
+	                            _react2.default.createElement(
+	                              'ul',
+	                              null,
+	                              feed
+	                            )
+	                          ),
+	                          _react2.default.createElement(
+	                            'div',
+	                            { className: 'filters' },
+	                            _react2.default.createElement(
+	                              'h3',
+	                              null,
+	                              'Applied Filters:'
+	                            ),
+	                            _react2.default.createElement(
+	                              'ul',
+	                              null,
+	                              appliedFilters
+	                            ),
+	                            _react2.default.createElement(
+	                              'button',
+	                              { type: 'button', onClick: this.filterQuestions },
+	                              'Filter Questions'
+	                            ),
+	                            _react2.default.createElement(_tagsSearchBar2.default, { text: 'Filter questions by tags', onInput: this.filtersSearch, output: this.props.filtersOutput, what: 'Filter' })
+	                          )
+	                        )
+	                      )
+	                    )
+	                  )
+	                ),
+	                _react2.default.createElement(
+	                  'div',
+	                  { className: 'land-column' },
+	                  _react2.default.createElement(
+	                    'table',
+	                    { className: 'inner' },
+	                    _react2.default.createElement(
+	                      'tr',
+	                      null,
+	                      _react2.default.createElement(
+	                        'td',
+	                        { className: 'inner-col users-online' },
+	                        _react2.default.createElement(
+	                          'div',
+	                          { className: 'users-online' },
+	                          _react2.default.createElement(
+	                            'h1',
+	                            null,
+	                            'USERS ONLINE:'
+	                          ),
+	                          _react2.default.createElement(
+	                            'ul',
+	                            null,
+	                            usersOnline
+	                          )
+	                        )
+	                      )
+	                    )
+	                  )
+	                )
+	              )
+	            )
 	          )
 	        )
 	      );
@@ -36699,7 +36779,7 @@
 				});
 				return _react2.default.createElement(
 					'div',
-					null,
+					{ className: 'search-bar' },
 					_react2.default.createElement('input', { type: 'text', placeholder: this.props.text, onChange: this.props.onInput }),
 					_react2.default.createElement(
 						'ul',
@@ -36902,24 +36982,71 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function NavBar() {
-	
 	  return _react2.default.createElement(
 	    'div',
-	    { className: 'navigation' },
+	    { className: 'nav-bar' },
 	    _react2.default.createElement(
-	      'h1',
-	      { id: 'app-name' },
-	      'Code Roulette'
-	    ),
-	    _react2.default.createElement(
-	      'h4',
-	      { id: 'beta' },
-	      'beta'
-	    ),
-	    _react2.default.createElement(
-	      'div',
-	      { className: 'userName' },
-	      _react2.default.createElement(_userName2.default, null)
+	      'center',
+	      { className: 'wrapper' },
+	      _react2.default.createElement(
+	        'table',
+	        { className: 'outer', width: '100%' },
+	        _react2.default.createElement(
+	          'tr',
+	          null,
+	          _react2.default.createElement(
+	            'td',
+	            { className: 'content' },
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'nav-column title-column' },
+	              _react2.default.createElement(
+	                'table',
+	                { className: 'inner', width: '100%' },
+	                _react2.default.createElement(
+	                  'tr',
+	                  null,
+	                  _react2.default.createElement(
+	                    'td',
+	                    { className: 'inner-col' },
+	                    _react2.default.createElement(
+	                      'div',
+	                      { className: 'title' },
+	                      _react2.default.createElement(
+	                        'h1',
+	                        { id: 'app-name' },
+	                        'Code Roulette'
+	                      ),
+	                      _react2.default.createElement(
+	                        'h4',
+	                        { id: 'beta' },
+	                        'beta'
+	                      )
+	                    )
+	                  )
+	                )
+	              )
+	            ),
+	            _react2.default.createElement(
+	              'div',
+	              { className: 'nav-column input-column' },
+	              _react2.default.createElement(
+	                'table',
+	                { className: 'inner', width: '100%' },
+	                _react2.default.createElement(
+	                  'tr',
+	                  null,
+	                  _react2.default.createElement(
+	                    'td',
+	                    { className: 'inner-col' },
+	                    _react2.default.createElement(_userName2.default, null)
+	                  )
+	                )
+	              )
+	            )
+	          )
+	        )
+	      )
 	    )
 	  );
 	}
@@ -36979,24 +37106,28 @@
 	      var userName = "Please log in or register";
 	
 	      if (this.props.userName) {
-	        userName = this.props.userName;
+	        userName = 'Welcome ' + this.props.userName + '!';
 	      }
 	
 	      return _react2.default.createElement(
 	        'div',
-	        { className: 'user-input' },
+	        { className: 'user-name' },
+	        _react2.default.createElement(
+	          'div',
+	          { className: 'add-user' },
+	          _react2.default.createElement('input', { className: 'user-input', type: 'text', ref: function ref(name) {
+	              _this2.name = name;
+	            }, placeholder: this.props.userName, id: 'userName', required: true }),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', id: 'name-submit', onClick: this.nameSubmit },
+	            'Submit'
+	          )
+	        ),
 	        _react2.default.createElement(
 	          'h3',
 	          null,
-	          this.props.userName
-	        ),
-	        _react2.default.createElement('input', { className: 'user-name', type: 'text', ref: function ref(name) {
-	            _this2.name = name;
-	          }, placeholder: this.props.userName, id: 'userName', required: true }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', className: 'name-submit', id: 'name-submit', onClick: this.nameSubmit },
-	          'Register'
+	          userName
 	        )
 	      );
 	    }

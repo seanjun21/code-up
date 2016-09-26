@@ -88,6 +88,13 @@ io.on('connection', (socket) => {
                         data: userNameArr
                     });
                 });
+                socket.emit('action', {
+                    type: 'addUserSuccess',
+                    data: {
+                        userName: data.userName,
+                        userID: data.userID
+                    }
+                });
             });
         }
         if (action.type === 'server/postMessage') {
