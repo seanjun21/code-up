@@ -8,7 +8,7 @@ function reducer(state={}, action) {
         filtersOutput: [],
         appliedTags: [],
         appliedFilters: [],
-        lobby: action.data.lobby,
+        curRoomOccupants: action.data.curRoomOccupants,
         currentQuestion: {
           questionID: '',
           questionText: '',
@@ -22,20 +22,28 @@ function reducer(state={}, action) {
         userName: action.data.userName
       })
     }
-    case 'userEnterLobby': {
+    case 'updateLobby': {
       return Object.assign({}, state, {
-        lobby: action.data
+        curRoomOccupants: action.data.curRoomOccupants
+      })
+    }
+    case 'updateQuestionFeed': {
+      return Object.assign({}, state, {
+        questionFeed: action.data.questions,
+        curRoomOccupants: action.data.curRoomOccupants,
+        appliedTags: [],
+        tagsOutput: []
       })
     }
     case 'postQuestionSuccess': {
+      console.log(action.data, '<--- action.data');
       return Object.assign({}, state, {
-        questionFeed: action.data.questions,
         currentQuestion: {
           questionText: action.data.questionText,
           questionID: action.data.questionID,
-          appliedTags: [],
-          tagsOutput: []
-        }
+          whenAsked: action.data.whenAsked,
+        },
+        curRoomOccupants: action.data.curRoomOccupants
       })
     }
     case 'postMessageSuccess': {
@@ -49,13 +57,13 @@ function reducer(state={}, action) {
       })
     }
     case 'joinRoomSuccess': {
-    console.log(action.data);
       return Object.assign({}, state, {
         currentQuestion: {
           questionText: action.data.questionText,
           questionID: action.data.questionID,
-          messages: action.data.messages
-        }
+          messages: action.data.messages,
+        },
+        curRoomOccupants: action.data.curRoomOccupants
       })
     }
     case 'addFilterResults': {

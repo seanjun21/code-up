@@ -15,53 +15,52 @@ const joinRoom = require('./backend/functions/join-room');
 
 let spaces = {
     lobby: [],
-    1: []
+    2: []
 };
 
 app.use(express.static('./build'));
 
 io.on('connection', (socket) => {
-
-    // console.log("socket------->");
-    // console.log(socket);
-    // console.log(`Socket connected: ${socket.id}`);
-
+    console.log("Socket connected: " + socket.id);
+    // push newly connect socket into the lobby array in the hash map
     spaces.lobby.push(socket);
     socket.on('action', (action) => {
-
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
-                let userNameArr = [];
+                // create updated username array for lobby
+                let lobbyUserArr = [];
                 spaces.lobby.forEach((person, index) => {
                     if (person.userName) {
                         let personObj = {
                             userName: person.userName,
                             userID: person.userID
                         };
-                        userNameArr.push(personObj);
+                        lobbyUserArr.push(personObj);
                     } else {
                         let personObj = {
                             userName: `Guest User No. ${index + 1}`,
-                            // Is it a security issue to have a socket.id being sent to front end?
+                            // TODO: Is it a security issue to have a socket.id being sent to front end?
                             userID: person.id
                         };
-                        userNameArr.push(personObj);
+                        lobbyUserArr.push(personObj);
                     }
                 });
+                // emit updated lobby array to all sockets in lobby
                 socket.emit('action', {
                     type: 'getQuestionsSuccess',
                     data: {
                         questions: data.questions,
-                        lobby: userNameArr
+                        curRoomOccupants: lobbyUserArr
                     }
                 });
             });
         }
         if (action.type === 'server/addUser') {
-            // TODO: send back username to be stored in state in 'lobby' array. emit to everyone for update
             addUser(action.data).then((data) => {
-                let userNameArr = [];
+                // create updated username array for lobby
+                let lobbyUserArr = [];
                 spaces.lobby.forEach((person, index) => {
+                    // add 'userName' and userID keys to socket object and set values accordingly
                     if (socket.id === person.id) {
                         person.userName = data.userName;
                         person.userID = data.userID;
@@ -71,24 +70,26 @@ io.on('connection', (socket) => {
                             userName: person.userName,
                             userID: person.userID
                         };
-                        userNameArr.push(personObj);
+                        lobbyUserArr.push(personObj);
                     } else {
                         let personObj = {
                             userName: `Guest User No. ${index + 1}`,
                             // Is it a security issue to have a socket.id being sent to front end?
                             userID: person.id
                         };
-                        userNameArr.push(personObj);
+                        lobbyUserArr.push(personObj);
                     }
                 });
-                //console.log(userNameArr, '<<<<<<<userNameArr');
-
+                // emit updated lobby array to all sockets in lobby
                 spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
-                        type: 'userEnterLobby',
-                        data: userNameArr
+                        type: 'updateLobby',
+                        data: {
+                            curRoomOccupants: lobbyUserArr
+                        }
                     });
                 });
+                // emit updated user info to the socket that made the dispatch
                 socket.emit('action', {
                     type: 'addUserSuccess',
                     data: {
@@ -110,24 +111,58 @@ io.on('connection', (socket) => {
             });
         }
         if (action.type === 'server/postQuestion') {
-            let questionID = action.data.questionID;
-            spaces[questionID] = [socket];
-
-            let lobby = spaces[lobby];
-            for (let j = 0; j < lobby.length; j += 1) {
-                let roomSock = lobby[j];
-                // console.log('Room Socket ----> ', roomSock.id);
-                // console.log('Socket to delete ----> ', socket.id);
-                if (lobbySock.id === socket.id) {
-                    lobby.splice(j, 1);
-                }
-            }
-
             postQuestion(action.data).then((data) => {
+                let questionID = data.questionID;
+                let roomUserArr = [];
+                // remove socket from lobby array and add to room array for questionID
+                let lobby = spaces.lobby;
+                for (let i = 0; i < lobby.length; i += 1) {
+                    let item = lobby[i];
+                    if (item.id === socket.id) {
+                        roomUserArr.push(item);
+                        lobby.splice(i, 1);
+                    }
+                }
+                // create new 'room' in hash map for the new question
+                spaces[questionID] = roomUserArr;
+                // create updated username array for lobby
+                let lobbyUserArr = [];
+                spaces.lobby.forEach((person, index) => {
+                    if (person.userName) {
+                        let personObj = {
+                            userName: person.userName,
+                            userID: person.userID
+                        };
+                        lobbyUserArr.push(personObj);
+                    } else {
+                        let personObj = {
+                            userName: `Guest User No. ${index + 1}`,
+                            // Is it a security issue to have a socket.id being sent to front end?
+                            userID: person.id
+                        };
+                        lobbyUserArr.push(personObj);
+                    }
+                });
+                // emit updated lobby array to all sockets in lobby
                 spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
+                        type: 'updateQuestionFeed',
+                        data: { 
+                            questionFeed: data.questionFeed,
+                            curRoomOccupants: lobbyUserArr
+                        }
+                    });
+                });
+                // emit the question details and the room username array back to the socket that made the dispatch
+                spaces[questionID].forEach((socket) => {
+                    socket.emit('action', {
                         type: 'postQuestionSuccess',
-                        data: data
+                        data: {
+                            questionID: data.questionID,
+                            questionText: data.questionText,
+                            whenAsked: data.whenAsked,
+                            curRoomOccupants: roomUserArr
+                        }
                     });
                 });
             });
@@ -140,58 +175,102 @@ io.on('connection', (socket) => {
                 });
             });
         }
-        // TODO: pass back the username for that room and store room's occupants (add section that shows room's occuments in chatroom component and make sure we send back the user that joined the room to be stored as state also.)
+
         if (action.type === 'server/joinRoom') {
-            let questionID = action.data.questionID;
-            spaces[questionID].push(socket);
-
-            let lobby = spaces.lobby;
-            for (let i = 0; i < lobby.length; i += 1) {
-                let item = lobby[i];
-                // console.log('Room Socket ----> ', roomSock.id);
-                // console.log('Socket to delete ----> ', socket.id);
-                if (item.id === socket.id) {
-                    lobby.splice(i, 1);
-                }
-            }
-
             joinRoom(action.data).then((data) => {
-                console.log(data);
+                let questionID = data.questionID;
+                // remove socket from lobby array and add to room array for questionID
+                let lobby = spaces.lobby;
+                for (let i = 0; i < lobby.length; i += 1) {
+                    let item = lobby[i];
+                    if (item.id === socket.id) {
+                        spaces[questionID].push(item);
+                        lobby.splice(i, 1);
+                    }
+                }
+                // create updated username array for lobby
+                let lobbyUserArr = [];
+                spaces.lobby.forEach((person, index) => {
+                    if (person.userName) {
+                        let personObj = {
+                            userName: person.userName,
+                            userID: person.userID
+                        };
+                        lobbyUserArr.push(personObj);
+                    } else {
+                        let personObj = {
+                            userName: `Guest User No. ${index + 1}`,
+                            // Is it a security issue to have a socket.id being sent to front end?
+                            userID: person.id
+                        };
+                        lobbyUserArr.push(personObj);
+                    }
+                });
+                // emit updated lobby array to all sockets in lobby
+                spaces.lobby.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'updateLobby',
+                        data: {
+                            curRoomOccupants: lobbyUserArr,
+                        }
+                    });
+                });
+                // create updated username array for question room
+                let roomUserArr = [];
+                spaces[questionID].forEach((person, index) => {
+                    if (person.userName) {
+                        let personObj = {
+                            userName: person.userName,
+                            userID: person.userID
+                        };
+                        roomUserArr.push(personObj);
+                    } else {
+                        let personObj = {
+                            userName: `Guest User No. ${index + 1}`,
+                            // Is it a security issue to have a socket.id being sent to front end?
+                            userID: person.id
+                        };
+                        roomUserArr.push(personObj);
+                    }
+                });
+                // send off data to all sockets in question room
                 spaces[questionID].forEach((socket) => {
                     socket.emit('action', {
                         type: 'joinRoomSuccess',
-                        data: data
-                    });
+                        data: {
+                            questionText: data.questionText,
+                            questionID: data.questionID,
+                            messages: data.messages,
+                            curRoomOccupants: roomUserArr
+                        }
+                    })
                 });
             });
         }
     });
 //when a user leaves or closes browser
     socket.on('disconnect', () => {
-        var rooms = Object.keys(spaces);
-        var socketToRemove = socket.id;
-
+        // create rooms array of values (arrays) for each key in 'spaces' hash map
+        let rooms = Object.keys(spaces);
+        let socketToRemove = socket.id;
+        // loop through array of rooms
         for (let i = 0; i < rooms.length; i += 1) {
             let room = spaces[rooms[i]];
-            // console.log(`room ${rooms[i]} ----> `, room );
+            // loop through each room array and remove the disconnected socket when found
             for (let j = 0; j < room.length; j += 1) {
-                let roomSock = room[j];
-                // console.log('Room Socket ----> ', roomSock.id);
-                // console.log('Socket to delete ----> ', socket.id);
-                if (roomSock.id === socket.id) {
+                let item = room[j];
+                if (item.id === socket.id) {
                     room.splice(j, 1);
                 }
             }
-            // console.log(`${rooms[i]} ----> `, room )
         }
-
     });
 });
 
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
     server.listen(PORT, () => {
-        // console.log(`Listening on localhost: ${PORT}`);
+        console.log(`Listening on localhost: ${PORT}`);
         if (callback) {
             callback();
         }

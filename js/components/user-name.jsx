@@ -15,7 +15,6 @@ class UserName extends React.Component{
       type: 'server/addUser',
       data: { input: userName }
     });
-    console.log(userName, "<---userName");
   }
 
   render () {

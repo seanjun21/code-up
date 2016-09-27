@@ -8,13 +8,5 @@ const knex = require('knex')({
     connection: databaseUrl
 });
 
-knex.select().from('users').then(function(result) {
-    console.log(result.rows);
-    return result;
-})
-.catch(function(err) {
-    console.error(err);
-});
-
 module.exports = knex;
 

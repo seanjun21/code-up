@@ -36,11 +36,14 @@ class LandingPage extends React.Component {
           type: "server/postQuestion",
           data: {
             userID: this.props.userID,
-            input: this.refs.questionText.value
+            questionText: this.refs.questionText.value,
+            tags: this.props.appliedTags
           }
         }))
       });
+      // think it is erroring out before it hits reducers -- 'data' here is same data object we sent off. maybe put this in another function...
       promise.then((data) => {
+        console.log('data', data)
         window.location.href = '/#/room/' + data.questionID
       })
     }
@@ -156,15 +159,15 @@ class LandingPage extends React.Component {
   // }
 
   render() {
+    console.log('state', this.props.state);
     if (!this.props.questionFeed) {
       return null
     }
-    console.log(this.props.state);
     let feed = this.props.questionFeed.map((question, index) => {
       return (
         <li key={index}>
           <p>{question.question_text}</p>
-          <p>Date: {question.whenasked}</p>
+          <p>Date: {question.when_asked}</p>
           <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom(question.id)}>Join room</button></div>
         </li>
       )
@@ -180,7 +183,7 @@ class LandingPage extends React.Component {
         return <li key={index}><p>{tag}</p></li>;
     });
 
-    let usersOnline = this.props.lobby;
+    let usersOnline = this.props.curRoomOccupants;
       usersOnline = usersOnline.map((user) => {
         return <li key={user.userID}><p>{user.userName}</p></li>;
     });
@@ -260,7 +263,7 @@ const mapStateToProps = (state) => {
     appliedTags: state.appliedTags,
     appliedFilters: state.appliedFilters,
     state: state,
-    lobby: state.lobby
+    curRoomOccupants: state.curRoomOccupants
   }
 };
 

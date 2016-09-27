@@ -32,7 +32,7 @@ let findQ = (questionID) => {
         .where({
             id: questionID
         })
-        .returning('question_id', 'question_text')
+        .returning(['id', 'question_text'])
         .then((data) => {
             resolve(data);
         })

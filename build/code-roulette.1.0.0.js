@@ -23070,7 +23070,7 @@
 	          filtersOutput: [],
 	          appliedTags: [],
 	          appliedFilters: [],
-	          lobby: action.data.lobby,
+	          curRoomOccupants: action.data.curRoomOccupants,
 	          currentQuestion: {
 	            questionID: '',
 	            questionText: '',
@@ -23085,22 +23085,31 @@
 	          userName: action.data.userName
 	        });
 	      }
-	    case 'userEnterLobby':
+	    case 'updateLobby':
 	      {
 	        return Object.assign({}, state, {
-	          lobby: action.data
+	          curRoomOccupants: action.data.curRoomOccupants
+	        });
+	      }
+	    case 'updateQuestionFeed':
+	      {
+	        return Object.assign({}, state, {
+	          questionFeed: action.data.questions,
+	          curRoomOccupants: action.data.curRoomOccupants,
+	          appliedTags: [],
+	          tagsOutput: []
 	        });
 	      }
 	    case 'postQuestionSuccess':
 	      {
+	        console.log(action.data, '<--- action.data');
 	        return Object.assign({}, state, {
-	          questionFeed: action.data.questions,
 	          currentQuestion: {
 	            questionText: action.data.questionText,
 	            questionID: action.data.questionID,
-	            appliedTags: [],
-	            tagsOutput: []
-	          }
+	            whenAsked: action.data.whenAsked
+	          },
+	          curRoomOccupants: action.data.curRoomOccupants
 	        });
 	      }
 	    case 'postMessageSuccess':
@@ -23117,13 +23126,13 @@
 	      }
 	    case 'joinRoomSuccess':
 	      {
-	        console.log(action.data);
 	        return Object.assign({}, state, {
 	          currentQuestion: {
 	            questionText: action.data.questionText,
 	            questionID: action.data.questionID,
 	            messages: action.data.messages
-	          }
+	          },
+	          curRoomOccupants: action.data.curRoomOccupants
 	        });
 	      }
 	    case 'addFilterResults':
@@ -36363,11 +36372,14 @@
 	            type: "server/postQuestion",
 	            data: {
 	              userID: _this2.props.userID,
-	              input: _this2.refs.questionText.value
+	              questionText: _this2.refs.questionText.value,
+	              tags: _this2.props.appliedTags
 	            }
 	          }));
 	        });
+	        // think it is erroring out before it hits reducers -- 'data' here is same data object we sent off. maybe put this in another function...
 	        promise.then(function (data) {
+	          console.log('data', data);
 	          window.location.href = '/#/room/' + data.questionID;
 	        });
 	      }
@@ -36491,10 +36503,10 @@
 	    value: function render() {
 	      var _this3 = this;
 	
+	      console.log('state', this.props.state);
 	      if (!this.props.questionFeed) {
 	        return null;
 	      }
-	      console.log(this.props.state);
 	      var feed = this.props.questionFeed.map(function (question, index) {
 	        return _react2.default.createElement(
 	          'li',
@@ -36508,7 +36520,7 @@
 	            'p',
 	            null,
 	            'Date: ',
-	            question.whenasked
+	            question.when_asked
 	          ),
 	          _react2.default.createElement(
 	            'div',
@@ -36554,7 +36566,7 @@
 	        );
 	      });
 	
-	      var usersOnline = this.props.lobby;
+	      var usersOnline = this.props.curRoomOccupants;
 	      usersOnline = usersOnline.map(function (user) {
 	        return _react2.default.createElement(
 	          'li',
@@ -36733,7 +36745,7 @@
 	    appliedTags: state.appliedTags,
 	    appliedFilters: state.appliedFilters,
 	    state: state,
-	    lobby: state.lobby
+	    curRoomOccupants: state.curRoomOccupants
 	  };
 	};
 	
@@ -37129,7 +37141,6 @@
 	        type: 'server/addUser',
 	        data: { input: userName }
 	      });
-	      console.log(userName, "<---userName");
 	    }
 	  }, {
 	    key: 'render',
