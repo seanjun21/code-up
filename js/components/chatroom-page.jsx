@@ -44,6 +44,8 @@ class ChatRoom extends React.Component{
         <ul>{messages}</ul>
         <input type="text" className="newMessage" ref="messageText" placeholder="submit message" />
         <button type="button" className="newMessageButton" onClick={this.sendMessage}>send message</button>
+
+        <Firepad />
       </div>
     );
   }

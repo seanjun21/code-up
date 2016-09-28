@@ -1,13 +1,46 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Code Roulette</title>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="code-roulette.1.0.0.css">
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>
+
+    <!-- CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.17.0/codemirror.css"/>
+
+    <!-- Firepad -->
+    <link rel="stylesheet" href="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.css" />
+    <script src="https://cdn.firebase.com/libs/firepad/1.4.0/firepad.min.js"></script>
 </head>
-<body>
+<body onload="init()">
 <div id="app"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
 <script src="code-roulette.1.0.0.js"></script>
+<script>
+  function init() {
+    // Initialize the Firebase SDK.
+    firebase.initializeApp({
+      apiKey: 'AIzaSyDzRGP_qB3NJpsNBokWc584Js4cCaRWObw',
+      databaseURL: 'https://code-help-f2a98.firebaseio.com'
+    });
+
+    // Get Firebase Database reference.
+    // var firepadRef = firebase.database().ref();
+    //
+    // Change the above <firepadRef> to code below to make new instance for each user/querstionID
+    var firepadRef = firebase.database().child(questionId).ref();
+
+    // Create CodeMirror (with lineWrapping on).
+    var codeMirror = CodeMirror(document.getElementById('firepad'), { lineWrapping: true });
+
+    // Create Firepad (with rich text toolbar and shortcuts enabled).
+    var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+        { richTextShortcuts: true, richTextToolbar: true, defaultText: "Let's get coding!" });
+  }
+</script>
 </body>
 </html>
