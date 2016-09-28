@@ -143,6 +143,7 @@ io.on('connection', (socket) => {
                         lobbyUserArr.push(personObj);
                     }
                 });
+                console.log('spaces[questionID', spaces[questionID]);
                 // emit updated lobby array to all sockets in lobby
                 spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
@@ -154,7 +155,13 @@ io.on('connection', (socket) => {
                     });
                 });
                 // emit the question details and the room username array back to the socket that made the dispatch
+                console.log(data.questionID, 'data.questionID');
+                console.log(data.questionText, 'data.questionText');
+                console.log(data.whenAsked, 'data.whenAsked');
+                console.log(roomUserArr, 'roomUserArr');
+
                 spaces[questionID].forEach((socket) => {
+                    console.log(socket.id, 'socket.id');
                     socket.emit('action', {
                         type: 'postQuestionSuccess',
                         data: {

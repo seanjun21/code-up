@@ -23056,26 +23056,31 @@
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
-	
+	var initialState = {
+	  questionFeed: [],
+	  tagsOutput: [],
+	  filtersOutput: [],
+	  appliedTags: [],
+	  appliedFilters: [],
+	  curRoomOccupants: [],
+	  currentQuestion: {
+	    questionID: '',
+	    questionText: '',
+	    messages: []
+	  }
+	};
 	function reducer() {
-	  var state = arguments.length <= 0 || arguments[0] === undefined ? {} : arguments[0];
+	  var state = arguments.length <= 0 || arguments[0] === undefined ? initialState : arguments[0];
 	  var action = arguments[1];
+	
+	  console.log(action.type, 'action.type');
 	
 	  switch (action.type) {
 	    case 'getQuestionsSuccess':
 	      {
 	        return Object.assign({}, state, {
 	          questionFeed: action.data.questions,
-	          tagsOutput: [],
-	          filtersOutput: [],
-	          appliedTags: [],
-	          appliedFilters: [],
-	          curRoomOccupants: action.data.curRoomOccupants,
-	          currentQuestion: {
-	            questionID: '',
-	            questionText: '',
-	            messages: []
-	          }
+	          curRoomOccupants: action.data.curRoomOccupants
 	        });
 	      }
 	    case 'addUserSuccess':
@@ -23094,7 +23099,7 @@
 	    case 'updateQuestionFeed':
 	      {
 	        return Object.assign({}, state, {
-	          questionFeed: action.data.questions,
+	          questionFeed: action.data.questionFeed,
 	          curRoomOccupants: action.data.curRoomOccupants,
 	          appliedTags: [],
 	          tagsOutput: []
@@ -36361,26 +36366,17 @@
 	  }, {
 	    key: 'postQuestion',
 	    value: function postQuestion(event) {
-	      var _this2 = this;
-	
 	      event.preventDefault();
 	      if (!this.props.userID) {
 	        console.log("Please log in to post questions");
 	      } else {
-	        var promise = new Promise(function (response) {
-	          response(_this2.props.dispatch({
-	            type: "server/postQuestion",
-	            data: {
-	              userID: _this2.props.userID,
-	              questionText: _this2.refs.questionText.value,
-	              tags: _this2.props.appliedTags
-	            }
-	          }));
-	        });
-	        // think it is erroring out before it hits reducers -- 'data' here is same data object we sent off. maybe put this in another function...
-	        promise.then(function (data) {
-	          console.log('data', data);
-	          window.location.href = '/#/room/' + data.questionID;
+	        this.props.dispatch({
+	          type: "server/postQuestion",
+	          data: {
+	            userID: this.props.userID,
+	            questionText: this.refs.questionText.value,
+	            tags: this.props.appliedTags
+	          }
 	        });
 	      }
 	    }
@@ -36501,11 +36497,14 @@
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _this3 = this;
+	      var _this2 = this;
 	
 	      console.log('state', this.props.state);
-	      if (!this.props.questionFeed) {
-	        return null;
+	      // if (!this.props.questionFeed) {
+	      //   return null
+	      // }
+	      if (this.props.currentQuestion.questionID !== "") {
+	        hashHistory.push('/room/' + this.props.currentQuestion.questionID);
 	      }
 	      var feed = this.props.questionFeed.map(function (question, index) {
 	        return _react2.default.createElement(
@@ -36533,7 +36532,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'button', onClick: _this3.joinRoom(question.id) },
+	              { type: 'button', onClick: _this2.joinRoom(question.id) },
 	              'Join room'
 	            )
 	          )
@@ -36745,7 +36744,8 @@
 	    appliedTags: state.appliedTags,
 	    appliedFilters: state.appliedFilters,
 	    state: state,
-	    curRoomOccupants: state.curRoomOccupants
+	    curRoomOccupants: state.curRoomOccupants,
+	    currentQuestion: state.currentQuestion
 	  };
 	};
 	

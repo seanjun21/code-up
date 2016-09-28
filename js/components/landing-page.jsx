@@ -31,21 +31,14 @@ class LandingPage extends React.Component {
       console.log("Please log in to post questions")
     }
     else {
-      const promise = new Promise((response) => {
-        response(this.props.dispatch({
-          type: "server/postQuestion",
-          data: {
-            userID: this.props.userID,
-            questionText: this.refs.questionText.value,
-            tags: this.props.appliedTags
-          }
-        }))
+      this.props.dispatch({
+        type: "server/postQuestion",
+        data: {
+          userID: this.props.userID,
+          questionText: this.refs.questionText.value,
+          tags: this.props.appliedTags
+        }
       });
-      // think it is erroring out before it hits reducers -- 'data' here is same data object we sent off. maybe put this in another function...
-      promise.then((data) => {
-        console.log('data', data)
-        window.location.href = '/#/room/' + data.questionID
-      })
     }
   }
 
@@ -160,8 +153,11 @@ class LandingPage extends React.Component {
 
   render() {
     console.log('state', this.props.state);
-    if (!this.props.questionFeed) {
-      return null
+    // if (!this.props.questionFeed) {
+    //   return null
+    // }
+    if (this.props.currentQuestion.questionID !== "") {
+      hashHistory.push(`/room/${this.props.currentQuestion.questionID}`);
     }
     let feed = this.props.questionFeed.map((question, index) => {
       return (
@@ -263,7 +259,8 @@ const mapStateToProps = (state) => {
     appliedTags: state.appliedTags,
     appliedFilters: state.appliedFilters,
     state: state,
-    curRoomOccupants: state.curRoomOccupants
+    curRoomOccupants: state.curRoomOccupants,
+    currentQuestion: state.currentQuestion
   }
 };
 

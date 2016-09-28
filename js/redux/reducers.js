@@ -1,19 +1,24 @@
+let initialState = {  
+  questionFeed: [],      
+  tagsOutput: [],
+  filtersOutput: [],
+  appliedTags: [],
+  appliedFilters: [],
+  curRoomOccupants: [],
+  currentQuestion: {
+    questionID: '',
+    questionText: '',
+    messages: []
+  }
+};
+function reducer(state=initialState, action) {
+  console.log(action.type, 'action.type');
 
-function reducer(state={}, action) {
   switch(action.type) {
     case 'getQuestionsSuccess': {
       return Object.assign({}, state, {
         questionFeed: action.data.questions,
-        tagsOutput: [],
-        filtersOutput: [],
-        appliedTags: [],
-        appliedFilters: [],
         curRoomOccupants: action.data.curRoomOccupants,
-        currentQuestion: {
-          questionID: '',
-          questionText: '',
-          messages: []
-        }
       })
     }
     case 'addUserSuccess': {
@@ -29,7 +34,7 @@ function reducer(state={}, action) {
     }
     case 'updateQuestionFeed': {
       return Object.assign({}, state, {
-        questionFeed: action.data.questions,
+        questionFeed: action.data.questionFeed,
         curRoomOccupants: action.data.curRoomOccupants,
         appliedTags: [],
         tagsOutput: []
