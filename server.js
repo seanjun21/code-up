@@ -45,14 +45,14 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/addUser') {
             addUser(action.data).then((data) => {
-                let lobby = spaces.lobby 
+                let lobby = spaces.lobby
                 lobby.forEach((person, index) => {
                     if (socket.id === person.id) {
                         person.userName = data.userName;
                         person.userID = data.userID;
                     }
                 });
-                let lobbyUserArr = createRoomArr(lobby);            
+                let lobbyUserArr = createRoomArr(lobby);
                 lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateRoom',
@@ -94,7 +94,7 @@ io.on('connection', (socket) => {
                 lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateQuestionFeed',
-                        data: { 
+                        data: {
                             questions: data.questions,
                             currentUsers: lobbyUserArr
                         }
@@ -108,7 +108,7 @@ io.on('connection', (socket) => {
                             currentUsers: roomUserArr
                         }
                     });
-                });    
+                });
             });
         }
         if (action.type === 'server/filterQuestions') {
@@ -135,8 +135,8 @@ io.on('connection', (socket) => {
                 console.log('lobby', lobby);
                 let lobbyUserArr = createRoomArr(lobby);
                 console.log('lobbyUserArr', lobbyUserArr);
-                let roomUserArr = createRoomArr(room);  
-                console.log('roomUserArr', 'roomUserArr');            
+                let roomUserArr = createRoomArr(room);
+                console.log('roomUserArr', 'roomUserArr');
                 lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateRoom',
@@ -174,7 +174,7 @@ io.on('connection', (socket) => {
                         }
                     });
                 });
-            } 
+            }
         }
     });
 });

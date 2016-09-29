@@ -322,4 +322,13 @@ body ul li p {
   margin-bottom: 10px;
   margin-top: 10px;
 }
+body .firepad {
+  width: 700px;
+  height: 350px;
+  border-style: solid;
+  border-color: grey;
+  border-width: 2px;
+  margin-top: 2em;
+  padding: 1em;
+}
 /*# sourceMappingURL=code-roulette.1.0.0.css.map */
