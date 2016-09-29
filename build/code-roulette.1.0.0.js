@@ -37412,7 +37412,8 @@
 	          'button',
 	          { type: 'button', className: 'newMessageButton', onClick: this.sendMessage },
 	          'send message'
-	        )
+	        ),
+	        _react2.default.createElement(Firepad, null)
 	      );
 	    }
 	  }]);

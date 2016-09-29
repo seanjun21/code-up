@@ -1,26 +1,43 @@
 
-//
-// <div id="firepad" ref="firepad"> goes in the chatroom-page component
-//
-// on componentDidMount() {
-//  this.refs.firepad
-// }
-//
-
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
-// componentDidMount() {
-//   this.refs.Firepad()
-// }
 
-function Firepad () {
-  return (
-    <div className="firepad" id="firepad" ref="firepad"></div>
-  );
+class Firepad extends React.Component {
+
+  componentDidMount() {
+
+     // Initialize the Firebase SDK.
+     firebase.initializeApp({
+       apiKey: 'AIzaSyDzRGP_qB3NJpsNBokWc584Js4cCaRWObw',
+       databaseURL: 'https://code-help-f2a98.firebaseio.com'
+     })
+     // Get Firebase Database reference.
+     // var firepadRef = firebase.database().ref();
+     // Change the above code to below to embed in an app.
+      firepadRef = firebase.database().child(this.props.questionID).ref();
+     //
+
+     // Create CodeMirror (with lineWrapping on).
+     var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
+
+     // Create Firepad (with rich text toolbar and shortcuts enabled).
+     var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+         { richTextShortcuts: true, richTextToolbar: true, defaultText: "Let's get coding!" });
+   }
+
+  render() {
+    return (
+        <div className="firepad" id="firepad" ref="firepad"></div>
+    );
+  }
 }
 
-
+const mapStateToProps = (state) => {
+  return {
+  questionID: state.currentQuestion.questionID
+  }
+};
 
 export default Firepad;
