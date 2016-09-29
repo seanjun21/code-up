@@ -1,13 +1,19 @@
-let initialState = {  
-  questionFeed: [],      
-  tagsOutput: [],
-  filtersOutput: [],
-  appliedTags: [],
-  appliedFilters: [],
-  curRoomOccupants: [],
+let initialState = {
+  user: {
+    userName: '',
+    userID: ''
+  },
+  currentUsers: [],
+  questionFeed: {
+    tagsOutput: [],
+    appliedTags: [],
+    filtersOutput: [],
+    appliedFilters: []
+  },
   currentQuestion: {
     questionID: '',
     questionText: '',
+    whenAsked: '',
     messages: []
   }
 };
@@ -15,60 +21,41 @@ function reducer(state=initialState, action) {
   console.log(action.type, 'action.type');
 
   switch(action.type) {
-    case 'getQuestionsSuccess': {
-      return Object.assign({}, state, {
-        questionFeed: action.data.questions,
-        curRoomOccupants: action.data.curRoomOccupants,
-      })
-    }
-    case 'addUserSuccess': {
-      return Object.assign({}, state, {
-        userID: action.data.userID,
-        userName: action.data.userName
-      })
-    }
-    case 'updateLobby': {
-      return Object.assign({}, state, {
-        curRoomOccupants: action.data.curRoomOccupants
-      })
-    }
     case 'updateQuestionFeed': {
+      let currentUsers = state.currentUsers;
+      if (action.data.currentUsers) {
+        currentUsers = action.data.currentUsers
+      }
       return Object.assign({}, state, {
-        questionFeed: action.data.questionFeed,
-        curRoomOccupants: action.data.curRoomOccupants,
-        appliedTags: [],
-        tagsOutput: []
-      })
-    }
-    case 'postQuestionSuccess': {
-      console.log(action.data, '<--- action.data');
-      return Object.assign({}, state, {
-        currentQuestion: {
-          questionText: action.data.questionText,
-          questionID: action.data.questionID,
-          whenAsked: action.data.whenAsked,
+        questionFeed: {
+          questions: action.data.questions
+          tagsOutput: [],
+          appliedTags: [],
+          filtersOutput: [],
+          appliedFilters: [],
         },
-        curRoomOccupants: action.data.curRoomOccupants
+        currentUsers: currentUsers
       })
     }
-    case 'postMessageSuccess': {
+    case 'updateUser': {
+      return Object.assign({}, state, {
+        user: action.data.user
+      })
+    }
+    case 'updateRoom': {
+      return Object.assign({}, state, {
+        currentUsers: action.data.currentUsers
+      })
+    }
+    case 'enterRoom': {
+      return Object.assign({}, state, {
+        currentQuestion: action.data.currentQuestion,
+        currentUsers: action.data.currentUsers
+      })
+    }
+    case 'updateMessages': {
       return Object.assign({}, state, {
         chatMessages: action.data.messages
-      })
-    }
-    case 'questionFilterSuccess': {
-      return Object.assign({}, state, {
-        questionFeed: action.data.questions
-      })
-    }
-    case 'joinRoomSuccess': {
-      return Object.assign({}, state, {
-        currentQuestion: {
-          questionText: action.data.questionText,
-          questionID: action.data.questionID,
-          messages: action.data.messages,
-        },
-        curRoomOccupants: action.data.curRoomOccupants
       })
     }
     case 'addFilterResults': {

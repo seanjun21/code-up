@@ -4,11 +4,11 @@ let addUser = (data) => {
     return new Promise((resolve, reject) => {
         let userName = data.input;
         knex.insert({ user_name: userName })
-            .returning(['id', 'user_name'])
+            .returning(['user_name', 'id'])
             .into('users')
             .then((data) => {
                 resolve({
-                    userID: data[0].id, userName: data[0].user_name
+                    userName: data[0].user_name, userID: data[0].id
                 });
             })
             .catch((err) => {

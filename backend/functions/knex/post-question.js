@@ -12,7 +12,15 @@ let postQuestion = (data) => {
             .where({ is_answered: false })
             .orderBy('when_asked')
             .then((questions) => {
-                resolve({ questionFeed: questions, questionID: data[0].id, questionText: data[0].question_text, whenAsked: data[0].when_asked });
+                resolve({ 
+                    questions: questions, 
+                    currentQuestion: { 
+                        questionID: data[0].id, 
+                        questionText: data[0].question_text, 
+                        whenAsked: data[0].when_asked, 
+                        messages: []
+                    } 
+                });
             })
             .catch((err) => {
                 reject(err);
