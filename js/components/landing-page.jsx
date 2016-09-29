@@ -34,6 +34,12 @@ class LandingPage extends React.Component {
     // });
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.currentQuestion.questionID !== "") {
+      hashHistory.push(`/room/${nextProps.currentQuestion.questionID}`);
+    }
+  }
+
   postQuestion(event) {
     event.preventDefault();
     if (!this.props.userID) {
@@ -132,9 +138,7 @@ class LandingPage extends React.Component {
 
   render() {
     console.log('state', this.props.state);
-    if (this.props.currentQuestion.questionID !== "") {
-      hashHistory.push(`/room/${this.props.currentQuestion.questionID}`);
-    }
+
     let feed = this.props.questions.map((question) => {
       return (
         <li key={question.id}>
