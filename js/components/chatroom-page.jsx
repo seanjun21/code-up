@@ -26,7 +26,7 @@ class ChatRoom extends React.Component{
       return null
     }
 
-    let messages = null
+    let messages = null;
     if (this.props.messages) {
       messages = this.props.messages.map((message, index) => {
       return (
@@ -53,7 +53,8 @@ const mapStateToProps = (state) => {
   return {
     questionID: state.currentQuestion.questionID,
     questionText: state.currentQuestion.questionText,
-    messages: state.currentQuestion.messages
+    messages: state.currentQuestion.messages,
+    userName: state.userName
   }
 };
 

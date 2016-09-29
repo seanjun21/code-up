@@ -5,22 +5,39 @@ let postMessages = (data) => {
     let questionID = data.questionID;
     let userName = data.userName;
     return new Promise((resolve, reject) => {
-        const promise = knex.insert({ message_text: messageText, question_id: question_id, user_name: userName })
-        .returning('question_id')
-        .into('messages')
-        promise.then((question_id) => {
-            return new Promise((resolve, reject) => {
-                knex.select()
-                .from('messages')
-                .where({ question_id: question_id })
-                .orderBy('when_sent')
-                .then((messages) => {
-                    resolve({ messages: messages });
-                })
-                .catch((err) => {
-                    reject(err);
-                });
+        const promise = insertM(messageText, questionID, userName);
+        promise.then((promiseData) => {
+            console.log(promiseData, '<---------Promise Data');
+            knex.select()
+            .from('messages')
+            .where({ question_id: promiseData })
+            .orderBy('when_sent')
+            .then((messages) => {
+                console.log(messages, '<---------promiseMessages');
+                resolve({ messages: messages });
+            })
+            .catch((err) => {
+                reject(err);
             });
+        })
+        .catch((err) => {
+            reject(err);
+        });
+    });
+};
+
+let insertM = (messageText, questionID, userName) => {
+    return new Promise((resolve, reject) => {
+        knex.insert({
+            message_text: messageText,
+            question_id: questionID,
+            user_name: userName,
+            when_sent: '1999-01-08 04:05:06'
+        })
+        .into('messages')
+        .returning(['question_id'])
+        .then((data) => {
+            resolve(data[0].question_id);
         })
         .catch((err) => {
             reject(err);

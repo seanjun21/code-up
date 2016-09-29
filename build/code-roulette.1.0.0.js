@@ -36998,7 +36998,8 @@
 	  return {
 	    questionID: state.currentQuestion.questionID,
 	    questionText: state.currentQuestion.questionText,
-	    messages: state.currentQuestion.messages
+	    messages: state.currentQuestion.messages,
+	    userName: state.userName
 	  };
 	};
 	
