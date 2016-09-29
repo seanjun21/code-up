@@ -31001,7 +31001,7 @@
 	
 	var _chatroomPage2 = _interopRequireDefault(_chatroomPage);
 	
-	var _navBar = __webpack_require__(321);
+	var _navBar = __webpack_require__(322);
 	
 	var _navBar2 = _interopRequireDefault(_navBar);
 	
@@ -36703,11 +36703,8 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
-<<<<<<< HEAD
 	var _reactRouter = __webpack_require__(253);
 	
-=======
->>>>>>> 1f39b6afaf45ef5624944635e27c4d92f2fc2646
 	var _tagsSearchBar = __webpack_require__(317);
 	
 	var _tagsSearchBar2 = _interopRequireDefault(_tagsSearchBar);
@@ -37285,6 +37282,10 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
+	var _firepad = __webpack_require__(321);
+	
+	var _firepad2 = _interopRequireDefault(_firepad);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -37364,7 +37365,7 @@
 	          { type: 'button', className: 'newMessageButton', onClick: this.sendMessage },
 	          'send message'
 	        ),
-	        _react2.default.createElement(Firepad, null)
+	        _react2.default.createElement(_firepad2.default, null)
 	      );
 	    }
 	  }]);
@@ -37393,13 +37394,88 @@
 	  value: true
 	});
 	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(1);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	var _reactDom = __webpack_require__(34);
+	
+	var _reactDom2 = _interopRequireDefault(_reactDom);
+	
+	var _reactRedux = __webpack_require__(172);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+	
+	var FirepadEditor = function (_React$Component) {
+	  _inherits(FirepadEditor, _React$Component);
+	
+	  function FirepadEditor() {
+	    _classCallCheck(this, FirepadEditor);
+	
+	    return _possibleConstructorReturn(this, (FirepadEditor.__proto__ || Object.getPrototypeOf(FirepadEditor)).apply(this, arguments));
+	  }
+	
+	  _createClass(FirepadEditor, [{
+	    key: 'componentDidMount',
+	    value: function componentDidMount() {
+	
+	      // Initialize the Firebase SDK.
+	      firebase.initializeApp({
+	        apiKey: 'AIzaSyDzRGP_qB3NJpsNBokWc584Js4cCaRWObw',
+	        databaseURL: 'https://code-help-f2a98.firebaseio.com'
+	      });
+	      // Get Firebase Database reference.
+	      var firepadRef = firebase.database().ref(this.props.questionID);
+	
+	      // Create CodeMirror (with lineWrapping on).
+	      var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
+	
+	      // Create Firepad (with rich text toolbar and shortcuts enabled).
+	      var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror, { richTextShortcuts: true, richTextToolbar: true, defaultText: "Let's get coding!" });
+	    }
+	  }, {
+	    key: 'render',
+	    value: function render() {
+	      return _react2.default.createElement('div', { className: 'firepad', id: 'firepad', ref: 'firepad' });
+	    }
+	  }]);
+	
+	  return FirepadEditor;
+	}(_react2.default.Component);
+	
+	var mapStateToProps = function mapStateToProps(state) {
+	  return {
+	    questionID: state.currentQuestion.questionID
+	  };
+	};
+	
+	exports.default = FirepadEditor;
+
+/***/ },
+/* 322 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
 	var _react = __webpack_require__(1);
 	
 	var _react2 = _interopRequireDefault(_react);
 	
 	var _reactRedux = __webpack_require__(172);
 	
-	var _userName = __webpack_require__(322);
+	var _userName = __webpack_require__(323);
 	
 	var _userName2 = _interopRequireDefault(_userName);
 	
@@ -37478,7 +37554,7 @@
 	exports.default = NavBar;
 
 /***/ },
-/* 322 */
+/* 323 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
