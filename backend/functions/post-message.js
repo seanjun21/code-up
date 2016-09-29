@@ -7,13 +7,11 @@ let postMessages = (data) => {
     return new Promise((resolve, reject) => {
         const promise = insertM(messageText, questionID, userName);
         promise.then((promiseData) => {
-            console.log(promiseData, '<---------Promise Data');
             knex.select()
             .from('messages')
             .where({ question_id: promiseData })
             .orderBy('when_sent')
             .then((messages) => {
-                console.log(messages, '<---------promiseMessages');
                 resolve({ messages: messages });
             })
             .catch((err) => {
