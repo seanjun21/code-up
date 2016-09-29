@@ -13,10 +13,7 @@ class Firepad extends React.Component {
        databaseURL: 'https://code-help-f2a98.firebaseio.com'
      })
      // Get Firebase Database reference.
-     // var firepadRef = firebase.database().ref();
-     // Change the above code to below to embed in an app.
       firepadRef = firebase.database().child(this.props.questionId).ref();
-     //
 
      // Create CodeMirror (with lineWrapping on).
      var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
