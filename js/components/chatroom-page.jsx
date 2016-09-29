@@ -34,12 +34,13 @@ class ChatRoom extends React.Component{
     });
 
     return (
-      <div>
-        <h1 className="questionText">{this.props.questionText}</h1>
-        <ul>{messages}</ul>
-        <input type="text" className="newMessage" ref="messageText" placeholder="submit message" />
-        <button type="button" className="newMessageButton" onClick={this.sendMessage}>send message</button>
-
+      <div className="chatroom-container">
+        <div className="message-container">
+          <h1 className="questionText">{this.props.questionText}</h1>
+          <ul>message: this is a text placeholder {messages}</ul>
+          <input type="text" className="newMessage" ref="messageText" placeholder="submit message" />
+          <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
+        </div>
         <Firepad />
       </div>
     );
