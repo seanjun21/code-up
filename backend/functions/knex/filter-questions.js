@@ -1,4 +1,4 @@
-const knex = require('../database/connect.js');
+const knex = require('../../database/connect.js');
 
 let filterQuestions = (data) => {
     let tag = data.tag;

@@ -9,14 +9,20 @@ class Tag extends React.Component {
 
 	addItem(event) {
 		event.preventDefault()
-		let type = `apply${this.props.what}`
-		let tag = this.props.name
+		let data = {}
+		data[this.props.what] = this.props.name;
 		this.props.dispatch({
-      		type: type,
-      		data: {
-        		item: tag
-      		}
-    	})
+      		type: 'updateQuestionFeed',
+      		data: data
+		});
+		if (this.props.what === 'filter') {
+			this.props.dispatch({
+				type: 'server/filterQuestions',
+				data: {
+					filters: this.props.appliedFilters
+				}
+			});
+		}
     }
 
 	render() {
@@ -24,4 +30,10 @@ class Tag extends React.Component {
 	}
 }
 
-module.exports = connect()(Tag);
+const mapStateToProps = (state) => {
+  return {
+  	appliedFilters: state.questionFeed.appliedFilters
+  }
+};
+
+module.exports = connect(mapStateToProps)(Tag);

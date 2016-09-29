@@ -1,4 +1,4 @@
-const knex = require('../database/connect.js');
+const knex = require('../../database/connect.js');
 
 let joinRoom = (data) => {
     let questionID = data.questionID;
@@ -12,10 +12,13 @@ let joinRoom = (data) => {
             })
             .orderBy('when_sent')
             .then((messages) => {
-                resolve({
-                    questionText: data[0].question_text,
-                    questionID: data[0].id,
-                    messages: messages
+                resolve({  
+                    currentQuestion: { 
+                        questionID: data[0].id, 
+                        questionText: data[0].question_text, 
+                        whenAsked: data[0].when_asked, 
+                        messages: messages
+                    } 
                 });
             })
             .catch((err) => {
@@ -32,7 +35,7 @@ let findQ = (questionID) => {
         .where({
             id: questionID
         })
-        .returning(['id', 'question_text'])
+        .returning(['id', 'question_text', 'when_asked'])
         .then((data) => {
             resolve(data);
         })
