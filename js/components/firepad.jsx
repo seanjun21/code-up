@@ -3,7 +3,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 
-
 class Firepad extends React.Component {
 
   componentDidMount() {
@@ -16,7 +15,7 @@ class Firepad extends React.Component {
      // Get Firebase Database reference.
      // var firepadRef = firebase.database().ref();
      // Change the above code to below to embed in an app.
-      firepadRef = firebase.database().child(this.props.questionID).ref();
+      firepadRef = firebase.database().child(this.props.questionId).ref();
      //
 
      // Create CodeMirror (with lineWrapping on).
@@ -36,7 +35,7 @@ class Firepad extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-  questionID: state.currentQuestion.questionID
+  questionId: state.currentQuestionquestionId
   }
 };
 
