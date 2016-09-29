@@ -36703,8 +36703,11 @@
 	
 	var _reactRedux = __webpack_require__(172);
 	
+<<<<<<< HEAD
 	var _reactRouter = __webpack_require__(253);
 	
+=======
+>>>>>>> 1f39b6afaf45ef5624944635e27c4d92f2fc2646
 	var _tagsSearchBar = __webpack_require__(317);
 	
 	var _tagsSearchBar2 = _interopRequireDefault(_tagsSearchBar);
