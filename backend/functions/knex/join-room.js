@@ -1,4 +1,4 @@
-const knex = require('../database/connect.js');
+const knex = require('../../database/connect.js');
 
 let joinRoom = (data) => {
     let questionID = data.questionID;

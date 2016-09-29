@@ -37,7 +37,7 @@ class UserName extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
-  userName: state.userName
+  userName: state.user.userName
   }
 };
 

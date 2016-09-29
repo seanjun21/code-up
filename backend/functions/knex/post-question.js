@@ -1,4 +1,4 @@
-const knex = require('../database/connect.js');
+const knex = require('../../database/connect.js');
 
 let postQuestion = (data) => {
     let questionText = data.questionText;
@@ -7,6 +7,7 @@ let postQuestion = (data) => {
     return new Promise((resolve, reject) => {
         const promise = insertQ(questionText, userID);
         promise.then((data) => {
+            // TODO: Write if statement here for if tags were passed in, do insert to questions_tags and update select to be a join query returning tags also for each question and map this in component.
             knex.select()
             .from('questions')
             .where({ is_answered: false })

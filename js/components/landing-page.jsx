@@ -1,28 +1,37 @@
-/*onClick={this.removeTag(index)}>*/
-/*onClick={this.removeFilter(index)}>*/
 import React from 'react'
 import {connect} from 'react-redux'
+import {hashHistory} from 'react-router'
 import TagsSearchBar from './tags-search-bar'
 import tagsArr from '../tags-arr'
-
 
 class LandingPage extends React.Component {
 
   constructor() {
     super();
     this.postQuestion = this.postQuestion.bind(this);
-    this.filterQuestions = this.filterQuestions.bind(this);
     this.joinRoom = this.joinRoom.bind(this);
-    this.tagsSearch = this.tagsSearch.bind(this);
     this.filtersSearch = this.filtersSearch.bind(this);
-    // this.removeTag = this.removeTag.bind(this)
-    // this.removeFilter = this.removeFilter.bind(this)
+    this.tagsSearch = this.tagsSearch.bind(this);
+    this.resetFilters = this.resetFilters.bind(this)
+    this.resetTags = this.resetTags.bind(this)
   }
 
   componentDidMount() {
     this.props.dispatch({
       type: 'server/getQuestions'
     });
+    // resets current question if you go back to lobby from question room
+    // this.props.dispatch({
+    //   type: 'enterRoom',
+    //   data: {
+    //     currentQuestion: {
+    //       questionID: '',
+    //       questionText: '',
+    //       whenAsked: '',
+    //       messages: []
+    //     }
+    //   }
+    // });
   }
 
   postQuestion(event) {
@@ -42,38 +51,15 @@ class LandingPage extends React.Component {
     }
   }
 
-  filterQuestions(event) {
-    event.preventDefault();
-    let filters = this.props.appliedFilters;
-    if (filters.length < 1) {
-      this.props.dispatch({
-      type: "server/getQuestions",
-      data: {}
-    })
-    } else {
-      this.props.dispatch({
-        type: "server/filterQuestions",
-        data: {
-          filters: filters
-        }
-      })
-    }
-  }
-
   joinRoom(id, callback) {
     let props = this.props
     return function callback() {
-      const promise = new Promise((response) => {
-        response(props.dispatch({
-          type: "server/joinRoom",
-          data: {
-            questionID: id
-          }
-        }))
+      props.dispatch({
+        type: "server/joinRoom",
+        data: {
+          questionID: id
+        }
       });
-      promise.then(() => {
-        window.location.href = '/#/room/' + id
-      })
     }
   }
 
@@ -95,11 +81,11 @@ class LandingPage extends React.Component {
       tempArr = []
     }
     this.props.dispatch({
-      type: "addFilterResults",
+      type: "updateQuestionFeed",
       data: {
-        results: tempArr
+        filtersOutput: tempArr
       }
-    })
+    });
   }
 
   tagsSearch(event) {
@@ -120,48 +106,38 @@ class LandingPage extends React.Component {
       tempArr = []
     }
     this.props.dispatch({
-      type: "addTagResults",
+      type: "updateQuestionFeed",
       data: {
-        results: tempArr
+        tagsOutput: tempArr
       }
-    })
+    });
   }
 
-  // removeFilter(idx, callback) {
-  //   let props = this.props
-  //   return function callback() {
-  //     this.props.dispatch({
-  //       type: removeFilter,
-  //       data: {
-  //         index: idx
-  //       }
-  //     })
-  //   }
-  // }
+  resetFilters(event) {
+    event.preventDefault();
+      this.props.dispatch({
+      type: 'server/getQuestions'
+    });
+  }
 
-  // removeTag(idx, callback) {
-  //   let props = this.props
-  //   return function callback() {
-  //     this.props.dispatch({
-  //       type: removeTag,
-  //       data: {
-  //         index: idx
-  //       }
-  //     })
-  //   }
-  // }
+  resetTags(event) {
+    event.preventDefault();
+      this.props.dispatch({
+      type: 'updateQuestionFeed',
+      data: {
+        appliedTags: []
+      }
+    });
+  }
 
   render() {
     console.log('state', this.props.state);
-    // if (!this.props.questionFeed) {
-    //   return null
-    // }
     if (this.props.currentQuestion.questionID !== "") {
       hashHistory.push(`/room/${this.props.currentQuestion.questionID}`);
     }
-    let feed = this.props.questionFeed.map((question, index) => {
+    let feed = this.props.questions.map((question) => {
       return (
-        <li key={index}>
+        <li key={question.id}>
           <p>{question.question_text}</p>
           <p>Date: {question.when_asked}</p>
           <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom(question.id)}>Join room</button></div>
@@ -169,18 +145,15 @@ class LandingPage extends React.Component {
       )
     });
 
-    let appliedFilters = this.props.appliedFilters;
-      appliedFilters = appliedFilters.map((filter, index) => {
-        return <li key={index}><p>{filter}</p></li>;
+    let appliedFilters = this.props.appliedFilters.map((filter, index) => {
+        return <li key={index + 1}><p>{filter}</p></li>;
     });
 
-    let appliedTags = this.props.appliedTags;
-      appliedTags = appliedTags.map((tag, index) => {
-        return <li key={index}><p>{tag}</p></li>;
+    let appliedTags = this.props.appliedTags.map((tag, index) => {
+        return <li key={index + 1}><p>{tag}</p></li>;
     });
 
-    let usersOnline = this.props.curRoomOccupants;
-      usersOnline = usersOnline.map((user) => {
+    let usersOnline = this.props.currentUsers.map((user) => {
         return <li key={user.userID}><p>{user.userName}</p></li>;
     });
 
@@ -200,8 +173,9 @@ class LandingPage extends React.Component {
                             <textarea className="post-question-input" name="Text1" cols="36" rows="5" ref="questionText" placeholder="Enter question text" required />
                             <h3>Applied Tags:</h3>
                             <ul>{appliedTags}</ul>
+                            <button type="button" onClick={this.resetTags}>Reset Tags</button>
                             <button type="button" onClick={this.postQuestion}>Submit Question</button>
-                            <TagsSearchBar text="Add tags to your question" onInput={this.tagsSearch} output={this.props.tagsOutput} what="Tag" />
+                            <TagsSearchBar text="Add tags to your question" onInput={this.tagsSearch} output={this.props.tagsOutput} what="tag" />
                           </div>
                         </div>
                       </td>
@@ -220,8 +194,8 @@ class LandingPage extends React.Component {
                           <div className="filters">
                             <h3>Applied Filters:</h3>
                             <ul>{appliedFilters}</ul>
-                            <button type="button" onClick={this.filterQuestions}>Filter Questions</button>
-                            <TagsSearchBar text="Filter questions by tags" onInput={this.filtersSearch} output={this.props.filtersOutput} what="Filter" />
+                            <button type="button" onClick={this.resetFilters}>Reset Filters</button>
+                            <TagsSearchBar text="Filter questions by tags" onInput={this.filtersSearch} output={this.props.filtersOutput} what="filter" />
                           </div>
                         </div>
                       </td>
@@ -251,15 +225,15 @@ class LandingPage extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    questionFeed: state.questionFeed,
-    userID: state.userID,
-    userName: state.userName,
-    filtersOutput: state.filtersOutput,
-    tagsOutput: state.tagsOutput,
-    appliedTags: state.appliedTags,
-    appliedFilters: state.appliedFilters,
     state: state,
-    curRoomOccupants: state.curRoomOccupants,
+    userName: state.user.userName,
+    userID: state.user.userID,
+    currentUsers: state.currentUsers,
+    questions: state.questionFeed.questions,
+    tagsOutput: state.questionFeed.tagsOutput,
+    appliedTags: state.questionFeed.appliedTags,
+    filtersOutput: state.questionFeed.filtersOutput,
+    appliedFilters: state.questionFeed.appliedFilters,
     currentQuestion: state.currentQuestion
   }
 };

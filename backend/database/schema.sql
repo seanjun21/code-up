@@ -21,13 +21,13 @@ create table if not exists messages (
 );
 
 create table if not exists tags (
-    id serial primary key,
-    tag text not null unique
+    name text not null unique primary key,
+    id serial
 );
 
 create table if not exists questions_tags (
     question_id integer references questions,
-    tag_id integer references tags,
-    primary key (question_id, tag_id)
+    tag_name text references tags,
+    primary key (question_id, tag_name)
 );
 

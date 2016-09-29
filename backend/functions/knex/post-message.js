@@ -1,4 +1,4 @@
-const knex = require('../database/connect.js');
+const knex = require('../../database/connect.js');
 
 let postMessages = (data) => {
     let messageText = data.input;
@@ -6,10 +6,10 @@ let postMessages = (data) => {
     let userName = data.userName;
     return new Promise((resolve, reject) => {
         const promise = insertM(messageText, questionID, userName);
-        promise.then((promiseData) => {
+        promise.then((question_id) => {
             knex.select()
             .from('messages')
-            .where({ question_id: promiseData })
+            .where({ question_id: question_id })
             .orderBy('when_sent')
             .then((messages) => {
                 resolve({ messages: messages });
@@ -33,9 +33,9 @@ let insertM = (messageText, questionID, userName) => {
             when_sent: '1999-01-08 04:05:06'
         })
         .into('messages')
-        .returning(['question_id'])
+        .returning('question_id')
         .then((data) => {
-            resolve(data[0].question_id);
+            resolve(data.question_id);
         })
         .catch((err) => {
             reject(err);

@@ -12,14 +12,17 @@ const postQuestion = require('./backend/functions/knex/post-question');
 const postMessage = require('./backend/functions/knex/post-message');
 const filterQuestions = require('./backend/functions/knex/filter-questions');
 const joinRoom = require('./backend/functions/knex/join-room');
+const insertTags = require('./backend/functions/knex/insert-tags');
 const createRoomArr = require('./backend/functions/hash-map/create-room-arr');
 const findSocketIdx = require('./backend/functions/hash-map/find-socket-idx');
 
 let spaces = {
-    lobby: [],
+    lobby: []
 };
 
 app.use(express.static('./build'));
+
+// insertTags();
 
 io.on('connection', (socket) => {
     console.log("Socket connected: " + socket.id);
@@ -28,15 +31,15 @@ io.on('connection', (socket) => {
     socket.on('action', (action) => {
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
-                createRoomArr(lobby).then((lobbyUserArr) => {
-                    // emit updated lobby array to all sockets in lobby
-                    socket.emit('action', {
-                        type: 'updateQuestionFeed',
-                        data: {
-                            questions: data.questions,
-                            currentUsers: lobbyUserArr
-                        }
-                    });
+            let lobbyUserArr = createRoomArr(spaces.lobby);
+                socket.emit('action', {
+                    type: 'updateQuestionFeed',
+                    data: {
+                        questions: data.questions,
+                        appliedFilters: [],
+                        filteredFeed: false,
+                        currentUsers: lobbyUserArr
+                    }
                 });
             });
         }
@@ -49,23 +52,20 @@ io.on('connection', (socket) => {
                         person.userID = data.userID;
                     }
                 });
-                createRoomArr(lobby).then((lobbyUserArr) => {            
-                    // emit updated lobby array to all sockets in lobby
-                    lobby.forEach((socket) => {
-                        socket.emit('action', {
-                            type: 'updateRoom',
-                            data: {
-                                currentUsers: lobbyUserArr
-                            }
-                        });
-                    });
-                    // emit updated user info to the socket that made the dispatch
+                let lobbyUserArr = createRoomArr(lobby);            
+                lobby.forEach((socket) => {
                     socket.emit('action', {
-                        type: 'updateUser',
+                        type: 'updateRoom',
                         data: {
-                            user: data
+                            currentUsers: lobbyUserArr
                         }
                     });
+                });
+                socket.emit('action', {
+                    type: 'updateUser',
+                    data: {
+                        user: data
+                    }
                 });
             });
         }
@@ -83,35 +83,30 @@ io.on('connection', (socket) => {
             postQuestion(action.data).then((data) => {
                 let questionID = data.questionID;
                 let lobby = spaces.lobby;
-                findSocketIdx(socket.id, lobby).then((idx) => {
-                    let item = lobby[idx];
-                    let room = [item];
-                    // create new 'room' in hash map for the new question
-                    spaces[questionID] = room;
-                    lobby.splice(idx, 1);
-                    createRoomArr(lobby).then((lobbyUserArr) => {
-                        createRoomArr(room).then((roomUserArr) => {
-                            // emit updated lobby array to all sockets in lobby
-                            lobby.forEach((socket) => {
-                                socket.emit('action', {
-                                    type: 'updateQuestionFeed',
-                                    data: { 
-                                        questions: data.questions,
-                                        currentUsers: lobbyUserArr
-                                    }
-                                });
-                            });
-                            // emit the question details and the room username array back to the socket that made the dispatch
-                            room.forEach((socket) => {
-                                socket.emit('action', {
-                                    type: 'enterRoom',
-                                    data: {
-                                        currentQuestion: data.currentQuestion
-                                        currentUsers: roomUserArr
-                                    }
-                                });
-                            });
-                        });
+                let idx = findSocketIdx(socket.id, lobby);
+                let item = lobby[idx];
+                let room = [item];
+                // create new 'room' in hash map for the new question
+                spaces[questionID] = room;
+                lobby.splice(idx, 1);
+                let lobbyUserArr = createRoomArr(lobby);
+                let roomUserArr = createRoomArr(room);
+                lobby.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'updateQuestionFeed',
+                        data: { 
+                            questions: data.questions,
+                            currentUsers: lobbyUserArr
+                        }
+                    });
+                });
+                room.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'enterRoom',
+                        data: {
+                            currentQuestion: data.currentQuestion,
+                            currentUsers: roomUserArr
+                        }
                     });
                 });    
             });
@@ -126,62 +121,60 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/joinRoom') {
             joinRoom(action.data).then((data) => {
-                let questionID = data.questionID;
+                console.log('data -->', data);
+                let questionID = data.currentQuestion.questionID;
+                console.log('questionID', questionID);
                 let lobby = spaces.lobby;
-                findSocketIdx(socket.id, lobby).then((idx) => {
-                    let item = lobby[idx];
-                    let room = spaces[questionID];
-                    room.push(item);
-                    lobby.splice(idx, 1);
-                    createRoomArr(lobby).then((lobbyUserArr) => {
-                        createRoomArr(room).then((roomUserArr) => {               
-                            // emit updated lobby array to all sockets in lobby
-                            lobby.forEach((socket) => {
-                                socket.emit('action', {
-                                    type: 'updateRoom',
-                                    data: {
-                                        currentUsers: lobbyUserArr,
-                                    }
-                                });
-                            });
-                            // send off data to all sockets in question room
-                            room.forEach((socket) => {
-                                socket.emit('action', {
-                                    type: 'enterRoom',
-                                    data: {
-                                        currentQuestion: data.currentQuestion
-                                        currentUsers: roomUserArr
-                                    }
-                                })
-                            });
-                        });
+                let idx = findSocketIdx(socket.id, lobby);
+                console.log('idx', idx)
+                let item = lobby[idx];
+                let room = spaces[questionID];
+                room.push(item);
+                lobby.splice(idx, 1);
+                console.log('room', room);
+                console.log('lobby', lobby);
+                let lobbyUserArr = createRoomArr(lobby);
+                console.log('lobbyUserArr', lobbyUserArr);
+                let roomUserArr = createRoomArr(room);  
+                console.log('roomUserArr', 'roomUserArr');            
+                lobby.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'updateRoom',
+                        data: {
+                            currentUsers: lobbyUserArr,
+                        }
                     });
+                });
+                room.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'enterRoom',
+                        data: {
+                            currentQuestion: data.currentQuestion,
+                            currentUsers: roomUserArr
+                        }
+                    })
                 });
             });
         }
     });
-//when a user leaves or closes browser
     socket.on('disconnect', () => {
         // create rooms array of values (arrays) for each key in 'spaces' hash map
         let rooms = Object.keys(spaces);
-        // loop through array of rooms
         for (let i = 0; i < rooms.length; i += 1) {
             let room = spaces[rooms[i]];
-            findSocketIdx(socket.id, room).then((idx) => {
-                if (idx !== null) {
-                    room.splice(idx, 1);
-                    createRoomArr(room).then((roomUserArr) => {
-                        room.forEach((socket) => {
-                            socket.emit('action', {
-                                type: 'updateRoom',
-                                data: {
-                                    currentUsers: roomUserArr
-                                }
-                            });
-                        });
+            let idx = findSocketIdx(socket.id, room);
+            if (idx !== null) {
+                room.splice(idx, 1);
+                let roomUserArr = createRoomArr(room);
+                room.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'updateRoom',
+                        data: {
+                            currentUsers: roomUserArr
+                        }
                     });
-                } 
-            });
+                });
+            } 
         }
     });
 });

@@ -5,10 +5,12 @@ let initialState = {
   },
   currentUsers: [],
   questionFeed: {
+    questions: [],
     tagsOutput: [],
     appliedTags: [],
     filtersOutput: [],
-    appliedFilters: []
+    appliedFilters: [],
+    filteredFeed: false
   },
   currentQuestion: {
     questionID: '',
@@ -18,93 +20,70 @@ let initialState = {
   }
 };
 function reducer(state=initialState, action) {
-  console.log(action.type, 'action.type');
+  console.log('action.type -->', action.type);
+  console.log('action.data -->', action.data);
 
   switch(action.type) {
     case 'updateQuestionFeed': {
-      let currentUsers = state.currentUsers;
-      if (action.data.currentUsers) {
-        currentUsers = action.data.currentUsers
+      let questions = state.questionFeed.questions;
+      // TODO: fix for resetting peoples filtered questionFeeds (TODO: use join in function to return array of question objects incl. tags and update so you can compare newly posted question to your applied tags)
+      if (action.data.questions) {
+        if (state.filteredFeed) {
+          questions.push(action.data.questions[0]);
+        } else {
+          questions = action.data.questions;
+        }
       }
+      let tagsOutput = action.data.tagsOutput || [];
+      let appliedTags = action.data.appliedTags || state.questionFeed.appliedTags;
+      if (action.data.tag) {
+        appliedTags.push(action.data.tag);
+      }
+      let filtersOutput = action.data.filtersOutput || [];
+      let appliedFilters = action.data.appliedFilters || state.questionFeed.appliedFilters;
+      if (action.data.filter) {
+        appliedFilters.push(action.data.filter);
+      }
+      let filteredFeed = action.data.filteredFeed || state.questionFeed.filteredFeed;
+      let currentUsers = action.data.currentUsers || state.currentUsers;
       return Object.assign({}, state, {
         questionFeed: {
-          questions: action.data.questions
-          tagsOutput: [],
-          appliedTags: [],
-          filtersOutput: [],
-          appliedFilters: [],
+          questions: questions,
+          tagsOutput: tagsOutput,
+          appliedTags: appliedTags,
+          filtersOutput: filtersOutput,
+          appliedFilters: appliedFilters,
+          filteredFeed: filteredFeed
         },
         currentUsers: currentUsers
-      })
+      });
     }
     case 'updateUser': {
       return Object.assign({}, state, {
         user: action.data.user
-      })
+      });
     }
     case 'updateRoom': {
       return Object.assign({}, state, {
         currentUsers: action.data.currentUsers
-      })
+      });
     }
     case 'enterRoom': {
+      let currentUsers = action.data.currentUsers || state.currentUsers;
       return Object.assign({}, state, {
         currentQuestion: action.data.currentQuestion,
-        currentUsers: action.data.currentUsers
-      })
+        currentUsers: currentUsers
+      });
     }
     case 'updateMessages': {
       return Object.assign({}, state, {
-        chatMessages: action.data.messages
-      })
-    }
-    case 'addFilterResults': {
-      return Object.assign({}, state, {
-        filtersOutput: action.data.results
-      })
-    }
-    case 'addTagResults': {
-      return Object.assign({}, state, {
-        tagsOutput: action.data.results
-      })
-    }
-    case 'applyFilter': {
-      let appliedFilters = state.appliedFilters
-      appliedFilters.push(action.data.item)
-      return Object.assign({}, state, {
-        appliedFilters: appliedFilters,
-        filtersOutput: []
-      })
-    }
-    case 'applyTag': {
-      let appliedTags = state.appliedTags
-      appliedTags.push(action.data.item)
-      return Object.assign({}, state, {
-        appliedTags: appliedTags,
-        tagsOutput: []
-      })
-    }
-    case 'removeFilter': {
-      let appliedFilters = state.appliedFilters
-      for (let i = 0; i < appliedFilters.length; i++) {
-        if (action.data.index === i) {
-          appliedFilters.splice(i, 1);
+        currentQuestion: {
+          questionID: state.currentQuestion.questionID,
+          questionText: state.currentQuestion.questionText,
+          whenAsked: state.currentQuestion.whenAsked,
+          messages: action.data.messages
         }
-      }
-      return Object.assign({}, state, {
-        appliedTags: appliedTags
-      })
-    }
-    case 'removeTag': {
-      let appliedTags = state.appliedTags
-      for (let i = 0; i < appliedTags.length; i++) {
-        if (action.data.index === i) {
-          appliedTags.splice(i, 1);
-        }
-      }
-      return Object.assign({}, state, {
-        appliedTags: appliedTags
-      })
+      });
     }
     default: {
       return state;
