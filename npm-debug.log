@@ -1,33 +1,36 @@
 0 info it worked if it ends with ok
-1 verbose cli [ '/usr/local/bin/node', '/usr/local/bin/npm', 'run', 'start' ]
-2 info using npm@3.10.3
-3 info using node@v6.4.0
+1 verbose cli [ '/usr/local/Cellar/node/6.6.0/bin/node',
+1 verbose cli   '/usr/local/bin/npm',
+1 verbose cli   'run',
+1 verbose cli   'start' ]
+2 info using npm@3.10.7
+3 info using node@v6.6.0
 4 verbose run-script [ 'prestart', 'start', 'poststart' ]
 5 info lifecycle code-roulette@1.0.0~prestart: code-roulette@1.0.0
 6 silly lifecycle code-roulette@1.0.0~prestart: no script for prestart, continuing
 7 info lifecycle code-roulette@1.0.0~start: code-roulette@1.0.0
 8 verbose lifecycle code-roulette@1.0.0~start: unsafe-perm in lifecycle true
-9 verbose lifecycle code-roulette@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/jamesyoung/Desktop/thinkful/projects/week_14-16/code-roulette/node_modules/.bin:/usr/local/bin:/Users/jamesyoung/.npm-global/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
-10 verbose lifecycle code-roulette@1.0.0~start: CWD: /Users/jamesyoung/Desktop/thinkful/projects/week_14-16/code-roulette
+9 verbose lifecycle code-roulette@1.0.0~start: PATH: /usr/local/lib/node_modules/npm/bin/node-gyp-bin:/Users/alexbang/Thinkful/PROJECTS/code-roulette/node_modules/.bin:/usr/local/Cellar/node/6.6.0/bin:/Library/Frameworks/Python.framework/Versions/3.5/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+10 verbose lifecycle code-roulette@1.0.0~start: CWD: /Users/alexbang/Thinkful/PROJECTS/code-roulette
 11 silly lifecycle code-roulette@1.0.0~start: Args: [ '-c', 'node server.js' ]
 12 silly lifecycle code-roulette@1.0.0~start: Returned: code: 1  signal: null
 13 info lifecycle code-roulette@1.0.0~start: Failed to exec start script
 14 verbose stack Error: code-roulette@1.0.0 start: `node server.js`
 14 verbose stack Exit status 1
-14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:242:16)
+14 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:255:16)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at EventEmitter.emit (events.js:191:7)
 14 verbose stack     at ChildProcess.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/spawn.js:40:14)
 14 verbose stack     at emitTwo (events.js:106:13)
 14 verbose stack     at ChildProcess.emit (events.js:191:7)
-14 verbose stack     at maybeClose (internal/child_process.js:852:16)
-14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:215:5)
+14 verbose stack     at maybeClose (internal/child_process.js:877:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:226:5)
 15 verbose pkgid code-roulette@1.0.0
-16 verbose cwd /Users/jamesyoung/Desktop/thinkful/projects/week_14-16/code-roulette
-17 error Darwin 14.5.0
-18 error argv "/usr/local/bin/node" "/usr/local/bin/npm" "run" "start"
-19 error node v6.4.0
-20 error npm  v3.10.3
+16 verbose cwd /Users/alexbang/Thinkful/PROJECTS/code-roulette
+17 error Darwin 15.6.0
+18 error argv "/usr/local/Cellar/node/6.6.0/bin/node" "/usr/local/bin/npm" "run" "start"
+19 error node v6.6.0
+20 error npm  v3.10.7
 21 error code ELIFECYCLE
 22 error code-roulette@1.0.0 start: `node server.js`
 22 error Exit status 1

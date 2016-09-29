@@ -13,7 +13,7 @@ class Firepad extends React.Component {
        databaseURL: 'https://code-help-f2a98.firebaseio.com'
      })
      // Get Firebase Database reference.
-      firepadRef = firebase.database().child(this.props.questionId).ref();
+      firepadRef = firebase.database().child(this.props.questionID).ref();
 
      // Create CodeMirror (with lineWrapping on).
      var codeMirror = CodeMirror(this.refs.firepad, { lineWrapping: true });
@@ -32,7 +32,7 @@ class Firepad extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-  questionId: state.currentQuestionquestionId
+  questionID: state.currentQuestion.questionID
   }
 };
 
