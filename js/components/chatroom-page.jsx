@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
+import Firepad from './firepad';
 
 class ChatRoom extends React.Component{
 
