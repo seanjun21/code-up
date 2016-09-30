@@ -37462,7 +37462,7 @@
 	  };
 	};
 	
-	exports.default = FirepadEditor;
+	exports.default = (0, _reactRedux.connect)(mapStateToProps)(FirepadEditor);
 
 /***/ },
 /* 322 */
