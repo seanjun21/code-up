@@ -37351,6 +37351,24 @@
 	        { className: 'chatroom-container' },
 	        _react2.default.createElement(
 	          'div',
+	          { className: 'chat-users' },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            'Current users: '
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            _react2.default.createElement(
+	              'li',
+	              null,
+	              this.props.chatUsers
+	            )
+	          )
+	        ),
+	        _react2.default.createElement(
+	          'div',
 	          { className: 'message-container' },
 	          _react2.default.createElement(
 	            'h1',
@@ -37383,7 +37401,8 @@
 	    questionID: state.currentQuestion.questionID,
 	    questionText: state.currentQuestion.questionText,
 	    messages: state.currentQuestion.messages,
-	    userName: state.user.userName
+	    userName: state.user.userName,
+	    chatUsers: state.currentUsers
 	  };
 	};
 	

@@ -35,6 +35,12 @@ class ChatRoom extends React.Component{
 
     return (
       <div className="chatroom-container">
+        <div className="chat-users">
+          <p>Current users: </p>
+          <ul>
+            <li>{this.props.chatUsers}</li>
+          </ul>
+        </div>
         <div className="message-container">
           <h1 className="questionText">{this.props.questionText}</h1>
           <ul>message: this is a text placeholder {messages}</ul>
@@ -52,7 +58,8 @@ const mapStateToProps = (state) => {
     questionID: state.currentQuestion.questionID,
     questionText: state.currentQuestion.questionText,
     messages: state.currentQuestion.messages,
-    userName: state.user.userName
+    userName: state.user.userName,
+    chatUsers: state.currentUsers
   }
 };
 
