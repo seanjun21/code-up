@@ -37363,7 +37363,7 @@
 	            _react2.default.createElement(
 	              'li',
 	              null,
-	              this.props.currentUsers
+	              this.props.chatUsers
 	            )
 	          )
 	        ),
@@ -37402,7 +37402,7 @@
 	    questionText: state.currentQuestion.questionText,
 	    messages: state.currentQuestion.messages,
 	    userName: state.user.userName,
-	    currentUsers: state.currentUsers
+	    chatUsers: state.currentUsers
 	  };
 	};
 	
