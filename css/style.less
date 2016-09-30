@@ -2,9 +2,11 @@
 
 @white: #ffffff;
 @dkGrey: #6C6C6C;
-@ltBlue: #008ae6;
+// @ltBlue: #008ae6;
+@ltBlue: #3399ff;
 @dkBlue: #002e4d;
 @orange: #ff8000;
+@mdGrey: #f0f0f0;
 
 body {
     margin: 0;
@@ -43,7 +45,8 @@ body {
                         .inner {
                             font-size: 14px;
                             text-align: left;
-                            border: 2px solid @dkBlue;
+                            // border: 2px solid @dkBlue;
+                            border: 2px solid @mdGrey;
                             height: 352px;
                             width: 95%;
 
@@ -138,12 +141,14 @@ body {
                                     h1 {
                                         margin: 0 auto;
                                         font-size: 25px;
-                                        color: @dkBlue;
+                                        // color: @dkBlue;
+                                        color: @dkGrey;
                                         margin-top: 0px;
                                         margin-bottom: 5px;
                                         padding-bottom: 5px;
                                         width: 90%;
-                                        border-bottom: 1px solid @dkBlue;
+                                        // border-bottom: 1px solid @dkBlue;
+                                        border-bottom: 1px solid @dkGrey;
                                         text-align: center;
                                     }
 
@@ -173,7 +178,8 @@ body {
                                         display: inline-block;
                                         padding-right: 5px;
                                         letter-spacing: 0.2em;
-                                        color: @dkBlue;
+                                        // color: @dkBlue;
+                                        color: #303030;
                                         font-size: 35px;
                                         margin-top: 0;
                                         margin-bottom: 0;
@@ -181,7 +187,8 @@ body {
 
                                     h4 {
                                         display: inline-block;
-                                        color: @orange;
+                                        // color: @orange;
+                                        color: #303030;
                                         letter-spacing: 0.2em;
                                         margin-top: 0;
                                         margin-bottom: 0;
@@ -189,7 +196,8 @@ body {
                                 }
                                 .user-name {
                                     vertical-align: middle;
-                                    color: @dkBlue;
+                                    // color: @dkBlue;
+                                    color: @dkGrey;
                                     display: inline-block;
                                     margin-top: 20px;
                                     width: 100%;
@@ -207,7 +215,8 @@ body {
                                         width: 200px;
                                     }
                                     input:required {
-                                        border: 1px solid @dkBlue;
+                                        // border: 1px solid @dkBlue;
+                                        border: 1px solid @dkGrey;
                                         box-shadow: none;
                                     }
                                     input:invalid {
@@ -254,7 +263,8 @@ body {
         }
     }
     .nav-bar {
-        background-color: @ltBlue;
+        // background-color: @ltBlue;
+        background-color: #e8e8e8;
         color: @white;
         height: 150px;
         .outer {
@@ -273,8 +283,10 @@ body {
 
     button {
         color: @white;
-        background-color: @orange;
-        border: 1px solid @orange;
+        // background-color: @orange;
+        // border: 1px solid @orange;
+        background-color: @ltBlue;
+        border: 1px solid @ltBlue;
         border-radius: 6px;
         padding: 0.3em 1em;
         display: inline-block;
@@ -283,7 +295,8 @@ body {
 
     input {
         width: 150px;
-        border: 1px solid @dkGrey;
+        // border: 1px solid @dkGrey;
+        border: 1px solid @mdGrey;
         border-radius: 6px;
         text-align: center;
         padding: 0.3em 1em;
@@ -308,10 +321,10 @@ body {
 
     .message-container {
       border-style: solid;
-      border-color: grey;
+      border-color: #F0F0F0;
       border-width: 2px;
       margin: 1em;
-      width: 500px;
+      width: 400px;
       padding: 1em;
       display: inline-block;
 
@@ -322,16 +335,31 @@ body {
     }
 
     .firepad {
-    width: 800px;
+    width: 600px;
     height: 350px;
     border-style: solid;
-    border-color: grey;
+    border-color: #F0F0F0;
     border-width: 2px;
 
     // margin-top: 2em;
     padding: 1em;
     display: inline-block;
     }
-  }
 
+    .chat-users {
+      border-style: solid;
+      border-color: #F0F0F0;
+      border-width: 2px;
+      width: 200px;
+      height: 350px;
+      padding: 1em;
+      margin: -7em 1em 1em 1em;
+      display: inline-block;
+      text-align: center;
+    }
+
+    .chat-users li {
+      list-style: none;
+    }
+  }
 }
