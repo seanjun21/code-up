@@ -40,7 +40,7 @@ body .landing-page .wrapper .outer .content .land-column .inner,
 body .nav-bar .wrapper .outer .content .land-column .inner {
   font-size: 14px;
   text-align: left;
-  border: 2px solid #002e4d;
+  border: 2px solid #f0f0f0;
   height: 352px;
   width: 95%;
 }
@@ -159,12 +159,12 @@ body .landing-page .wrapper .outer .content .land-column .inner .inner-col .user
 body .nav-bar .wrapper .outer .content .land-column .inner .inner-col .users-online h1 {
   margin: 0 auto;
   font-size: 25px;
-  color: #002e4d;
+  color: #6C6C6C;
   margin-top: 0px;
   margin-bottom: 5px;
   padding-bottom: 5px;
   width: 90%;
-  border-bottom: 1px solid #002e4d;
+  border-bottom: 1px solid #6C6C6C;
   text-align: center;
 }
 body .landing-page .wrapper .outer .content .nav-column,
@@ -195,7 +195,7 @@ body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .title h1 {
   display: inline-block;
   padding-right: 5px;
   letter-spacing: 0.2em;
-  color: #002e4d;
+  color: #303030;
   font-size: 35px;
   margin-top: 0;
   margin-bottom: 0;
@@ -203,7 +203,7 @@ body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .title h1 {
 body .landing-page .wrapper .outer .content .nav-column .inner .inner-col .title h4,
 body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .title h4 {
   display: inline-block;
-  color: #ff8000;
+  color: #303030;
   letter-spacing: 0.2em;
   margin-top: 0;
   margin-bottom: 0;
@@ -211,7 +211,7 @@ body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .title h4 {
 body .landing-page .wrapper .outer .content .nav-column .inner .inner-col .user-name,
 body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .user-name {
   vertical-align: middle;
-  color: #002e4d;
+  color: #6C6C6C;
   display: inline-block;
   margin-top: 20px;
   width: 100%;
@@ -232,7 +232,7 @@ body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .user-name 
 }
 body .landing-page .wrapper .outer .content .nav-column .inner .inner-col .user-name input:required,
 body .nav-bar .wrapper .outer .content .nav-column .inner .inner-col .user-name input:required {
-  border: 1px solid #002e4d;
+  border: 1px solid #6C6C6C;
   box-shadow: none;
 }
 body .landing-page .wrapper .outer .content .nav-column .inner .inner-col .user-name input:invalid,
@@ -282,7 +282,7 @@ body .landing-page .outer .content {
   text-align: center;
 }
 body .nav-bar {
-  background-color: #008ae6;
+  background-color: #e8e8e8;
   color: #ffffff;
   height: 150px;
 }
@@ -298,8 +298,8 @@ body .nav-bar .outer .user-name .add-user {
 }
 body button {
   color: #ffffff;
-  background-color: #ff8000;
-  border: 1px solid #ff8000;
+  background-color: #3399ff;
+  border: 1px solid #3399ff;
   border-radius: 6px;
   padding: 0.3em 1em;
   display: inline-block;
@@ -327,10 +327,10 @@ body .chatroom-container {
 }
 body .chatroom-container .message-container {
   border-style: solid;
-  border-color: grey;
+  border-color: #F0F0F0;
   border-width: 2px;
   margin: 1em;
-  width: 500px;
+  width: 400px;
   padding: 1em;
   display: inline-block;
 }
@@ -340,12 +340,26 @@ body .chatroom-container button {
   margin-right: -0.5em;
 }
 body .chatroom-container .firepad {
-  width: 800px;
+  width: 400px;
   height: 350px;
   border-style: solid;
-  border-color: grey;
+  border-color: #F0F0F0;
   border-width: 2px;
   padding: 1em;
   display: inline-block;
+}
+body .chatroom-container .chat-users {
+  border-style: solid;
+  border-color: #F0F0F0;
+  border-width: 2px;
+  width: 200px;
+  height: 350px;
+  padding: 1em;
+  margin: -7em 1em 1em 1em;
+  display: inline-block;
+  text-align: center;
+}
+body .chatroom-container .chat-users li {
+  list-style: none;
 }
 /*# sourceMappingURL=code-roulette.1.0.0.css.map */
