@@ -37348,22 +37348,27 @@
 	
 	      return _react2.default.createElement(
 	        'div',
-	        null,
+	        { className: 'chatroom-container' },
 	        _react2.default.createElement(
-	          'h1',
-	          { className: 'questionText' },
-	          this.props.questionText
-	        ),
-	        _react2.default.createElement(
-	          'ul',
-	          null,
-	          messages
-	        ),
-	        _react2.default.createElement('input', { type: 'text', className: 'newMessage', ref: 'messageText', placeholder: 'submit message' }),
-	        _react2.default.createElement(
-	          'button',
-	          { type: 'button', className: 'newMessageButton', onClick: this.sendMessage },
-	          'send message'
+	          'div',
+	          { className: 'message-container' },
+	          _react2.default.createElement(
+	            'h1',
+	            { className: 'questionText' },
+	            this.props.questionText
+	          ),
+	          _react2.default.createElement(
+	            'ul',
+	            null,
+	            'message: this is a text placeholder ',
+	            messages
+	          ),
+	          _react2.default.createElement('input', { type: 'text', className: 'newMessage', ref: 'messageText', placeholder: 'submit message' }),
+	          _react2.default.createElement(
+	            'button',
+	            { type: 'button', className: 'newMessageButton', onClick: this.sendMessage },
+	            'send'
+	          )
 	        ),
 	        _react2.default.createElement(_firepad2.default, null)
 	      );
