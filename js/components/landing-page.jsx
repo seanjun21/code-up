@@ -57,16 +57,13 @@ class LandingPage extends React.Component {
     }
   }
 
-  joinRoom(id, callback) {
-    let props = this.props
-    return function callback() {
-      props.dispatch({
-        type: "server/joinRoom",
-        data: {
-          questionID: id
-        }
-      });
-    }
+  joinRoom(id) {
+    this.props.dispatch({
+      type: "server/joinRoom",
+      data: {
+        questionID: id
+      }
+    })
   }
 
   filtersSearch(event) {
