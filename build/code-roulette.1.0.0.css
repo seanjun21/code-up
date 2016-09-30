@@ -282,7 +282,7 @@ body .landing-page .outer .content {
   text-align: center;
 }
 body .nav-bar {
-  background-color: #E0E0E0;
+  background-color: #e8e8e8;
   color: #ffffff;
   height: 150px;
 }
@@ -298,8 +298,8 @@ body .nav-bar .outer .user-name .add-user {
 }
 body button {
   color: #ffffff;
-  background-color: #008ae6;
-  border: 1px solid #008ae6;
+  background-color: #3399ff;
+  border: 1px solid #3399ff;
   border-radius: 6px;
   padding: 0.3em 1em;
   display: inline-block;

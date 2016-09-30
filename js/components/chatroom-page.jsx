@@ -38,7 +38,7 @@ class ChatRoom extends React.Component{
         <div className="chat-users">
           <p>Current users: </p>
           <ul>
-            <li>{this.props.chatUsers}</li>
+            <li>{this.props.currentUsers}</li>
           </ul>
         </div>
         <div className="message-container">
@@ -59,7 +59,7 @@ const mapStateToProps = (state) => {
     questionText: state.currentQuestion.questionText,
     messages: state.currentQuestion.messages,
     userName: state.user.userName,
-    chatUsers: state.currentUsers
+    currentUsers: state.currentUsers
   }
 };
 
