@@ -37346,6 +37346,18 @@
 	        );
 	      });
 	
+	      var usersOnline = this.props.currentUsers.map(function (user) {
+	        return _react2.default.createElement(
+	          'li',
+	          { key: user.userID },
+	          _react2.default.createElement(
+	            'p',
+	            null,
+	            user.userName
+	          )
+	        );
+	      });
+	
 	      return _react2.default.createElement(
 	        'div',
 	        { className: 'chatroom-container' },
@@ -37360,11 +37372,7 @@
 	          _react2.default.createElement(
 	            'ul',
 	            null,
-	            _react2.default.createElement(
-	              'li',
-	              null,
-	              this.props.chatUsers
-	            )
+	            usersOnline
 	          )
 	        ),
 	        _react2.default.createElement(
@@ -37402,7 +37410,7 @@
 	    questionText: state.currentQuestion.questionText,
 	    messages: state.currentQuestion.messages,
 	    userName: state.user.userName,
-	    chatUsers: state.currentUsers
+	    currentUsers: state.currentUsers
 	  };
 	};
 	
