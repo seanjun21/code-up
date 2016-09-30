@@ -36,4 +36,4 @@ const mapStateToProps = (state) => {
   }
 };
 
-export default FirepadEditor;
+export default connect(mapStateToProps)(FirepadEditor);
