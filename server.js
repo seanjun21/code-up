@@ -25,10 +25,26 @@ app.use(express.static('./build'));
 // insertTags();
 
 io.on('connection', (socket) => {
+
     console.log("Socket connected: " + socket.id);
     // push newly connect socket into the lobby array in the hash map
-    spaces.lobby.push(socket);
+    // spaces.lobby.push(socket);
+    socket.emit('action', {
+      type: 'findRoom'
+    })
     socket.on('action', (action) => {
+      if (action.type === 'server/setRoom') {
+        if (action.data.questionID === 'lobby') {
+           spaces.lobby.push(socket);
+        } else {
+          spaces[action.data.questionID].push(socket)
+        }
+        socket.emit('action', {
+          type: 'findRoom'
+          })
+      }
+
+
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
             let lobbyUserArr = createRoomArr(spaces.lobby);
@@ -124,10 +140,7 @@ io.on('connection', (socket) => {
                 let questionID = data.currentQuestion.questionID;
                 let lobby = spaces.lobby;
                 let idx = findSocketIdx(socket.id, lobby);
-                let item = lobby[idx];
-                let room = [];
-                spaces[questionID] = room;
-                room.push(item);
+                let room = spaces[questionID];
                 lobby.splice(idx, 1);
                 let lobbyUserArr = createRoomArr(lobby);
                 let roomUserArr = createRoomArr(room);

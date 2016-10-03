@@ -17,13 +17,22 @@ let initialState = {
     questionText: '',
     whenAsked: '',
     messages: []
-  }
+  },
+  needRoom: false
 };
 function reducer(state=initialState, action) {
   console.log('action.type -->', action.type);
   console.log('action.data -->', action.data);
 
   switch(action.type) {
+    case 'findRoom': {
+      let needRoom = !state.needRoom;
+      console.log(state.needRoom, "<-- state needRoom")
+      return Object.assign({}, state, {
+        needRoom: needRoom
+      })
+    }
+
     case 'updateQuestionFeed': {
       let questions = state.questionFeed.questions;
       // TODO: fix for resetting peoples filtered questionFeeds (TODO: use join in function to return array of question objects incl. tags and update so you can compare newly posted question to your applied tags)

@@ -20,21 +20,17 @@ class LandingPage extends React.Component {
     this.props.dispatch({
       type: 'server/getQuestions'
     });
-    // resets current question if you go back to lobby from question room
-    // this.props.dispatch({
-    //   type: 'enterRoom',
-    //   data: {
-    //     currentQuestion: {
-    //       questionID: '',
-    //       questionText: '',
-    //       whenAsked: '',
-    //       messages: []
-    //     }
-    //   }
-    // });
   }
 
   componentWillReceiveProps(nextProps) {
+    if (nextProps.needRoom) {
+      this.props.dispatch({
+        type: 'server/setRoom',
+        data: {
+          questionID: 'lobby'
+        }
+      })
+    }
     if (nextProps.currentQuestion.questionID !== "") {
       hashHistory.push(`/room/${nextProps.currentQuestion.questionID}`);
     }
@@ -58,12 +54,7 @@ class LandingPage extends React.Component {
   }
 
   joinRoom(id) {
-    this.props.dispatch({
-      type: "server/joinRoom",
-      data: {
-        questionID: id
-      }
-    })
+    hashHistory.push(`/room/${id}`);
   }
 
   filtersSearch(event) {
@@ -235,7 +226,8 @@ const mapStateToProps = (state) => {
     appliedTags: state.questionFeed.appliedTags,
     filtersOutput: state.questionFeed.filtersOutput,
     appliedFilters: state.questionFeed.appliedFilters,
-    currentQuestion: state.currentQuestion
+    currentQuestion: state.currentQuestion,
+    needRoom: state.needRoom
   }
 };
 
