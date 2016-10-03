@@ -26,11 +26,18 @@ function reducer(state=initialState, action) {
 
   switch(action.type) {
     case 'findRoom': {
-      let needRoom = !state.needRoom;
-      console.log(state.needRoom, "<-- state needRoom")
       return Object.assign({}, state, {
-        needRoom: needRoom
+        needRoom: true
       })
+    }
+
+    case 'roomLoaded': {
+      let currentUsers = action.data.currentUsers || state.currentUsers;
+      return Object.assign({}, state, {
+        currentQuestion: action.data.currentQuestion,
+        currentUsers: currentUsers,
+        needRoom: false
+      });
     }
 
     case 'updateQuestionFeed': {
@@ -64,7 +71,8 @@ function reducer(state=initialState, action) {
           appliedFilters: appliedFilters,
           filteredFeed: filteredFeed
         },
-        currentUsers: currentUsers
+        currentUsers: currentUsers,
+        needRoom: false
       });
     }
     case 'updateUser': {

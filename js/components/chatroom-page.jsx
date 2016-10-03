@@ -10,27 +10,16 @@ class ChatRoom extends React.Component{
     this.sendMessage = this.sendMessage.bind(this);
   }
 
-  componentDidMount() {
-    let questionID = this.props.params.questionID;
-    console.log(this.props.params.questionID, "<-- questionID")
-    this.props.dispatch({
-      type: 'server/joinRoom',
-      data: {
-        questionID: questionID
-      }
-    });
-  }
-
   componentWillReceiveProps(nextProps) {
     let questionID = nextProps.params.questionID;
     console.log(questionID, "<---questionID")
     if (nextProps.needRoom) {
       this.props.dispatch({
-        type: 'server/setRoom',
+        type: 'server/loadRoom',
         data: {
           questionID: questionID
         }
-      })
+      });
     }
   }
 

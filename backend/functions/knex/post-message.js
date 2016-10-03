@@ -9,7 +9,7 @@ let postMessages = (data) => {
         promise.then((question_id) => {
             knex.select()
             .from('messages')
-            .where({ question_id: question_id })
+            .where({ question_id: parseInt(question_id) })
             .orderBy('when_sent')
             .then((messages) => {
                 resolve({ messages: messages });
@@ -34,7 +34,7 @@ let insertM = (messageText, questionID, userName) => {
         .into('messages')
         .returning('question_id')
         .then((data) => {
-            resolve(data.question_id);
+            resolve(data);
         })
         .catch((err) => {
             reject(err);
