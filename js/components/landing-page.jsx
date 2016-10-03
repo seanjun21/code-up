@@ -57,16 +57,13 @@ class LandingPage extends React.Component {
     }
   }
 
-  joinRoom(id, callback) {
-    let props = this.props
-    return function callback() {
-      props.dispatch({
-        type: "server/joinRoom",
-        data: {
-          questionID: id
-        }
-      });
-    }
+  joinRoom(id) {
+    this.props.dispatch({
+      type: "server/joinRoom",
+      data: {
+        questionID: id
+      }
+    })
   }
 
   filtersSearch(event) {
@@ -144,7 +141,7 @@ class LandingPage extends React.Component {
         <li key={question.id}>
           <p>{question.question_text}</p>
           <p>Date: {question.when_asked}</p>
-          <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom(question.id)}>Join room</button></div>
+          <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom.bind(this, question.id)}>Join room</button></div>
         </li>
       )
     });
