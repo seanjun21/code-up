@@ -141,7 +141,7 @@ class LandingPage extends React.Component {
         <li key={question.id}>
           <p>{question.question_text}</p>
           <p>Date: {question.when_asked}</p>
-          <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom(question.id)}>Join room</button></div>
+          <div className="room"><p>Room #: {question.id}</p><button type="button" onClick={this.joinRoom.bind(this, question.id)}>Join room</button></div>
         </li>
       )
     });

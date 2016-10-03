@@ -36469,7 +36469,7 @@
 	            ),
 	            _react2.default.createElement(
 	              'button',
-	              { type: 'button', onClick: _this2.joinRoom(question.id) },
+	              { type: 'button', onClick: _this2.joinRoom.bind(_this2, question.id) },
 	              'Join room'
 	            )
 	          )
