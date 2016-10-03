@@ -7,8 +7,7 @@ create table if not exists questions (
     id serial primary key,
     user_id integer not null references users,
     question_text text not null,
-    when_asked timestamp not null,
-    -- '1999-01-08 04:05:06'
+    when_asked timestamp not null default now(),
     is_answered boolean
 );
 
@@ -17,7 +16,7 @@ create table if not exists messages (
     question_id integer not null references questions,
     message_text text not null,
     user_name text not null,
-    when_sent timestamp not null
+    when_sent timestamp not null default now()
 );
 
 create table if not exists tags (

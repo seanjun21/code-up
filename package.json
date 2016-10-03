@@ -9,7 +9,7 @@
     "start": "node server.js",
     "mkdir": "mkdir -p build",
     "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:js && npm run build:css",
-    "watch": "npm run watch:html & npm run watch:js & npm run watch:css",
+    "watch": "npm run mkdir && npm run watch:html & npm run watch:js & npm run watch:css",
     "clean": "rm -rf build",
     "build:html": "npm run clean:html && cp index.html build/",
     "watch:html": "npm run build:html && chokidar index.html -c 'npm run build:html'",

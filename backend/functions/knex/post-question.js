@@ -17,8 +17,8 @@ let postQuestion = (data) => {
                     questions: questions, 
                     currentQuestion: { 
                         questionID: data[0].id, 
-                        questionText: data[0].question_text, 
-                        whenAsked: data[0].when_asked, 
+                        questionText: data[0].question_text,
+                        whenAsked: data[0].when_asked,
                         messages: []
                     } 
                 });
@@ -35,7 +35,7 @@ let postQuestion = (data) => {
 
 let insertQ = (questionText, userID) => {
     return new Promise((resolve, reject) => {
-        knex.insert({question_text: questionText, user_id: userID, is_answered: false, when_asked: '1999-01-08 04:05:06'})
+        knex.insert({question_text: questionText, user_id: userID, is_answered: false })
         .into('questions')
         .returning(['id', 'question_text', 'when_asked'])
         .then((data) => {

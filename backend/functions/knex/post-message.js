@@ -29,8 +29,7 @@ let insertM = (messageText, questionID, userName) => {
         knex.insert({
             message_text: messageText,
             question_id: questionID,
-            user_name: userName,
-            when_sent: '1999-01-08 04:05:06'
+            user_name: userName
         })
         .into('messages')
         .returning('question_id')
