@@ -39,7 +39,6 @@ let insertQ = (questionText, userID) => {
         .into('questions')
         .returning(['id', 'question_text', 'when_asked'])
         .then((data) => {
-          console.log("data----->", data)
             resolve(data);
             })
         .catch((err) => {

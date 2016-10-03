@@ -151,7 +151,6 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/joinRoom') {
             joinRoom(action.data).then((data) => {
-                console.log(spaces[data.currentQuestion.questionID], '<------------questionID');
 
                 let questionID = data.currentQuestion.questionID;
                 let lobby = spaces.lobby;
