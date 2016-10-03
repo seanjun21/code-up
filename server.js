@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 
@@ -25,13 +24,44 @@ app.use(express.static('./build'));
 // insertTags();
 
 io.on('connection', (socket) => {
+
     console.log("Socket connected: " + socket.id);
     // push newly connect socket into the lobby array in the hash map
-    spaces.lobby.push(socket);
+    // spaces.lobby.push(socket);
+    socket.emit('action', {
+        type: 'findRoom'
+    });
     socket.on('action', (action) => {
+        // if (action.type === 'server/setRoom') {
+        //     spaces.lobby.push(socket);
+        //
+        //     socket.emit('action', {
+        //         type: 'findRoom'
+        //     })
+        // }
+
+        if (action.type === 'server/loadRoom') {
+            joinRoom(action.data).then((data) => {
+                let room = spaces[data.currentQuestion.questionID];
+                room.push(socket);
+                let roomUserArr = createRoomArr(room);
+
+                room.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'roomLoaded',
+                        data: {
+                            currentQuestion: data.currentQuestion,
+                            currentUsers: roomUserArr
+                        }
+                    })
+                });
+            })
+        }
+
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
-            let lobbyUserArr = createRoomArr(spaces.lobby);
+                spaces.lobby.push(socket);
+                let lobbyUserArr = createRoomArr(spaces.lobby);
                 socket.emit('action', {
                     type: 'updateQuestionFeed',
                     data: {
@@ -81,7 +111,7 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/postQuestion') {
             postQuestion(action.data).then((data) => {
-                let questionID = data.questionID;
+                let questionID = data.currentQuestion.questionID;
                 let lobby = spaces.lobby;
                 let idx = findSocketIdx(socket.id, lobby);
                 let item = lobby[idx];
@@ -121,16 +151,17 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/joinRoom') {
             joinRoom(action.data).then((data) => {
+
                 let questionID = data.currentQuestion.questionID;
                 let lobby = spaces.lobby;
                 let idx = findSocketIdx(socket.id, lobby);
+
                 let item = lobby[idx];
-                let room = [];
-                spaces[questionID] = room;
-                room.push(item);
+                spaces[questionID].push(item);
                 lobby.splice(idx, 1);
+
                 let lobbyUserArr = createRoomArr(lobby);
-                let roomUserArr = createRoomArr(room);
+                let roomUserArr = createRoomArr(spaces[questionID]);
                 lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateRoom',
@@ -139,7 +170,7 @@ io.on('connection', (socket) => {
                         }
                     });
                 });
-                room.forEach((socket) => {
+                spaces[questionID].forEach((socket) => {
                     socket.emit('action', {
                         type: 'enterRoom',
                         data: {

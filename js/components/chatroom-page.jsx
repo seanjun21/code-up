@@ -10,6 +10,19 @@ class ChatRoom extends React.Component{
     this.sendMessage = this.sendMessage.bind(this);
   }
 
+  componentDidMount () {
+    let questionID = this.props.params.questionID;
+    console.log(questionID, '<_______QUESTION ID');
+    if (this.props.needRoom) {
+      this.props.dispatch({
+        type: 'server/loadRoom',
+        data: {
+          questionID: questionID
+        }
+      });
+    }
+  }
+
   sendMessage(event) {
     event.preventDefault();
     this.props.dispatch({
@@ -23,6 +36,7 @@ class ChatRoom extends React.Component{
   }
 
   render() {
+    console.log(this.props.state, "<--state")
     let messages = this.props.messages.map((message, index) => {
       return (
           <li key={index} id={message.question_id}>
@@ -59,11 +73,13 @@ class ChatRoom extends React.Component{
 
 const mapStateToProps = (state) => {
   return {
+    state: state,
     questionID: state.currentQuestion.questionID,
     questionText: state.currentQuestion.questionText,
     messages: state.currentQuestion.messages,
     userName: state.user.userName,
-    currentUsers: state.currentUsers
+    currentUsers: state.currentUsers,
+    needRoom: state.needRoom
   }
 };
 
