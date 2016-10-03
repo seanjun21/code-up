@@ -45,7 +45,7 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/addUser') {
             addUser(action.data).then((data) => {
-                let lobby = spaces.lobby
+                let lobby = spaces.lobby;
                 lobby.forEach((person, index) => {
                     if (socket.id === person.id) {
                         person.userName = data.userName;
@@ -121,22 +121,16 @@ io.on('connection', (socket) => {
         }
         if (action.type === 'server/joinRoom') {
             joinRoom(action.data).then((data) => {
-                console.log('data -->', data);
                 let questionID = data.currentQuestion.questionID;
-                console.log('questionID', questionID);
                 let lobby = spaces.lobby;
                 let idx = findSocketIdx(socket.id, lobby);
-                console.log('idx', idx)
                 let item = lobby[idx];
-                let room = spaces[questionID];
+                let room = [];
+                spaces[questionID] = room;
                 room.push(item);
                 lobby.splice(idx, 1);
-                console.log('room', room);
-                console.log('lobby', lobby);
                 let lobbyUserArr = createRoomArr(lobby);
-                console.log('lobbyUserArr', lobbyUserArr);
                 let roomUserArr = createRoomArr(room);
-                console.log('roomUserArr', 'roomUserArr');
                 lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateRoom',
