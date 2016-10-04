@@ -25,7 +25,6 @@ app.use(express.static('./build'));
 
 io.on('connection', (socket) => {
 
-    console.log("Socket connected: " + socket.id);
     // push newly connect socket into the lobby array in the hash map
     // spaces.lobby.push(socket);
     socket.emit('action', {
@@ -43,12 +42,17 @@ io.on('connection', (socket) => {
         if (action.type === 'server/loadRoom') {
             joinRoom(action.data).then((data) => {
                 let room = spaces[data.currentQuestion.questionID];
+
+                if (!room) {
+                    room = spaces[data.currentQuestion.questionID] = [];
+                }
+
                 room.push(socket);
                 let roomUserArr = createRoomArr(room);
 
                 room.forEach((socket) => {
                     socket.emit('action', {
-                        type: 'roomLoaded',
+                        type: 'enterRoom',
                         data: {
                             currentQuestion: data.currentQuestion,
                             currentUsers: roomUserArr
@@ -157,6 +161,11 @@ io.on('connection', (socket) => {
                 let idx = findSocketIdx(socket.id, lobby);
 
                 let item = lobby[idx];
+
+                if (!spaces[questionID]) {
+                    spaces[questionID] = [];
+                }
+
                 spaces[questionID].push(item);
                 lobby.splice(idx, 1);
 
@@ -187,6 +196,10 @@ io.on('connection', (socket) => {
         let rooms = Object.keys(spaces);
         for (let i = 0; i < rooms.length; i += 1) {
             let room = spaces[rooms[i]];
+            if (!room) {
+                room = spaces[room[i]] = [];
+            }
+
             let idx = findSocketIdx(socket.id, room);
             if (idx !== null) {
                 room.splice(idx, 1);
@@ -207,7 +220,6 @@ io.on('connection', (socket) => {
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
     server.listen(PORT, () => {
-        console.log(`Listening on localhost: ${PORT}`);
         if (callback) {
             callback();
         }
