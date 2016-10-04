@@ -5,26 +5,22 @@ let postQuestion = (data) => {
     let userID = data.userID;
     let tags = data.tags;
     return new Promise((resolve, reject) => {
-        const promise = insertQ(questionText, userID);
-        promise.then((data) => {
-            // TODO: Write if statement here for if tags were passed in, do insert to questions_tags and update select to be a join query returning tags also for each question and map this in component.
-            knex.select()
-            .from('questions')
-            .where({ is_answered: false })
-            .orderBy('when_asked')
-            .then((questions) => {
-                resolve({
-                    questions: questions,
-                    currentQuestion: {
-                        questionID: data[0].id,
-                        questionText: data[0].question_text,
-                        whenAsked: data[0].when_asked,
-                        messages: []
-                    }
-                });
-            })
-            .catch((err) => {
-                reject(err);
+        let currentQuestion = insertQ(questionText, userID);
+        let insertedTags = insertT(tags, currentQuestion.id);
+        knex.insert()
+        .from('questions')
+        .where({ is_answered: false })
+        .orderBy('when_asked')
+        .then((questions) => {
+            resolve({
+                questions: questions,
+                currentQuestion: {
+                    questionID: currentQuestion.id,
+                    questionText: currentQuestion.question_text,
+                    whenAsked: currentQuestion.when_asked,
+                    messages: [],
+                    insertedTags: insertedTags
+                }
             });
         })
         .catch((err) => {
@@ -34,17 +30,34 @@ let postQuestion = (data) => {
 };
 
 let insertQ = (questionText, userID) => {
-    return new Promise((resolve, reject) => {
-        knex.insert({question_text: questionText, user_id: userID, is_answered: false })
-        .into('questions')
-        .returning(['id', 'question_text', 'when_asked'])
-        .then((data) => {
-            resolve(data);
-            })
+    console.log(questionText, userID);
+    knex.insert({question_text: questionText, user_id: userID, is_answered: false })
+    .into('questions')
+    .returning(['id', 'question_text', 'when_asked'])
+    .then((data) => {
+        return data[0];
+    })
+    .catch((err) => {
+        console.error(err);
+    });
+}
+
+let insertT = (tags, questionID) => {
+    console.log(tags, questionID);
+    let addedTags = []
+    tags.forEach((tag) => {
+        knex.insert({ tag: tag, question_id: questionID})
+        .into('tags')
+        .returning('tag')
+        .then(() => {
+            console.log('post tag success', tag);
+            addedTags.push(tag)
+        })
         .catch((err) => {
-            reject(err);
+            console.log('post tag error', err, tag);
         });
     });
+    return addedTags
 }
 
 module.exports = postQuestion;

@@ -231,8 +231,7 @@ const mapStateToProps = (state) => {
         appliedTags: state.questionFeed.appliedTags,
         filtersOutput: state.questionFeed.filtersOutput,
         appliedFilters: state.questionFeed.appliedFilters,
-        currentQuestion: state.currentQuestion,
-        needRoom: state.needRoom
+        currentQuestion: state.currentQuestion
     }
 };
 
