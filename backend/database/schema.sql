@@ -1,4 +1,4 @@
-create table if not exists users (
+create table if not exists users ( 
     id serial primary key,
     user_name text not null unique
 );
@@ -20,13 +20,7 @@ create table if not exists messages (
 );
 
 create table if not exists tags (
-    name text not null unique primary key,
-    id serial
+    id serial primary key,
+    tag text not null,
+    question_id integer references questions
 );
-
-create table if not exists questions_tags (
-    question_id integer references questions,
-    tag_name text references tags,
-    primary key (question_id, tag_name)
-);
-

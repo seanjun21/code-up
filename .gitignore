@@ -2,3 +2,6 @@
 node_modules
 .DS_Store
 build
+auth.js
+fbauth_example.js
+github-secret.js
