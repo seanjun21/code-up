@@ -2,9 +2,8 @@
 
 @white: #ffffff;
 @dkGrey: #6C6C6C;
-// @ltBlue: #008ae6;
 @ltBlue: #3399ff;
-@dkBlue: #002e4d;
+@dkBlue: darken(#3399ff, 20%);
 @orange: #ff8000;
 @mdGrey: #f0f0f0;
 
@@ -16,7 +15,8 @@ body {
     font-size: 18px;
     color: @dkGrey;
 
-    .landing-page, .nav-bar {
+    .landing-page, .nav-bar, .chatroom-page {
+
         .wrapper {
             width: 100%;
             table-layout: fixed;
@@ -34,6 +34,13 @@ body {
                     padding-bottom: 10px;
                     height: 100%;
 
+                    .fire-pad {
+                        font-size: 20px;
+                        height: 400px;
+                        max-width: 600px;
+                        margin: 0 auto;
+                    }
+
                     .land-column {
                         max-width: 300px;
                         display: inline-block;
@@ -45,7 +52,6 @@ body {
                         .inner {
                             font-size: 14px;
                             text-align: left;
-                            // border: 2px solid @dkBlue;
                             border: 2px solid @mdGrey;
                             height: 352px;
                             width: 95%;
@@ -61,14 +67,28 @@ body {
                                             width: 85%;
                                             border-bottom: 1px solid @dkGrey;
                                             font-size: 17px;
+
+                                            .text {
+                                                font-size: 20px;
+                                            }
+                                            .date {
+                                                font-style: italic;
+                                            }
                                             .room {
-                                                p {
-                                                    display: inline-block;
-                                                }
+                                                button {
+                                                    margin-left: 0;
+                                                    margin-bottom: 10px;
+                                                } 
                                             }
                                         }
+                                        li:hover {
+                                            cursor: text;
+                                            color: inherit;
+                                        }   
                                     }
                                     .filters {
+                                        margin-left: 10px;
+
                                         h3 {
                                         font-size: 20px;
                                         }
@@ -84,16 +104,20 @@ body {
                                             margin-bottom: 0px;
                                         }
                                         ul {
+
                                             li {
                                                 border-bottom: 0px;
                                             }
+                                            li:hover {
+                                                cursor: pointer;
+                                                color: grey;
+                                            } 
                                         }
-
                                     }
                                 }
-
                                 .post-question {
                                     font-size: 17px;
+
                                     .post-question-input {
                                         margin-left: 10px;
                                         margin-top: 10px;
@@ -129,10 +153,14 @@ body {
 
                                     ul {
                                         padding-left: 15px;
+
+                                        li:hover {
+                                            cursor: text;
+                                            color: inherit;
+                                        }
                                     }
                                 }
-
-                                .post-question, .question-feed, .users-online {
+                                .post-question, .question-feed, .users-online, .post-message, .question-text {
                                     max-width: 285px;
                                     width: 95%;
                                     margin: 0 auto;
@@ -141,17 +169,14 @@ body {
                                     h1 {
                                         margin: 0 auto;
                                         font-size: 25px;
-                                        // color: @dkBlue;
                                         color: @dkGrey;
                                         margin-top: 0px;
                                         margin-bottom: 5px;
                                         padding-bottom: 5px;
                                         width: 90%;
-                                        // border-bottom: 1px solid @dkBlue;
                                         border-bottom: 1px solid @dkGrey;
                                         text-align: center;
                                     }
-
                                 }
                             }
                         }
@@ -174,20 +199,20 @@ body {
 
                                 .title {
                                     padding-left: 15px;
+
                                     h1 {
                                         display: inline-block;
                                         padding-right: 5px;
                                         letter-spacing: 0.2em;
-                                        // color: @dkBlue;
+                                        text-shadow: 1px 1px @white;
                                         color: #303030;
                                         font-size: 35px;
                                         margin-top: 0;
                                         margin-bottom: 0;
                                     }
-
                                     h4 {
                                         display: inline-block;
-                                        // color: @orange;
+                                        text-shadow: 0.5px 0.5px @white;
                                         color: #303030;
                                         letter-spacing: 0.2em;
                                         margin-top: 0;
@@ -196,7 +221,6 @@ body {
                                 }
                                 .user-name {
                                     vertical-align: middle;
-                                    // color: @dkBlue;
                                     color: @dkGrey;
                                     display: inline-block;
                                     margin-top: 20px;
@@ -205,9 +229,11 @@ body {
 
                                     h3 {
                                         color: @white;
+                                        text-shadow: 0.4px 0.4px @dkGrey;
                                         margin-top: 0;
                                         margin-bottom: 0;
                                         margin-right: 35px;
+                                        font-size: 20px;
                                         font-style: italic;
                                         font-weight: lighter;
                                     }
@@ -215,12 +241,8 @@ body {
                                         width: 200px;
                                     }
                                     input:required {
-                                        // border: 1px solid @dkBlue;
                                         border: 1px solid @dkGrey;
                                         box-shadow: none;
-                                    }
-                                    input:invalid {
-                                        box-shadow:0 0 3px red;
                                     }
                                     button {
                                         margin-right: 30px;
@@ -256,23 +278,27 @@ body {
 
     }
     .landing-page {
+
         .outer {
+
             .content {
                 text-align: center;
             }
         }
     }
     .nav-bar {
-        // background-color: @ltBlue;
         background-color: #e8e8e8;
-        color: @white;
+        color: @dkGrey;
         height: 150px;
+
         .outer {
+
             .title-column {
                 text-align: left;
             }
             .user-name {
                 text-align: right;
+
                 .add-user {
                     width: 100%;
                     text-align: right;
@@ -283,8 +309,6 @@ body {
 
     button {
         color: @white;
-        // background-color: @orange;
-        // border: 1px solid @orange;
         background-color: @ltBlue;
         border: 1px solid @ltBlue;
         border-radius: 6px;
@@ -292,10 +316,13 @@ body {
         display: inline-block;
         margin-left: 10px;
     }
+    button:hover {
+        cursor: pointer;
+        background-color: @dkBlue;
+    }
 
     input {
         width: 150px;
-        // border: 1px solid @dkGrey;
         border: 1px solid @mdGrey;
         border-radius: 6px;
         text-align: center;
@@ -315,51 +342,44 @@ body {
         }
     }
 
-  .chatroom-container {
+    .chatroom-container {
+        margin: 1em auto;
 
-    margin: 1em auto;
-
-    .message-container {
-      border-style: solid;
-      border-color: #F0F0F0;
-      border-width: 2px;
-      margin: 1em;
-      width: 400px;
-      padding: 1em;
-      display: inline-block;
-
+        .message-container {
+            border-style: solid;
+            border-color: #F0F0F0;
+            border-width: 2px;
+            margin: 1em;
+            width: 400px;
+            padding: 1em;
+            display: inline-block;
+        }
+        .firepad {
+            width: 600px;
+            height: 350px;
+            border-style: solid;
+            border-color: #F0F0F0;
+            border-width: 2px;
+            padding: 1em;
+            display: inline-block;
+        }
+        .chat-users {
+            border-style: solid;
+            border-color: #F0F0F0;
+            border-width: 2px;
+            width: 200px;
+            height: 350px;
+            padding: 1em;
+            margin: -7em 1em 1em 1em;
+            display: inline-block;
+            text-align: center;
+        }
+        .chat-users li {
+            list-style: none;
+        }
+        input, button {
+            margin-top: 1em;
+            margin-right: -0.5em;
+        }
     }
-    input, button {
-      margin-top: 1em;
-      margin-right: -0.5em;
-    }
-
-    .firepad {
-    width: 600px;
-    height: 350px;
-    border-style: solid;
-    border-color: #F0F0F0;
-    border-width: 2px;
-
-    // margin-top: 2em;
-    padding: 1em;
-    display: inline-block;
-    }
-
-    .chat-users {
-      border-style: solid;
-      border-color: #F0F0F0;
-      border-width: 2px;
-      width: 200px;
-      height: 350px;
-      padding: 1em;
-      margin: -7em 1em 1em 1em;
-      display: inline-block;
-      text-align: center;
-    }
-
-    .chat-users li {
-      list-style: none;
-    }
-  }
 }

@@ -52,26 +52,75 @@ class ChatRoom extends React.Component {
         });
 
         return (
-            <div className="chatroom-container">
-                <div className="chat-users">
-                    <p>Current users: </p>
-                    <ul>
-                        {usersOnline}
-                    </ul>
-                </div>
-                <div className="message-container">
-                    <h1 className="questionText">{this.props.questionText}</h1>
+            <div className="chatroom-page">
+                <center className="wrapper">
+                    <table className="outer" width="100%">
+                        <tr>
+                            <td className="content">
+                                <div className="land-column">
+                                    <table className="inner" width="100%">
+                                        <tr>
+                                            <td className="inner-col">
+                                                <div className="question-text">
+                                                    <h1>QUESTION:</h1>
+                                                    <div>
+                                                        <h2 className="user">USERNAME Asked: </h2>
+                                                        <h2 className="questionText">{this.props.questionText}</h2>
+                                                        <h2 className="date">On: {this.props.whenAsked}</h2>
+                                                        <button>Answered</button>
+                                                    </div>
+                                                </div>                                    
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div className="land-column">
+                                    <table className="inner" width="100%">
+                                        <tr>
+                                            <td className="inner-col">
+                                                <div className="post-message">
+                                                    <h1>MESSAGE:</h1>
+                                                    <div>
+                                                        {/*<p>Tags: </p>*/}
+                                                        {/*<ul>*/}
+                                                            {/*{tags}*/}
+                                                        {/*</ul>*/}
 
-                    {/*<p>Tags: </p>*/}
-                    {/*<ul>*/}
-                        {/*{tags}*/}
-                    {/*</ul>*/}
-
-                    <ul>message: this is a text placeholder {messages}</ul>
-                    <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
-                    <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
-                </div>
-                <Firepad questionID={this.props.params.questionID}/>
+                                                        <ul>{messages}</ul>
+                                                        <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
+                                                        <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div className="land-column">
+                                    <table className="inner">
+                                        <tr>
+                                            <td className="inner-col users-online">
+                                                <div className="users-online">
+                                                    <h1>IN ROOM:</h1>
+                                                    <div>
+                                                        <ul>{usersOnline}</ul>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td className="content">
+                                <div className="fire-pad">
+                                    <h1>COLLABORATE:</h1>
+                                    <Firepad questionID={this.props.params.questionID}/>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </center>
             </div>
         );
     }
@@ -82,6 +131,7 @@ const mapStateToProps = (state) => {
         state: state,
         questionID: state.currentQuestion.questionID,
         questionText: state.currentQuestion.questionText,
+        whenAsked: state.currentQuestion.whenAsked,
         messages: state.currentQuestion.messages,
         userName: state.user.userName,
         currentUsers: state.currentUsers,
