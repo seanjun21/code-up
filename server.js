@@ -24,6 +24,7 @@ app.use(express.static('./build'));
 // insertTags();
 
 io.on('connection', (socket) => {
+    console.log(socket.id, 'SOCKET is connected');
 
     // push newly connect socket into the lobby array in the hash map
     // spaces.lobby.push(socket);
@@ -31,26 +32,32 @@ io.on('connection', (socket) => {
         type: 'findRoom'
     });
     socket.on('action', (action) => {
-        // if (action.type === 'server/setRoom') {
-        //     spaces.lobby.push(socket);
-        //
-        //     socket.emit('action', {
-        //         type: 'findRoom'
-        //     })
-        // }
+        console.log(action.type, '<-----ACTION.TYPE');
+        console.log(spaces, '<----spaces');
+
 
         if (action.type === 'server/loadRoom') {
             joinRoom(action.data).then((data) => {
-                let room = spaces[data.currentQuestion.questionID];
 
-                if (!room) {
-                    room = spaces[data.currentQuestion.questionID] = [];
+                let roomKey = data.currentQuestion.questionID;
+
+                if (!spaces[roomKey]) {
+                    spaces[roomKey] = spaces[roomKey] = [];
                 }
 
-                room.push(socket);
-                let roomUserArr = createRoomArr(room);
+                let addSocket = true;
+                spaces[roomKey].forEach((person, index) => {
+                    if (socket.id === person.id) {
+                        addSocket = false;
+                    }
+                });
+                if (addSocket) {
+                    spaces[roomKey].push(socket);
+                }
 
-                room.forEach((socket) => {
+                let roomUserArr = createRoomArr(spaces[roomKey]);
+
+                spaces[roomKey].forEach((socket) => {
                     socket.emit('action', {
                         type: 'enterRoom',
                         data: {
@@ -64,7 +71,15 @@ io.on('connection', (socket) => {
 
         if (action.type === 'server/getQuestions') {
             getQuestions().then((data) => {
-                spaces.lobby.push(socket);
+                let addSocket = true;
+                spaces.lobby.forEach((person, index) => {
+                    if (socket.id === person.id) {
+                        addSocket = false;
+                    }
+                });
+                if (addSocket) {
+                    spaces.lobby.push(socket);
+                }
                 let lobbyUserArr = createRoomArr(spaces.lobby);
                 socket.emit('action', {
                     type: 'updateQuestionFeed',
@@ -116,16 +131,16 @@ io.on('connection', (socket) => {
         if (action.type === 'server/postQuestion') {
             postQuestion(action.data).then((data) => {
                 let questionID = data.currentQuestion.questionID;
-                let lobby = spaces.lobby;
-                let idx = findSocketIdx(socket.id, lobby);
-                let item = lobby[idx];
+                let idx = findSocketIdx(socket.id, spaces.lobby);
+                let item = spaces.lobby[idx];
                 let room = [item];
+
                 // create new 'room' in hash map for the new question
                 spaces[questionID] = room;
-                lobby.splice(idx, 1);
-                let lobbyUserArr = createRoomArr(lobby);
+                spaces.lobby.splice(idx, 1);
+                let lobbyUserArr = createRoomArr(spaces.lobby);
                 let roomUserArr = createRoomArr(room);
-                lobby.forEach((socket) => {
+                spaces.lobby.forEach((socket) => {
                     socket.emit('action', {
                         type: 'updateQuestionFeed',
                         data: {
@@ -166,6 +181,20 @@ io.on('connection', (socket) => {
                     spaces[questionID] = [];
                 }
 
+
+
+                // let addSocket = true;
+                // spaces.lobby.forEach((person, index) => {
+                //     if (socket.id === person.id) {
+                //         addSocket = false;
+                //     }
+                // });
+                // if (addSocket) {
+                //     spaces[roomKey].push(socket);
+                // }
+
+
+
                 spaces[questionID].push(item);
                 lobby.splice(idx, 1);
 
@@ -192,6 +221,7 @@ io.on('connection', (socket) => {
         }
     });
     socket.on('disconnect', () => {
+        console.log(socket.id, '<----------socket is disconnected');
         // create rooms array of values (arrays) for each key in 'spaces' hash map
         let rooms = Object.keys(spaces);
         for (let i = 0; i < rooms.length; i += 1) {
@@ -201,7 +231,6 @@ io.on('connection', (socket) => {
             }
             let idx = findSocketIdx(socket.id, room);
 
-            // console.log(idx, '<---------INDEX');
             if (idx !== null) {
                 room.splice(idx, 1);
                 let roomUserArr = createRoomArr(room);
