@@ -1,6 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import UserName from './user-name';
+import {Router, Route, IndexRoute, hashHistory, Link} from 'react-router';
 
 function NavBar () {
   return (
@@ -14,7 +15,7 @@ function NavBar () {
                   <tr>
                     <td className="inner-col">
                       <div className="title">
-                        <h1 id="app-name">Code Roulette</h1>
+                        <h1 id="app-name"><Link to="/">Code Roulette</Link></h1>
                         <h4 id="beta">beta</h4>
                       </div>
                     </td>
@@ -34,7 +35,7 @@ function NavBar () {
           </tr>
         </table>
       </center>
-    </div>    
+    </div>
   );
 }
 

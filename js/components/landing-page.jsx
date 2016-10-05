@@ -120,7 +120,6 @@ class LandingPage extends React.Component {
 
     render() {
         console.log('state', this.props.state);
-
         let feed = this.props.questions.map((question) => {
             return (
                 <li key={question.id}>
