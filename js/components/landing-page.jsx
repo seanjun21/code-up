@@ -12,7 +12,7 @@ class LandingPage extends React.Component {
         this.joinRoom = this.joinRoom.bind(this);
         this.filtersSearch = this.filtersSearch.bind(this);
         this.tagsSearch = this.tagsSearch.bind(this);
-        this.resetFilters = this.resetFilters.bind(this)
+        this.resetFilters = this.resetFilters.bind(this);
         this.resetTags = this.resetTags.bind(this)
     }
 

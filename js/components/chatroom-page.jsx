@@ -33,6 +33,10 @@ class ChatRoom extends React.Component {
     }
 
     render() {
+        // let tags = this.props.tags.map((tag) => {
+        //     return <li key={tag}><p>{tag}</p></li>;
+        // });
+
         let messages = this.props.messages.map((message, index) => {
             return (
                 <li key={index} id={message.question_id}>
@@ -57,6 +61,10 @@ class ChatRoom extends React.Component {
                 </div>
                 <div className="message-container">
                     <h1 className="questionText">{this.props.questionText}</h1>
+                    {/*<p>Tags: </p>*/}
+                    {/*<ul>*/}
+                        {/*{tags}*/}
+                    {/*</ul>*/}
                     <ul>message: this is a text placeholder {messages}</ul>
                     <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
                     <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
@@ -75,7 +83,8 @@ const mapStateToProps = (state) => {
         messages: state.currentQuestion.messages,
         userName: state.user.userName,
         currentUsers: state.currentUsers,
-        needRoom: state.needRoom
+        needRoom: state.needRoom,
+        tags: state.currentQuestion.tags
     }
 };
 

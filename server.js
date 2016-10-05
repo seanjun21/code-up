@@ -220,6 +220,7 @@ io.on('connection', (socket) => {
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
     server.listen(PORT, () => {
+        console.log(`Listening on port: ${PORT}`);
         if (callback) {
             callback();
         }

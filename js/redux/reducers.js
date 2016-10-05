@@ -28,15 +28,6 @@ function reducer(state=initialState, action) {
       })
     }
 
-    // case 'roomLoaded': {
-    //   let currentUsers = action.data.currentUsers || state.currentUsers;
-    //   return Object.assign({}, state, {
-    //     currentQuestion: action.data.currentQuestion,
-    //     currentUsers: currentUsers,
-    //     needRoom: false
-    //   });
-    // }
-
     case 'updateQuestionFeed': {
       let questions = state.questionFeed.questions;
       // TODO: fix for resetting peoples filtered questionFeeds (TODO: use join in function to return array of question objects incl. tags and update so you can compare newly posted question to your applied tags)
