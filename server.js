@@ -33,9 +33,6 @@ io.on('connection', (socket) => {
     });
     socket.on('action', (action) => {
         console.log(action.type, '<-----ACTION.TYPE');
-        console.log(spaces, '<----spaces');
-
-
         if (action.type === 'server/loadRoom') {
             joinRoom(action.data).then((data) => {
 

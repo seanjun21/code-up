@@ -58,25 +58,29 @@ let insertT = (tags, questionID) => {
     return new Promise((resolve, reject) => {
         let addedTags = [];
         let completed = 0;
-        tags.forEach((tag) => {
-            knex.insert({
-                tag: tag,
-                question_id: questionID
-            })
-                .into('tags')
-                .returning('tag')
-                .then(() => {
-                    console.log('post tag success', tag);
-                    addedTags.push(tag)
+        if (tags.length >= 1) {
+            tags.forEach((tag) => {
+                knex.insert({
+                    tag: tag,
+                    question_id: questionID
                 })
-                .catch((err) => {
-                    console.log('post tag error', err, tag);
-                });
-            completed++;
-            if (completed === tags.length) {
-                resolve(addedTags);
-            }
-        });
+                    .into('tags')
+                    .returning('tag')
+                    .then(() => {
+                        console.log('post tag success', tag);
+                        addedTags.push(tag)
+                    })
+                    .catch((err) => {
+                        console.log('post tag error', err, tag);
+                    });
+                completed++;
+                if (completed === tags.length) {
+                    resolve(addedTags);
+                }
+            });
+        } else {
+            resolve(addedTags);
+        }
     });
 };
 
