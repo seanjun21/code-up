@@ -61,10 +61,12 @@ class ChatRoom extends React.Component {
                 </div>
                 <div className="message-container">
                     <h1 className="questionText">{this.props.questionText}</h1>
+
                     {/*<p>Tags: </p>*/}
                     {/*<ul>*/}
                         {/*{tags}*/}
                     {/*</ul>*/}
+
                     <ul>message: this is a text placeholder {messages}</ul>
                     <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
                     <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>

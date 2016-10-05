@@ -199,8 +199,9 @@ io.on('connection', (socket) => {
             if (!room) {
                 room = spaces[room[i]] = [];
             }
-
             let idx = findSocketIdx(socket.id, room);
+
+            // console.log(idx, '<---------INDEX');
             if (idx !== null) {
                 room.splice(idx, 1);
                 let roomUserArr = createRoomArr(room);
@@ -220,7 +221,7 @@ io.on('connection', (socket) => {
 function runServer(callback) {
     let PORT = process.env.PORT || 8080;
     server.listen(PORT, () => {
-        console.log(`Listening on port: ${PORT}`);
+        console.log(`Listening on localhost: ${PORT}`);
         if (callback) {
             callback();
         }
