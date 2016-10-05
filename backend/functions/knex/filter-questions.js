@@ -14,6 +14,7 @@ let filterQuestions = (data) => {
                 .then((question) => {
                     questionsArr.push(question[0]);
                     if (questionsArr.length === tags.length) {
+                        // same nested loop to add tags to question objects before resolving
                         resolve({ questions: questionsArr });
                     }
                 }).catch((err) => {

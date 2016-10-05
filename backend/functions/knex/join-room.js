@@ -12,6 +12,7 @@ let joinRoom = (data) => {
             })
             .orderBy('when_sent')
             .then((messages) => {
+                // one more helper function to select for tags whose question_id matches data[0].id. add a key 'tags' to the object were creating in the resolve with the returned array of tags
                 resolve({  
                     currentQuestion: { 
                         questionID: data[0].id, 

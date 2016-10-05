@@ -16,7 +16,8 @@ let initialState = {
     questionID: '',
     questionText: '',
     whenAsked: '',
-    messages: []
+    messages: [],
+    tags: []
   },
   needRoom: false
 };
@@ -86,7 +87,8 @@ function reducer(state=initialState, action) {
           questionID: state.currentQuestion.questionID,
           questionText: state.currentQuestion.questionText,
           whenAsked: state.currentQuestion.whenAsked,
-          messages: action.data.messages
+          messages: action.data.messages,
+          tags: state.currentQuestion.tags
         }
       });
     }
