@@ -124,10 +124,10 @@ class LandingPage extends React.Component {
         let feed = this.props.questions.map((question) => {
             return (
                 <li key={question.id}>
-                    <p>{question.question_text}</p>
-                    <p>Date: {question.when_asked}</p>
-                    <div className="room"><p>Room #: {question.id}</p>
-                        <button type="button" onClick={this.joinRoom.bind(this, question.id)}>Join room</button>
+                    <p className='text'>{question.question_text}</p>
+                    <p className='date'>Posted: {question.when_asked}</p>
+                    <div className="room">
+                        <button type="button" onClick={this.joinRoom.bind(this, question.id)}>Join room #{question.id}</button>
                     </div>
                 </li>
             )
