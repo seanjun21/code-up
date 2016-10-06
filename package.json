@@ -2,7 +2,9 @@
   "name": "code-roulette",
   "version": "1.0.0",
   "description": "",
-  "engines": { "node": "6.4.0" },
+  "engines": {
+    "node": "6.4.0"
+  },
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -38,6 +40,7 @@
     "http-server": "^0.9.0",
     "knex": "^0.12.1",
     "less": "^2.7.1",
+    "moment": "^2.15.1",
     "pg": "^6.1.0",
     "react": "^15.3.2",
     "react-dom": "^15.3.2",

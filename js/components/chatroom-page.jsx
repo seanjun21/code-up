@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import Firepad from './firepad';
+import moment from 'moment';
 
 class ChatRoom extends React.Component {
 
@@ -38,11 +39,12 @@ class ChatRoom extends React.Component {
         // });
 
         let messages = this.props.messages.map((message, index) => {
+            let time = moment(message.when_sent).format('MMM Do YYYY, h:mm A');
             return (
                 <li key={index} id={message.question_id}>
                     <h3>{message.message_text}</h3>
                     <p>user: {message.user_name}</p>
-                    <p>time: {message.when_sent}</p>
+                    <p>time: {time}</p>
                 </li>
             )
         });
@@ -50,6 +52,8 @@ class ChatRoom extends React.Component {
         let usersOnline = this.props.currentUsers.map((user) => {
             return <li key={user.userID}><p>{user.userName}</p></li>;
         });
+
+        let time = moment(this.props.whenAsked).format('MMM Do YYYY, h:mm A');
 
         return (
             <div className="chatroom-page">
@@ -66,7 +70,7 @@ class ChatRoom extends React.Component {
                                                     <div>
                                                         <h2 className="user">USERNAME Asked: </h2>
                                                         <h2 className="questionText">{this.props.questionText}</h2>
-                                                        <h2 className="date">On: {this.props.whenAsked}</h2>
+                                                        <h2 className="date">On: {time}</h2>
                                                         <button>Answered</button>
                                                     </div>
                                                 </div>                                    
