@@ -185,8 +185,8 @@ class LandingPage extends React.Component {
                                             <td className="inner-col">
                                                 <div className="question-feed">
                                                     <h1>ANSWER A QUESTION:</h1>
-                                                    <div>
-                                                        <ul className="feed">{feed}</ul>
+                                                    <div className="feed">
+                                                        <ul>{feed}</ul>
                                                     </div>
                                                     <div className="filters">
                                                         <h3>Applied Filters:</h3>

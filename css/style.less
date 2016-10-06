@@ -104,17 +104,17 @@ body {
                             .inner-col {
                                 vertical-align: top;
                                 margin: 0 auto;
-                                
-                                .feed {
-                                  height: 170px;
-                                  overflow-y: scroll;
-                                }
 
                                 .question-feed {
 
                                     ul {
+                                        height: 170px;
+                                        width: 98%;
+                                        overflow-y: scroll;
+                                        background-color: @mdGrey;
 
                                         li {
+                                            background-color: @mdGrey;
                                             margin: 0 auto;
                                             width: 85%;
                                             border-bottom: 1px solid @dkGrey;
@@ -137,7 +137,9 @@ body {
                                             cursor: text;
                                             color: inherit;
                                         }
+
                                     }
+
                                     .filters {
                                         margin-left: 10px;
 
@@ -156,8 +158,12 @@ body {
                                             margin-bottom: 0px;
                                         }
                                         ul {
+                                            background-color: @white;
+                                            height: auto;
+                                            overflow-y: visible;
 
                                             li {
+                                                background-color: @white;
                                                 border-bottom: 0px;
                                             }
                                             li:hover {
@@ -238,7 +244,10 @@ body {
                                 }
                                 .post-message {
                                     ul {
+                                      background-color: @mdGrey;
+                                      width: 98%;
                                         li {
+                                            background-color: @mdGrey;
                                             margin: 0 auto;
                                             width: 85%;
                                             border-bottom: 1px solid @dkGrey;
