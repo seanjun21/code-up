@@ -5,6 +5,7 @@ import {connect} from 'react-redux'
 import {hashHistory} from 'react-router'
 import TagsSearchBar from './tags-search-bar'
 import tagsArr from '../tags-arr'
+import moment from 'moment'
 
 class LandingPage extends React.Component {
 
@@ -120,11 +121,13 @@ class LandingPage extends React.Component {
 
     render() {
         console.log('state', this.props.state);
+
         let feed = this.props.questions.map((question) => {
+            let time = moment(question.when_asked).format('MMM Do YYYY, h:mm A');
             return (
                 <li key={question.id}>
                     <p className='text'>{question.question_text}</p>
-                    <p className='date'>Posted: {question.when_asked}</p>
+                    <p className='date'>Posted: {time}</p>
                     <div className="room">
                         <button type="button" onClick={this.joinRoom.bind(this, question.id)}>Join room #{question.id}</button>
                     </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import Firepad from './firepad';
+import moment from 'moment';
 
 class ChatRoom extends React.Component {
 
@@ -38,11 +39,12 @@ class ChatRoom extends React.Component {
         // });
 
         let messages = this.props.messages.map((message, index) => {
+            let time = moment(message.when_sent).format('MMM Do YYYY, h:mm A');
             return (
                 <li key={index} id={message.question_id}>
                     <h3>{message.message_text}</h3>
                     <p>user: {message.user_name}</p>
-                    <p>time: {message.when_sent}</p>
+                    <p>time: {time}</p>
                 </li>
             )
         });
@@ -50,6 +52,8 @@ class ChatRoom extends React.Component {
         let usersOnline = this.props.currentUsers.map((user) => {
             return <li key={user.userID}><p>{user.userName}</p></li>;
         });
+
+        let time = moment(this.props.whenAsked).format('MMM Do YYYY, h:mm A');
 
         return (
             <div className="chatroom-page">
@@ -64,9 +68,13 @@ class ChatRoom extends React.Component {
                                                 <div className="question-text">
                                                     <h1>QUESTION:</h1>
                                                     <div>
-                                                        <h2 className="user">USERNAME Asked: </h2>
-                                                        <h2 className="questionText">{this.props.questionText}</h2>
-                                                        <h2 className="date">On: {this.props.whenAsked}</h2>
+                                                        <p className="user">USERNAME asked: </p>
+                                                        <h3 className="questionText">&nbsp;&nbsp;&nbsp;{this.props.questionText}</h3>
+                                                        <p className="date">On: {time}<br/>&nbsp;&nbsp;&nbsp;{this.props.whenAsked}</p>
+                                                        <p className="tags">Tags:<br/>&nbsp;&nbsp;&nbsp; </p>
+                                                        {/*<ul>*/}
+                                                            {/*{tags}*/}
+                                                        {/*</ul>*/}
                                                         <button>Answered</button>
                                                     </div>
                                                 </div>                                    
@@ -81,11 +89,6 @@ class ChatRoom extends React.Component {
                                                 <div className="post-message">
                                                     <h1>MESSAGE:</h1>
                                                     <div>
-                                                        {/*<p>Tags: </p>*/}
-                                                        {/*<ul>*/}
-                                                            {/*{tags}*/}
-                                                        {/*</ul>*/}
-
                                                         <ul>{messages}</ul>
                                                         <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
                                                         <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
