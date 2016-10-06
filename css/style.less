@@ -36,11 +36,51 @@ body {
 
                     .fire-pad {
                         font-size: 20px;
-                        height: 400px;
-                        max-width: 600px;
+                        width: 95%;
+                        max-width: 615px;
+                        height: 500px;
                         margin: 0 auto;
-                    }
+                        padding: 10px;
+                        border: 2px solid @mdGrey;
 
+                        h1 {
+                            margin: 0 auto;
+                            font-size: 25px;
+                            color: @dkGrey;
+                            margin-top: 0px;
+                            margin-bottom: 0px;
+                            padding-bottom: 5px;
+                            width: 600px;
+                            border-bottom: 1px solid @dkGrey;
+                            text-align: center;
+                        }
+
+                        .firepad {
+                            margin-bottom: 50px;
+                            height: 475px;
+                            .firepad-toolbar {
+                                padding-left: 0;
+                                .firepad-toolbar-wrapper {
+                                
+                                }
+                            }
+                            .CodeMirror-wrap {
+                                padding-left: 0;
+                                height: 375px;
+                                .CodeMirror-scroll { 
+                                    width: 700px;
+                                    height: 375px;
+                                    .CodeMirror-lines {
+                                        margin-left: 17px;
+                                    }
+                                }
+                            }
+                            .firepad-btn-group {
+                                margin-right: 0.9px;
+                                margin-top: 0;
+                            }
+                        }
+                    }
                     .land-column {
                         max-width: 300px;
                         display: inline-block;
@@ -52,9 +92,9 @@ body {
                         .inner {
                             font-size: 14px;
                             text-align: left;
-                            border: 2px solid @mdGrey;
                             height: 352px;
                             width: 95%;
+                            border: 2px solid @mdGrey;
 
                             .inner-col {
                                 vertical-align: top;
@@ -158,6 +198,50 @@ body {
                                             cursor: text;
                                             color: inherit;
                                         }
+                                    }
+                                }
+                                .question-text {
+                                    h3 {
+                                        font-size: 20px;
+                                        margin-left: 15px;
+                                        margin-top: 10px;
+                                    }
+                                    .user {
+                                        margin-bottom: 10px;
+                                    }
+                                    .tags {
+                                        margin-left: 15px;
+                                        width: 85%;
+                                        border-bottom: 1px solid @dkGrey;
+                                    }
+                                    p {
+                                        font-size: 17px;
+                                        font-style: italic;
+                                        margin-left: 15px;
+                                    }
+                                    button {
+                                        margin-left: 20px;
+                                    }
+                                }
+                                .post-message {
+                                    ul {
+                                        li {
+                                            margin: 0 auto;
+                                            width: 85%;
+                                            border-bottom: 1px solid @dkGrey;
+                                            font-size: 17px;
+
+                                            .text {
+                                                font-size: 20px;
+                                            }
+                                            .date {
+                                                font-style: italic;
+                                            }
+                                        }
+                                        li:hover {
+                                            cursor: text;
+                                            color: inherit;
+                                        }   
                                     }
                                 }
                                 .post-question, .question-feed, .users-online, .post-message, .question-text {
@@ -339,47 +423,6 @@ body {
                 margin-bottom: 10px;
                 margin-top: 10px;
             }
-        }
-    }
-
-    .chatroom-container {
-        margin: 1em auto;
-
-        .message-container {
-            border-style: solid;
-            border-color: #F0F0F0;
-            border-width: 2px;
-            margin: 1em;
-            width: 400px;
-            padding: 1em;
-            display: inline-block;
-        }
-        .firepad {
-            width: 600px;
-            height: 350px;
-            border-style: solid;
-            border-color: #F0F0F0;
-            border-width: 2px;
-            padding: 1em;
-            display: inline-block;
-        }
-        .chat-users {
-            border-style: solid;
-            border-color: #F0F0F0;
-            border-width: 2px;
-            width: 200px;
-            height: 350px;
-            padding: 1em;
-            margin: -7em 1em 1em 1em;
-            display: inline-block;
-            text-align: center;
-        }
-        .chat-users li {
-            list-style: none;
-        }
-        input, button {
-            margin-top: 1em;
-            margin-right: -0.5em;
         }
     }
 }

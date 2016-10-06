@@ -64,9 +64,13 @@ class ChatRoom extends React.Component {
                                                 <div className="question-text">
                                                     <h1>QUESTION:</h1>
                                                     <div>
-                                                        <h2 className="user">USERNAME Asked: </h2>
-                                                        <h2 className="questionText">{this.props.questionText}</h2>
-                                                        <h2 className="date">On: {this.props.whenAsked}</h2>
+                                                        <p className="user">USERNAME asked: </p>
+                                                        <h3 className="questionText">&nbsp;&nbsp;&nbsp;{this.props.questionText}</h3>
+                                                        <p className="date">On: <br/>&nbsp;&nbsp;&nbsp;{this.props.whenAsked}</p>
+                                                        <p className="tags">Tags:<br/>&nbsp;&nbsp;&nbsp; </p>
+                                                        {/*<ul>*/}
+                                                            {/*{tags}*/}
+                                                        {/*</ul>*/}
                                                         <button>Answered</button>
                                                     </div>
                                                 </div>                                    
@@ -81,11 +85,6 @@ class ChatRoom extends React.Component {
                                                 <div className="post-message">
                                                     <h1>MESSAGE:</h1>
                                                     <div>
-                                                        {/*<p>Tags: </p>*/}
-                                                        {/*<ul>*/}
-                                                            {/*{tags}*/}
-                                                        {/*</ul>*/}
-
                                                         <ul>{messages}</ul>
                                                         <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
                                                         <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
