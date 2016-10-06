@@ -19,21 +19,20 @@ class UserName extends React.Component{
 
   render () {
 
-    let userName = "Please log in or register";
+    // let userName = "Please log in or register";
 
     if (!this.props.userName) {
 
       return (
         <div className="user-name">
-          <div className="add-user"><input className='user-input' type="text" ref={(name) => { this.name = name; }} placeholder={this.props.userName} id="userName" required /><button type="button" id="name-submit" onClick={this.nameSubmit}>Submit</button></div>
-          <h3>{userName}</h3>
+          <div className="add-user"><input className='user-input' type="text" ref={(name) => { this.name = name; }} placeholder="Please login or register" id="userName" required /><button type="button" id="name-submit" onClick={this.nameSubmit}>Submit</button></div>
+          {/* <h3>{userName}</h3> */}
         </div>
       )
     } else {
-      userName = `Welcome ${this.props.userName}!`
 
       return (
-        <h3>{userName}</h3>
+        <h2 className='welcome'>Welcome {this.props.userName}!</h2>
       )
     }
 

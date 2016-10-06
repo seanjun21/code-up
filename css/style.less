@@ -15,6 +15,11 @@ body {
     font-size: 18px;
     color: @dkGrey;
 
+    .welcome {
+      text-align: center;
+      margin: 0 auto;
+    }
+
     .landing-page, .nav-bar, .chatroom-page {
 
         .wrapper {
@@ -61,13 +66,13 @@ body {
                             .firepad-toolbar {
                                 padding-left: 0;
                                 .firepad-toolbar-wrapper {
-                                
+
                                 }
                             }
                             .CodeMirror-wrap {
                                 padding-left: 0;
                                 height: 375px;
-                                .CodeMirror-scroll { 
+                                .CodeMirror-scroll {
                                     width: 700px;
                                     height: 375px;
                                     .CodeMirror-lines {
@@ -99,9 +104,16 @@ body {
                             .inner-col {
                                 vertical-align: top;
                                 margin: 0 auto;
+                                
+                                .feed {
+                                  height: 170px;
+                                  overflow-y: scroll;
+                                }
 
                                 .question-feed {
+
                                     ul {
+
                                         li {
                                             margin: 0 auto;
                                             width: 85%;
@@ -156,6 +168,7 @@ body {
                                     }
                                 }
                                 .post-question {
+
                                     font-size: 17px;
 
                                     .post-question-input {
@@ -241,7 +254,7 @@ body {
                                         li:hover {
                                             cursor: text;
                                             color: inherit;
-                                        }   
+                                        }
                                     }
                                 }
                                 .post-question, .question-feed, .users-online, .post-message, .question-text {
@@ -268,14 +281,6 @@ body {
                                   height: 200px;
                                   overflow-y: scroll;
                                 }
-
-                                .question-feed ul {
-                                  height: 100px;
-                                  overflow-y: scroll;
-                                }
-
-
-
                             }
                         }
                     }
@@ -296,7 +301,7 @@ body {
                                 margin: 0 auto;
 
                                 .title {
-                                    padding-left: 15px;
+                                    padding-left: 55px;
 
                                     h1 {
                                         display: inline-block;
@@ -321,7 +326,7 @@ body {
                                     vertical-align: middle;
                                     color: @dkGrey;
                                     display: inline-block;
-                                    margin-top: 20px;
+                                    margin-top: 5px;
                                     width: 100%;
                                     padding-right: 20px;
 
@@ -336,14 +341,15 @@ body {
                                         font-weight: lighter;
                                     }
                                     input {
-                                        width: 200px;
+                                        width: 150px;
+
                                     }
                                     input:required {
                                         border: 1px solid @dkGrey;
                                         box-shadow: none;
                                     }
                                     button {
-                                        margin-right: 30px;
+                                        // margin-right: 50px;
                                     }
                                 }
                             }
@@ -387,19 +393,20 @@ body {
     .nav-bar {
         background-color: #e8e8e8;
         color: @dkGrey;
-        height: 150px;
+        height: 100px;
 
         .outer {
 
             .title-column {
-                text-align: left;
+                text-align: center;
+
             }
             .user-name {
-                text-align: right;
+                text-align: center;
 
                 .add-user {
                     width: 100%;
-                    text-align: right;
+                    text-align: center;;
                 }
             }
         }

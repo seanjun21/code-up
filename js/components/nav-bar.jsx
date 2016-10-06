@@ -15,7 +15,7 @@ function NavBar () {
                   <tr>
                     <td className="inner-col">
                       <div className="title">
-                        <h1 id="app-name"><Link to="/">Code Roulette</Link></h1>
+                        <h1 id="app-name"><Link to="/">codeUp</Link></h1>
                         <h4 id="beta">beta</h4>
                       </div>
                     </td>

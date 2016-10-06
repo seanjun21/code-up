@@ -186,7 +186,7 @@ class LandingPage extends React.Component {
                                                 <div className="question-feed">
                                                     <h1>ANSWER A QUESTION:</h1>
                                                     <div>
-                                                        <ul>{feed}</ul>
+                                                        <ul className="feed">{feed}</ul>
                                                     </div>
                                                     <div className="filters">
                                                         <h3>Applied Filters:</h3>
