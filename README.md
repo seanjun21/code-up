@@ -1,4 +1,4 @@
-## codeUp beta
+## codeUp (beta)
 codeUp is a platform that provides answers to your programming and existential questions (e.g., how to fly) in a real-time, 1-on-1 environment by your peers and experts. It seamlessly integrates real-time, collaborative Firepad code editor and instant messaging with other users. Let's go learn how to fly!
 
 To begin, register a user account or log in/authenticate with your GitHub credentials. Then ask your question, add relevant tags by topic, and see your question appear in a real-time lobby queue. Other users may then respond to your question and begin a 1-on-1 chat session to discuss and/or pair program solutions to your programming dilemma. Registration is not required, but you will be limited to only viewing posted questions as a guest user.
