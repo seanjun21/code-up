@@ -1,9 +1,9 @@
 ## codeUp (beta)
-codeUp is a platform that provides answers to your programming and existential questions (e.g., how to fly) in a real-time, 1-on-1 environment by your peers and experts. It seamlessly integrates real-time, collaborative Firepad code editor and instant messaging with other users. Let's go learn how to fly!
+codeUp is a platform that provides answers to your programming and existential questions (e.g., how to fly) in a real-time, 1-on-1 environment by your peers and experts. It seamlessly integrates real-time, collaborative code editor and instant messaging with other users. Let's go learn how to fly!
 
 To begin, register a user account or log in/authenticate with your GitHub credentials. Then ask your question, add relevant tags by topic, and see your question appear in a real-time lobby queue. Other users may then respond to your question and begin a 1-on-1 chat session to discuss and/or pair program solutions to your programming dilemma. Registration is not required, but you will be limited to only viewing posted questions as a guest user.
 
-The backend is built on Node.js and serves the frontend "view" with event-based communication provided by Socket.io. The user interface is framed with React and Redux, dressed with collaborative-mojo freely provided by Firepad.io in its open source fashion. PostgreSQL database provide the bookkeeping on users, questions, topic tags, and chat messages so an expert can review chat logs to continue helping a user with their question from where another may have left off.
+The backend is built on Node.js and serves the frontend "view" with event-based communication provided by Socket.io. The user interface is framed with React and Redux, dressed with collaborative-mojo freely provided by Firepad.io code editor in its open source fashion. PostgreSQL database provides bookkeeping on users, questions, topic tags, and chat messages so an expert can review chat logs to continue helping a user with their question from where another may have left off.
 
 ## Screenshots
 
