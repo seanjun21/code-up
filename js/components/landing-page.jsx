@@ -57,8 +57,7 @@ class LandingPage extends React.Component {
         let tempArr = [];
         let value = event.target.value.toLowerCase();
         if (value.length > 0) {
-            let sortedTags = tagsArr.sort();
-            tempArr = sortedTags.filter((item) => {
+            tempArr = tagsArr.filter((item) => {
                 item = item.toLowerCase();
                 let tagsMatch = new RegExp(value);
                 if (item.match(tagsMatch)) {
@@ -83,8 +82,7 @@ class LandingPage extends React.Component {
         let tempArr = [];
         let value = event.target.value.toLowerCase();
         if (value.length > 0) {
-            let sortedTags = tagsArr.sort();
-            tempArr = sortedTags.filter((item) => {
+            tempArr = tagsArr.filter((item) => {
                 item = item.toLowerCase();
                 let tagsMatch = new RegExp(value);
                 if (item.match(tagsMatch)) {
