@@ -3,12 +3,14 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import Firepad from './firepad';
 import moment from 'moment';
+import {hashHistory} from 'react-router'
 
 class ChatRoom extends React.Component {
 
     constructor() {
         super();
         this.sendMessage = this.sendMessage.bind(this);
+        this.answerQuestion = this.answerQuestion.bind(this);
     }
 
     componentDidMount() {
@@ -20,6 +22,12 @@ class ChatRoom extends React.Component {
             }
         });
     }
+    //
+    // componentWillReceiveProps(nextProps) {
+    //     if (nextProps.currentQuestion.questionID !== "") {
+    //         hashHistory.push(`/`);
+    //     }
+    // }
 
     sendMessage(event) {
         event.preventDefault();
@@ -29,6 +37,17 @@ class ChatRoom extends React.Component {
                 input: this.refs.messageText.value,
                 questionID: this.props.questionID,
                 userName: this.props.userName
+            }
+        })
+    }
+
+    answerQuestion(event) {
+        event.preventDefault();
+        this.props.dispatch({
+            type: "server/answerQuestion",
+            data: {
+                questionID: this.props.questionID,
+                userID: this.props.userID
             }
         })
     }
@@ -81,12 +100,12 @@ class ChatRoom extends React.Component {
                                                     <div>
                                                         <p className="user">USERNAME asked: </p>
                                                         <h3 className="questionText">&nbsp;&nbsp;&nbsp;{this.props.questionText}</h3>
-                                                        <p className="date">On: {time}<br/>&nbsp;&nbsp;&nbsp;{this.props.whenAsked}</p>
+                                                        <p className="date">On: <br/>&nbsp;&nbsp;&nbsp;{time}</p>
                                                         <p className="tags">Tags:<br/>&nbsp;&nbsp;&nbsp; </p>
                                                         {/*<ul>*/}
                                                             {/*{tags}*/}
                                                         {/*</ul>*/}
-                                                        <button>Answered</button>
+                                                        <button type="button" className="answerQuestionButton" onClick={this.answerQuestion}>Answered</button>
                                                     </div>
                                                 </div>
                                             </td>
@@ -147,6 +166,7 @@ const mapStateToProps = (state) => {
         whenAsked: state.currentQuestion.whenAsked,
         messages: state.currentQuestion.messages,
         userName: state.user.userName,
+        userID: state.user.userID,
         currentUsers: state.currentUsers,
         needRoom: state.needRoom,
         tags: state.currentQuestion.tags
