@@ -51,7 +51,7 @@ For example, once postgreSQL is installed and launched, type:
 Queries for accessing the SQL database directly.
 
 	Query examples:
-		-REATE:
+		CREATE:
 			$ insert into *INSERT_TABLE* (*INSERT_COLUMN_1*, *INSERT_COLUMN_2*) values ('*INSERT_VALUE_1*', '*INSERT_VALUE_2*');
 			'1999-01-08 04:05:06' (format timestamp like this)
 		READ:
