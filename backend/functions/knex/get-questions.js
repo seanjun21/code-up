@@ -5,7 +5,7 @@ let getQuestions = () => {
         knex.select()
         .from('questions')
         .where({ is_answered: false })
-        .orderBy('when_asked')
+        .orderBy('when_asked', 'desc')
         .then((questions) => {
             // same nested loop to add tags to question objects before resolving
             resolve({ questions: questions });

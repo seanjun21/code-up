@@ -10,7 +10,7 @@ let postMessages = (data) => {
             knex.select()
             .from('messages')
             .where({ question_id: parseInt(question_id) })
-            .orderBy('when_sent')
+            .orderBy('when_sent', 'desc')
             .then((messages) => {
                 resolve({ messages: messages });
             })
