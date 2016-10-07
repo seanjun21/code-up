@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import {connect} from 'react-redux';
 import Firepad from './firepad';
 import moment from 'moment';
+import {hashHistory} from 'react-router'
 
 class ChatRoom extends React.Component {
 
@@ -23,7 +24,7 @@ class ChatRoom extends React.Component {
     }
     //
     // componentWillReceiveProps(nextProps) {
-    //     if (nextProps.currentQuestion.questionID === "") {
+    //     if (nextProps.currentQuestion.questionID !== "") {
     //         hashHistory.push(`/`);
     //     }
     // }
