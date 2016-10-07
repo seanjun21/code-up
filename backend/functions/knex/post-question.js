@@ -16,11 +16,7 @@ let postQuestion = (data) => {
                     .orderBy('when_asked', 'desc')
                     .then((questions) => {
                         // select * from tags
-                        // nested loop, first loop through questions, then tags.
-                        // For each question, at start of loop modify obj giving new key/value pair (tags: []).
-                        // then nest a loop through tags. Check each tag.question_id to see if it matches question.id of current question. if so question.tags.push(tag.tag). 
-                        // updatedquestions = []; at top.
-                        // push question (updated with tags) onto updated question array.
+                        // nested loop, first loop through questions, then tags. For each question, at start of loop modify obj giving new key/value pair (tags: []). then nest a loop through tags. Check each tag.question_id to see if it matches question.id of current question. if so question.tags.push(tag.tag). updatedquestions = []; at top. push question (updated with tags) onto updated question array.
                         resolve({
                             questions: questions,
                             currentQuestion: {

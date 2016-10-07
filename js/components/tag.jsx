@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {reset} from 'redux-form';
 
 class Tag extends React.Component {
 	constructor() {
@@ -23,6 +24,7 @@ class Tag extends React.Component {
 				}
 			});
 		}
+		this.props.dispatch(reset('myForm'));
     }
 
 	render() {
