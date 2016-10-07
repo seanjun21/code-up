@@ -1,9 +1,9 @@
-# codeUp ### beta
-codeUp is a platform that provides answers to your programming questions in real-time by your peers and experts in 1-on-1 chat rooms that are seamlessly integrated with a reactive, collaborative Firepad code editor.
+## codeUp beta
+codeUp is a platform that provides answers to your programming and existential questions (e.g., how to fly) in a real-time, 1-on-1 environment by your peers and experts. It seamlessly integrates real-time, collaborative Firepad code editor and instant messaging with other users. Let's go learn how to fly!
 
-To initilize the app, create a user account and log in/authenticate with your GitHub credentials. Ask your question, add relevant tags by topic, then see your question appear in a real-time lobby queue. Another user then picks up your question and invites you into a 1-on-1 chat room to discuss and pair program solutions to your programming dilemma.
+To begin, register a user account or log in/authenticate with your GitHub credentials. Then ask your question, add relevant tags by topic, and see your question appear in a real-time lobby queue. Other users may then respond to your question and begin a 1-on-1 chat session to discuss and/or pair program solutions to your programming dilemma. Registration is not required, but you will be limited to only viewing posted questions as a guest user.
 
-The backend is built with Node.js and Socket.io and frontend built with React and Redux and Firepad.io. PostgreSQL database used for storing users, questions, topic tags, and chat messages so an expert can review chat log to continue helping a user with their question from where another expert left off.
+The backend is built on Node.js and serves the frontend "view" with event-based communication provided by Socket.io. The user interface is framed with React and Redux, dressed with collaborative-mojo freely provided by Firepad.io in its open source fashion. PostgreSQL database provide the bookkeeping on users, questions, topic tags, and chat messages so an expert can review chat logs to continue helping a user with their question from where another may have left off.
 
 ## Screenshots
 
@@ -16,7 +16,7 @@ Live demo can be seen at: https://officehours.herokuapp.com/#/?_k=3sm66a
 
 ## Local Setup
 
-Steps below for setting up Code Roulette locally.
+Steps below for setting up codeUp locally.
 
 ### BACKEND:
 --Setting up the database and backend server.
@@ -72,7 +72,7 @@ Steps below for setting up Code Roulette locally.
 
 Also see the list of [contributors](https://github.com/seanjun21/code-roulette/contributors) for their specific commits to this project.
 
-## Acknowledgments
+## Tech:
 
 * [Socket.io](http://socket.io)
 * [Firepad.io](https://firepad.io)
