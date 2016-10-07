@@ -16,10 +16,10 @@ Live demo can be seen at: https://officehours.herokuapp.com/#/?_k=3sm66a
 
 ## Local Setup
 
-Steps below for setting up codeUp locally.
+Steps for setting up codeUp locally.
 
 ### BACKEND:
---Setting up the database and backend server.
+Setting up the database and backend server.
 
 	1. Install postgreSQL using homebrew:
 			$ brew install postgresql
@@ -39,25 +39,26 @@ Steps below for setting up codeUp locally.
 	6. Access database:
 			$ psql -d *INSERT_DB_NAME*
 
+For example, once postgreSQL is installed and launched, type:
 	* `createdb chat`
 	* `psql -d chat < backend/database/schema.sql`
 	* `psql -d chat`
 	* `insert into users (user_name) values ('Alex');`
 	* `insert into questions (user_id, question_text, when_asked, is_answered) values (1, 'this is the questions text', '1999-01-08 04:05:06', false);`
 
---Queries for accessing the SQL database directly.
+Queries for accessing the SQL database directly.
 
 	Query examples:
-		-CREATE:
+		-REATE:
 			$ insert into *INSERT_TABLE* (*INSERT_COLUMN_1*, *INSERT_COLUMN_2*) values ('*INSERT_VALUE_1*', '*INSERT_VALUE_2*');
 			'1999-01-08 04:05:06' (format timestamp like this)
-		-READ:
+		READ:
 			$ select * from *INSERT_TABLE*;
 			$ select *INSERT_VALUE from *INSERT_TABLE*;
 			$ select *INSERT_COLUMN_1*, *INSERT_COLUMN_2* from *INSERT_TABLE* where *INSERT_COLUMN_1*='*INSERT_VALUE_1*';
-		-UPDATE:
+		UPDATE:
 			$ update *INSERT_TABLE* set *INSERT_COLUMN_1*='*INSERT_VALUE_1*' where *INSERT_VALUE_2*='*INSERT_COLUMN_2*';
-		-DELETE:
+		DELETE:
 			$ delete from *INSERT_TABLE* where *INSERT_COLUMN_1*='*INSERT_VALUE_1*';
 
 ## Authors
@@ -74,5 +75,8 @@ Also see the list of [contributors](https://github.com/seanjun21/code-roulette/c
 
 ## Tech:
 
+* [React](http://facebook.github.io/react)
+* [Redux](http://redux.js.org)
+* [Node](http:/nodejs.org/)
 * [Socket.io](http://socket.io)
 * [Firepad.io](https://firepad.io)
