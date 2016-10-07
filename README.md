@@ -78,5 +78,5 @@ Also see the list of [contributors](https://github.com/seanjun21/code-roulette/c
 * [React](http://facebook.github.io/react)
 * [Redux](http://redux.js.org)
 * [Node](http:/nodejs.org/)
-* [Socket.io](http://socket.io)
-* [Firepad.io](https://firepad.io)
+* [Socket](http://socket.io)
+* [Firepad](https://firepad.io)
