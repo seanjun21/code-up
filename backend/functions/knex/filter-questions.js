@@ -11,6 +11,7 @@ let filterQuestions = (data) => {
                 knex.select()
                 .from('questions')
                 .where({ id: tag.question_id, is_answered: false })
+                .orderBy('when_asked', 'desc')
                 .then((question) => {
                     questionsArr.push(question[0]);
                     if (questionsArr.length === tags.length) {
