@@ -146,6 +146,23 @@ class LandingPage extends React.Component {
         let usersOnline = this.props.currentUsers.map((user) => {
             return <li key={user.userID}><p>{user.userName}</p></li>;
         });
+        let submitQuestion = "Please log in or register to post a question"
+        if (this.props.userName !== "") {
+            submitQuestion =  (
+                    <div>
+                        <textarea className="post-question-input" name="Text1" cols="36"
+                                  rows="5" ref="questionText"
+                                  placeholder="Enter question text" required/>
+                        <h3>Applied Tags:</h3>
+                        <ul>{appliedTags}</ul>
+                        <button type="button" onClick={this.resetTags}>Reset Tags</button>
+                        <button type="button" onClick={this.postQuestion}>Submit Question</button>
+                        <TagsSearchBar text="Add tags to your question"
+                                       onInput={this.tagsSearch}
+                                       output={this.props.tagsOutput} what="tag"/>
+                    </div>
+                );
+        }
 
         return (
             <div className="landing-page">
@@ -159,21 +176,7 @@ class LandingPage extends React.Component {
                                             <td className="inner-col">
                                                 <div className="post-question">
                                                     <h1>SUBMIT A QUESTION:</h1>
-                                                    <div>
-                                                        <textarea className="post-question-input" name="Text1" cols="36"
-                                                                  rows="5" ref="questionText"
-                                                                  placeholder="Enter question text" required/>
-                                                        <h3>Applied Tags:</h3>
-                                                        <ul>{appliedTags}</ul>
-                                                        <button type="button" onClick={this.resetTags}>Reset Tags
-                                                        </button>
-                                                        <button type="button" onClick={this.postQuestion}>Submit
-                                                            Question
-                                                        </button>
-                                                        <TagsSearchBar text="Add tags to your question"
-                                                                       onInput={this.tagsSearch}
-                                                                       output={this.props.tagsOutput} what="tag"/>
-                                                    </div>
+                                                    {submitQuestion}
                                                 </div>
                                             </td>
                                         </tr>

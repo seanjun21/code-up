@@ -1,4 +1,7 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {reset} from 'redux-form';
+
 import Tag from './tag'
 
 class TagsSearchBar extends React.Component {
@@ -9,11 +12,13 @@ class TagsSearchBar extends React.Component {
 	   	});
 	    return (
 			<div className="search-bar">
-				<input type="text" placeholder={this.props.text} onChange={this.props.onInput} />
+				<form ref='myForm'>
+					<input type="text" placeholder={this.props.text} onChange={this.props.onInput}/>
+				</form>
 				<ul>{tags}</ul>
 			</div>
 	    );
 	}
 }
 
-module.exports = TagsSearchBar;
+module.exports = connect()(TagsSearchBar);
