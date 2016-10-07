@@ -18,16 +18,10 @@ let initialState = {
     whenAsked: '',
     messages: [],
     tags: []
-  },
-  needRoom: false
+  }
 };
 function reducer(state=initialState, action) {
   switch(action.type) {
-    case 'findRoom': {
-      return Object.assign({}, state, {
-        needRoom: true
-      })
-    }
 
     case 'updateQuestionFeed': {
       let questions = state.questionFeed.questions;
@@ -39,6 +33,8 @@ function reducer(state=initialState, action) {
           questions = action.data.questions;
         }
       }
+
+      let currentQuestion = action.data.currentQuestion || state.currentQuestion;
       let tagsOutput = action.data.tagsOutput || [];
       let appliedTags = action.data.appliedTags || state.questionFeed.appliedTags;
       if (action.data.tag) {
@@ -61,7 +57,7 @@ function reducer(state=initialState, action) {
           filteredFeed: filteredFeed
         },
         currentUsers: currentUsers,
-        needRoom: false
+        currentQuestion: currentQuestion
       });
     }
     case 'updateUser': {

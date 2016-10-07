@@ -12,6 +12,8 @@ const postMessage = require('./backend/functions/knex/post-message');
 const filterQuestions = require('./backend/functions/knex/filter-questions');
 const joinRoom = require('./backend/functions/knex/join-room');
 const insertTags = require('./backend/functions/knex/insert-tags');
+const answerQuestion = require('./backend/functions/knex/answer-question');
+
 const createRoomArr = require('./backend/functions/hash-map/create-room-arr');
 const findSocketIdx = require('./backend/functions/hash-map/find-socket-idx');
 
@@ -165,33 +167,39 @@ io.on('connection', (socket) => {
                 });
             });
         }
+
+        if (action.type === 'server/answerQuestion') {
+            answerQuestion(action.data).then((data) => {
+                let questionID = action.data.questionID;
+                spaces[questionID].forEach((socket) => {
+                    spaces.lobby.push(socket);
+                });
+                spaces[questionID] = [];
+
+                let lobbyUserArr = createRoomArr(spaces.lobby);
+                spaces.lobby.forEach((socket) => {
+                    socket.emit('action', {
+                        type: 'updateQuestionFeed',
+                        data: {
+                            currentQuestion: data.currentQuestion,
+                            currentUsers: lobbyUserArr,
+                            questions: data.questions
+                        }
+                    });
+                });
+            });
+        }
+
         if (action.type === 'server/joinRoom') {
             joinRoom(action.data).then((data) => {
-
                 let questionID = data.currentQuestion.questionID;
                 let lobby = spaces.lobby;
                 let idx = findSocketIdx(socket.id, lobby);
-
                 let item = lobby[idx];
 
                 if (!spaces[questionID]) {
                     spaces[questionID] = [];
                 }
-
-
-
-                // let addSocket = true;
-                // spaces.lobby.forEach((person, index) => {
-                //     if (socket.id === person.id) {
-                //         addSocket = false;
-                //     }
-                // });
-                // if (addSocket) {
-                //     spaces[roomKey].push(socket);
-                // }
-
-
-
                 spaces[questionID].push(item);
                 lobby.splice(idx, 1);
 
