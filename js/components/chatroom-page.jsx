@@ -55,6 +55,17 @@ class ChatRoom extends React.Component {
 
         let time = moment(this.props.whenAsked).format('MMM Do YYYY, h:mm A');
 
+        let messageForm = 'Please log in to post messages';
+
+        if (this.props.userName !== '') {
+            messageForm = (
+                <div>
+                    <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
+                    <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
+                </div>
+            )
+        }
+
         return (
             <div className="chatroom-page">
                 <center className="wrapper">
@@ -77,7 +88,7 @@ class ChatRoom extends React.Component {
                                                         {/*</ul>*/}
                                                         <button>Answered</button>
                                                     </div>
-                                                </div>                                    
+                                                </div>
                                             </td>
                                         </tr>
                                     </table>
@@ -90,8 +101,7 @@ class ChatRoom extends React.Component {
                                                     <h1>MESSAGE:</h1>
                                                     <div>
                                                         <ul>{messages}</ul>
-                                                        <input type="text" className="newMessage" ref="messageText" placeholder="submit message"/>
-                                                        <button type="button" className="newMessageButton" onClick={this.sendMessage}>send</button>
+                                                        {messageForm}
                                                     </div>
                                                 </div>
                                             </td>
