@@ -65,13 +65,13 @@ Queries for accessing the SQL database directly.
 
 ## Authors
 
-* [Ben Young](https://github.com/URL) - *Project Manager*
+* [Ben Young](https://github.com/jbenjaminy) - *Project Manager*
 
-* [Alex Bang](https://github.com/URL) - *Front-End and Designer*
+* [Alex Bang](https://github.com/atbang) - *Front-End and Designer*
 
-* [Sean Jun](https://github.com/URL) - *Co-Product Manager + CI/Testing*
+* [Sean Jun](https://github.com/seanjun21) - *Co-Product Manager + CI/Testing*
 
-* [Joe Seago](https://github.com/URL) - *Co-Product Manager + DevOps*
+* [Joe Seago](https://github.com/Joe-Seago) - *Co-Product Manager + DevOps*
 
 Also see the list of [contributors](https://github.com/seanjun21/code-up/contributors) for their specific commits to this project.
 
