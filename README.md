@@ -73,7 +73,7 @@ Queries for accessing the SQL database directly.
 
 * [Joe Seago](https://github.com/URL) - *Co-Product Manager + DevOps*
 
-Also see the list of [contributors](https://github.com/seanjun21/code-roulette/contributors) for their specific commits to this project.
+Also see the list of [contributors](https://github.com/seanjun21/code-up/contributors) for their specific commits to this project.
 
 ## Tech:
 
