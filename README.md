@@ -7,12 +7,12 @@ The backend is built on Node.js and serves the frontend "view" with event-based 
 
 ## Screenshots
 
-![codeUP beta screenshot](./img/chatroom.png "codeUp")
+![codeUp beta screenshot](./img/chatroom.png "codeUp")
 
 
 ## Live Deployment
 
-Live demo can be seen at: https://officehours.herokuapp.com/#/?_k=3sm66a
+Live demo can be seen at: https://codeup-app.herokuapp.com
 
 ## Local Setup
 
